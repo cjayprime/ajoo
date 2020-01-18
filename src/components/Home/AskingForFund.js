@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 
-import pregnant from "../../assets/images/pregnant.svg";
-import Ellipse2 from "../../assets/images/Ellipse2.svg";
+import pregnant from "../../assets/images/pregnant.png";
+import Ellipse2 from "../../assets/images/Ellipse2.png";
 
 class AskingForFund extends PureComponent {
   render() {

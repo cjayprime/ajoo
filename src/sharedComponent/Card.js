@@ -35,10 +35,14 @@ const Card = props => {
         <label
           className={labelClass}
           style={{
-            background: categoryColor[category]
+            background: categoryColor[category],
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10
           }}
         >
-          {category}
+          <div>{category}</div>
         </label>
         <div className="topCampaigns_h6">
           <h6>{percent}% Complete</h6>

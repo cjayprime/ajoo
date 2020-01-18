@@ -3,15 +3,24 @@ import Card from "../../sharedComponent/Card";
 // import { CircularProgress } from "@material-ui/core";
 // import { campaignRequest } from "../../store/campaignModules/saga";
 import Spinner from "../../sharedComponent/Spinner";
-import { moneyFormat } from "../../utils/misc";
+import LoadableButton from "../../sharedComponent/LoadableButton";
+import ImageUpload from "../../sharedComponent/ImageUpload";
+import { campaignRequest } from "../../store/campaignModules/saga";
+import { isRequestActive } from "../../utils/misc";
 
 export default class CampaignBodyRight extends PureComponent {
+
   render() {
-    const { allCampaigns, isCampaignFetching } = this.props;
+    const { allCampaigns, isCampaignFetching, utils } = this.props;
+    
     return (
-      <div className="campaign_body_right">
+      <div
+        className="campaign_body_right"
+        ref={this.props.campaignBodyRightRef}
+        style={{marginLeft: this.props.position === "fixed" ? "30%" : "0"}}
+      >
         {
-          isCampaignFetching ? (
+          allCampaigns.transactions.length === 0 && isCampaignFetching ? (
             <Spinner />
           ) : (
               <>
@@ -26,7 +35,7 @@ export default class CampaignBodyRight extends PureComponent {
                       textTransform: "uppercase"
                     }}
                   >
-                    no campaign
+                    There are currently no campaigns
                   </span>
                 ) : (
                     <div
@@ -49,9 +58,19 @@ export default class CampaignBodyRight extends PureComponent {
                           />
                         </div>
                       ))}
-                      <div style={{width: "90%", display: "flex", justifyContent: "center"}} onClick={this.props.more}>
-                        <button className="allButton">SHOW MORE CAMPAIGNS</button>
-                      </div>
+                      <LoadableButton
+                          error={
+                              false
+                              /*formError &&
+                              "There is something wrong! Ensure you've added a campaign"*/
+                          }
+                          className="allButton"
+                          btnTitle="Show More Campaigns"
+                          isLoading={
+                              isRequestActive(utils.request, campaignRequest.fetchAllCampaignsRequest)
+                          }
+                          onClick={this.props.more}
+                      />
                     </div>
                   )}
               </>
@@ -65,8 +84,8 @@ export default class CampaignBodyRight extends PureComponent {
 CampaignBodyRight.defaultProps = {
   allCampaigns: {
     transactions: [],
-    total_records: "",
-    total_pages: "",
-    current_page: ""
+    //total_records: "",
+    //total_pages: "",
+    //current_page: ""
   }
 };

@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 
-import name1 from "../../assets/images/name1.svg";
-import name2 from "../../assets/images/name2.svg";
-import name3 from "../../assets/images/name3.svg";
-import name4 from "../../assets/images/name4.svg";
+import name1 from "../../assets/images/name1.png";
+import name2 from "../../assets/images/name2.png";
+import name3 from "../../assets/images/name3.png";
+import name4 from "../../assets/images/name4.png";
 import goldBadge from "../../assets/images/star.svg";
 import silverBadge from "../../assets/images/star2.svg";
 import blueBadge from "../../assets/images/star3.svg";

@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
-import image1 from "../../assets/images/rectangle5.svg";
-import image2 from "../../assets/images/rectangle6.svg";
-import image3 from "../../assets/images/profile_tab1.svg";
+import image1 from "../../assets/images/rectangle5.png";
+import image2 from "../../assets/images/rectangle6.png";
+import image3 from "../../assets/images/profile_tab1.png";
 import report from "../../assets/images/reportorg.svg";
 import facebookIcon from "../../assets/images/Vectorfb.svg";
 import twitterIcon from "../../assets/images/Vectortw.svg";

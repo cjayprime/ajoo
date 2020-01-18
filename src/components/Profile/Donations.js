@@ -25,8 +25,8 @@ const Donations = ({ userDonations, userCampaigns }) => {
                     var time = dateObj.getHours() + ":" + dateObj.getMinutes();
                     var dayTime = dateObj.getHours() > 12 ? "pm" : "am";
                     return (
-                      <div key={i} className="tabContent_card" style={{justifyContent: "space-between", paddingRight: 0, paddingLeft: 0}}>
-                        {a.campaign.title && 
+                      <div key={i} className="tabContent_card" style={{justifyContent: "space-between", paddingRight: 10, paddingLeft: 10}}>
+                        {a.campaign.title &&
                           <div className="donations_column1">
                             <h5>{a.campaign.title}</h5>
                           </div>}
@@ -35,7 +35,7 @@ const Donations = ({ userDonations, userCampaigns }) => {
                             {
                               (a.first_name || a.last_name)
                               ?
-                              <h5>{(a.first_name ? a.first_name + ", " : "") + "" + (a.last_name ? a.last_name : "")}</h5>
+                              <h5>{(a.first_name ? a.first_name + " " : "") + "" + (a.last_name ? a.last_name : "")}</h5>
                               :
                               <h5>Anonymous</h5>
                             }

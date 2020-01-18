@@ -1,12 +1,30 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 
+import { fetchCategories } from "../../store/miscModules/actions";
 import VerifiedPagesComponent from "../../components/VerifiedPages";
 
 class VerifiedPagesContainer extends PureComponent {
   render() {
-    return <VerifiedPagesComponent 
-    {...this.props}/>;
+
+    const {
+      fetchCategories,
+      categories
+    } = this.props
+
+    return <VerifiedPagesComponent
+      categories={categories}
+      fetchCategories={fetchCategories}
+      {...this.props} />;
   }
 }
 
-export default VerifiedPagesContainer;
+const mapStateToProps = ({ misc }) => ({
+  categories: misc.categories
+})
+
+const mapDispatchToProps = {
+  fetchCategories
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifiedPagesContainer);

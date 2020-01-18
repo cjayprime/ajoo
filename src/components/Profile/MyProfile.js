@@ -63,8 +63,11 @@ const MyProfile = (props) => {
                     }}
                   ></div>
                 </div>
-                <div className="tabContent_button">
-                  <button className="button_delete">Delete Campaign</button>
+                <div className="tabContent_button" style={{display: "flex", alignItems: "end"}}>
+                  {/*<button className="button_delete">Delete Campaign</button>*/}
+                  <div style={{display: "flex", alignItems: "center", height: 15, padding: 3.5, borderRadius: 5, width: "auto", background: c.status === 1 ? "green" : "orange", color: c.status === 1 ? "white" : "black"}}>
+                    {c.status === 1 ? "Campaign Live" : "Pending Verification"}
+                  </div>
                   <button
                     onClick={e => editCampaign(e, c)}
                     className="button_edit"

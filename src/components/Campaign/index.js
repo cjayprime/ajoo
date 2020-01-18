@@ -58,8 +58,6 @@ class CampaignComponent extends PureComponent {
 
     return (
       <Layout {...this.props}>
-        {/*<!-- Go to www.addthis.com/dashboard to customize your tools -->*/}
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c695c4c3b9a6a95"></script>
         {isRequestActive(
           utils.request,
           campaignRequest.fetchCampaignByIdRequest

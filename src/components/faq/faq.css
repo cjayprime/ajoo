@@ -1,0 +1,674 @@
+@media screen and (min-width: 1440px) {
+  /* faq  */
+
+  .faq {
+    margin: 80px 90px;
+  }
+
+  .faq h2 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 45px;
+    color: #212121;
+  }
+
+  .faq_card {
+    margin-top: 30px;
+    background: #f9fafc;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+  }
+
+  .faq_card-body-desk {
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ajoo_about {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #000000;
+    width: 30%;
+  }
+
+  .faq_desc {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .faq_desc p {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    margin-bottom: 19px;
+  }
+
+  .rewards_donation {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .verified_org {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_help p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  .faq_help label {
+    color: #0072a3;
+  }
+
+  .faq_hr {
+    width: 900px;
+    height: 0px;
+    border: 1px solid #dde2e5;
+    margin-top: 15px;
+  }
+
+  .faq_card-body-mobile {
+    display: none;
+  }
+
+  /* end faq */
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  /* faq  */
+
+  .faq {
+    margin: 80px 90px;
+  }
+
+  .faq h2 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 45px;
+    color: #212121;
+  }
+
+  .faq_card {
+    margin-top: 30px;
+    background: #f9fafc;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+  }
+
+  .faq_card-body-desk {
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ajoo_about {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #000000;
+    width: 30%;
+  }
+
+  .faq_desc {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .faq_desc p {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    margin-bottom: 19px;
+  }
+
+  .rewards_donation {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .verified_org {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_help p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  .faq_help label {
+    color: #0072a3;
+  }
+
+  .faq_hr {
+    width: 600px;
+    height: 0px;
+    border: 1px solid #dde2e5;
+    margin-top: 15px;
+  }
+
+  .faq_card-body-mobile {
+    display: none;
+  }
+
+  /* end faq */
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  /* faq  */
+  .faq_card-body-desk {
+    display: none;
+  }
+
+  .faq {
+    margin: 80px 90px;
+  }
+
+  .faq h2 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 45px;
+    color: #212121;
+  }
+
+  .faq_card {
+    margin-top: 30px;
+    background: #f9fafc;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+  }
+
+  .faq_card-body {
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ajoo_about {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+
+  .faq_head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #000000;
+    width: 30%;
+  }
+
+  .faq_desc {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .faq_desc p {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    margin-bottom: 19px;
+  }
+
+  .rewards_donation {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .verified_org {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+  .faq_help p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  .faq_help label {
+    color: #0072a3;
+  }
+
+  .faq_hr {
+    border: 0.5px solid #d5d5d5;
+    margin-top: 15px;
+  }
+
+  /* faq mobile */
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .collapsible:hover {
+    background-color: #555;
+  }
+
+  /* .collapsible:after {
+      content: "\002B";
+      color: white;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    } */
+
+  /* .active:after {
+      content: "\2212";
+    } */
+
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+
+  /* end faq */
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px) {
+  /* faq  */
+  .faq_card-body-desk {
+    display: none;
+  }
+
+  .faq {
+    margin: 80px 40px;
+  }
+
+  .faq h2 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 45px;
+    color: #212121;
+  }
+
+  .faq_card {
+    margin-top: 30px;
+    background: #f9fafc;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+  }
+
+  .faq_card-body {
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ajoo_about {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+
+  .faq_head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #000000;
+    width: 30%;
+  }
+
+  .faq_desc {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .faq_desc p {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    margin-bottom: 19px;
+  }
+
+  .rewards_donation {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .verified_org {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_help p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  .faq_help label {
+    color: #0072a3;
+  }
+
+  .faq_hr {
+    border: 0.5px solid #d5d5d5;
+    margin-top: 15px;
+  }
+
+  /* faq mobile */
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .collapsible:hover {
+    background-color: #555;
+  }
+
+  .collapsible:after {
+    content: "\002B";
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  /* 
+    .active:after {
+      content: "\2212";
+    } */
+
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+
+  /* end faq */
+}
+
+@media screen and (max-width: 450px) {
+  /* faq  */
+  .faq_card-body-desk {
+    display: none;
+  }
+
+  .faq {
+    margin: 80px 20px;
+  }
+
+  .faq h2 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 45px;
+    color: #212121;
+  }
+
+  .faq_card {
+    margin-top: 30px;
+    background: #f9fafc;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+  }
+
+  .faq_card-body {
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ajoo_about {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+
+  .faq_head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #000000;
+    width: 30%;
+  }
+
+  .faq_desc {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .faq_desc p {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    margin-bottom: 19px;
+  }
+
+  .rewards_donation {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .verified_org {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+  }
+
+  .faq_help p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  .faq_help label {
+    color: #0072a3;
+  }
+
+  .faq_hr {
+    border: 0.5px solid #d5d5d5;
+    margin-top: 15px;
+  }
+
+  /* faq mobile */
+
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .collapsible:hover {
+    background-color: #555;
+  }
+
+  .collapsible:after {
+    content: "\002B";
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+
+  /* .active:after {
+      content: "\2212";
+    } */
+
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+
+  /* end faq */
+}

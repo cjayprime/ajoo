@@ -25,3 +25,4 @@ export { default as FaqContainer } from "./FaqContainer";
 export { default as VolunteerVerificationContainer } from "./VolunteerVerificationContainer";
 export { default as HowItWorksContainer } from "./HowItWorksContainer";
 export { default as ProfilePhotoUploadContainer } from "./ProfilePhotoUploadContainer";
+export { default as AboutContainer } from "./AboutContainer";

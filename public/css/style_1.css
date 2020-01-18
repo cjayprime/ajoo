@@ -156,7 +156,7 @@ header {
   border-radius: 50%;
   width: 499px;
   height: 499px;
-  background-image: url(../images/doctor_original.svg);
+  background-image: url(../images/doctor_original.png);
 }
 
 .heading_right_image_3 {
@@ -525,6 +525,10 @@ label {
     max-width: 100%;*/
   width: 363px;
   height: 232px;
+}
+
+.card label {
+  text-align: center !important;
 }
 
 .label_card {
@@ -3805,14 +3809,13 @@ label span {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-left: 60px;
-  margin-right: 60px;
+  padding-left: 60px;
+  padding-right: 60px;
   padding-bottom: 40px;
 }
 
 .verified_page_first-card {
   width: 284px;
-  height: 450px;
   background: #f9f9f9;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
@@ -3820,8 +3823,9 @@ label span {
 
 .verified_page_first-card-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 100px;
+  padding-bottom: 30px;
 }
 
 .verified_footer-firstbtn {
@@ -3843,7 +3847,7 @@ label span {
   cursor: pointer;
 }
 
-.verified_footer-secondbtn {
+/* .verified_footer-secondbtn {
   font-family: Muli;
   font-style: normal;
   font-weight: bold;
@@ -3859,11 +3863,12 @@ label span {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 81px;
   margin-right: 15px;
-}
+} */
 
 .verified_page_second-card {
   width: 284px;
   height: 271px;
+  padding-top: 12px;
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
@@ -3874,28 +3879,35 @@ label span {
 .verified_page_third-card {
   width: 259px;
   height: 330px;
-  margin-top: 12px;
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }
 
 .verified_page_third-card-img {
-  margin-top: 74px;
-  margin-bottom: 112px;
+  display: flex;
+  justify-content: center;
+}
+
+.verified_page_third-card-img img {
+  width: 200px;
+  padding-top: 74px;
+  padding-bottom: 112px;
 }
 
 .verified_page_third-card-title {
+  display: flex;
+  justify-content: center;
+}
+
+.verified_page_third-card-title b {
   font-family: Muli;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  text-align: center;
   text-transform: uppercase;
   color: #000000;
-  display: flex;
-  justify-content: center;
 }
 
 /* END VERIFIED PAGES */
@@ -5167,117 +5179,7 @@ label span {
 }
 
 /* end campaign body */
-/* faq  */
 
-.faq {
-  margin: 80px 90px;
-}
-
-.faq h2 {
-  font-family: Muli;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 36px;
-  line-height: 45px;
-  color: #212121;
-}
-
-.faq_card {
-  margin-top: 30px;
-  background: #f9fafc;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
-}
-
-.faq_card-body-desk {
-  padding: 70px 60px;
-  display: flex;
-  flex-direction: column;
-}
-
-.ajoo_about {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 60px;
-}
-
-.faq_head {
-  font-family: Muli;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 26px;
-  line-height: 33px;
-  color: #000000;
-  width: 30%;
-}
-
-.faq_desc {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-}
-
-.faq_desc p {
-  font-family: Muli;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 23px;
-  color: #000000;
-  margin-bottom: 19px;
-}
-
-.rewards_donation {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 60px;
-}
-
-.verified_org {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 60px;
-}
-
-.benefit {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 60px;
-}
-
-.donors {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 60px;
-}
-
-.faq_help p {
-  display: flex;
-  justify-content: center;
-  font-family: Muli;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 25px;
-  color: #000000;
-}
-
-.faq_help label {
-  color: #0072a3;
-}
-
-.faq_hr {
-  width: 600px;
-  height: 0px;
-  border: 1px solid #dde2e5;
-  margin-top: 15px;
-}
-
-.faq_card-body-mobile {
-  display: none;
-}
-
-/* end faq */
 /* volunteer verification style */
 
 .verify_volunteer_image-body {
@@ -5982,3 +5884,22 @@ label span {
   color: #212121;
 }
 /* END DONATION */
+
+/* About */
+
+.about__container {
+  padding: 100px 200px 30px 200px;
+}
+
+.about__container p {
+  display: flex;
+  justify-content: center;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+  color: #000000;
+}
+
+/* End About */

@@ -4,6 +4,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import line from "../../assets/images/line.svg";
 import FormInputField from "../../sharedComponent/form";
+import AlertDialog from "../../sharedComponent/AlertDialog";
 import { campaignRequest } from "../../store/campaignModules/saga";
 import { validateInput, IMAGE_URL, validate } from "../../utils/misc";
 import ImageUpload from "../../sharedComponent/ImageUpload";
@@ -198,7 +199,9 @@ class EditCampaign extends Component {
         this.props.userCreateCampaign({ data });
     };
 
-    triggerImageUpload = () => {
+    triggerImageUpload = (e) => {
+
+        e.preventDefault();
         
         const { image } = this.state;
         const { editCampaign, createdCampaign, showPercentageProgress, history } = this.props;
@@ -208,9 +211,16 @@ class EditCampaign extends Component {
             this.editCampaign.imageUrl &&
             image === `${preImage}${this.editCampaign.imageUrl}`
         ) {
-            return history.push(
-                `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
-            );
+            //return history.push(
+             //   `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
+            //)
+            this.props.showRequestFeedBack({
+              message: "You need to select an image first!",
+              for: campaignRequest.uploadCampaignImageRequest,
+              success: false
+            });
+
+            return;
         }
 
         if (!image || !editCampaign.hasOwnProperty("campaign_id")) {
@@ -324,11 +334,19 @@ class EditCampaign extends Component {
             }
 
         }
-
+        
         const validate1 = validate.bind(this, this, form1);
         const validate2 = validate.bind(this, this, form2);
         return (
             <>
+                <AlertDialog
+                    open={
+                        utils.feedback.for === campaignRequest.userCampaignRequest ||
+                        utils.feedback.for === campaignRequest.uploadCampaignImageRequest
+                    }
+                    message={utils.feedback.message}
+                    success={utils.feedback.success}
+                />
                 <div className="edit__campaign">
                     <div className="edit__campaign-head">
                         <div className="edit__campaign-head-title">
@@ -434,7 +452,7 @@ class EditCampaign extends Component {
                                         }
                                     />
                                 </div>
-                                <div style={{ display: "flex", justifyContent: "center" }}>
+                                <div style={{ display: "flex", justifyContent: "center", cursor: "pointer" }}>
                                     <LoadableButton
                                         error={
                                             false

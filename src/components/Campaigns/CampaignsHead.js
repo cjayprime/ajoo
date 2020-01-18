@@ -4,7 +4,7 @@ class CampaignsHead extends PureComponent {
   render() {
     return (
       <>
-        <div className="campaigns_head_banner">
+        <div className="campaigns_head_banner" ref={this.props.campaignHeadRef}>
           <div className="campaigns_head_banner-container">
             <div className="campaigns_head_banner-heading">Explore</div>
             <div>

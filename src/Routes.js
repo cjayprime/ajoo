@@ -31,7 +31,8 @@ import {
   FaqContainer,
   VolunteerVerificationContainer,
   HowItWorksContainer,
-  ProfilePhotoUploadContainer
+  ProfilePhotoUploadContainer,
+  AboutContainer
 } from "./container";
 import { setUserData } from "./store/allActions";
 import PrivateRoute from "./sharedComponent/PrivateRoute";
@@ -121,6 +122,11 @@ let routes = {
       path: "/send_email",
       exact: true,
       component: EmailSentContainer
+    },
+    {
+      path: "/about",
+      exact: true,
+      component: AboutContainer
     }
   ],
   privateRoutes: [

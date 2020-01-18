@@ -4,29 +4,29 @@ import { Link } from "react-router-dom";
 import FormInputField from "../../sharedComponent/form";
 import redcross from "../../assets/images/redcross.svg";
 
-const verified_category = [
-  "Medical",
-  "Memorial",
-  "Emergency",
-  "Nonprofit",
-  "Education",
-  "Religion",
-  "Business",
-  "Sports",
-  "Concert",
-  "Reality Show",
-  "Entertainment",
-  "Community",
-  "Competition",
-  "Creative",
-  "Event",
-  "Faith",
-  "Family",
-  "Newlywed",
-  "Travel",
-  "Volunteer",
-  "Wishes"
-];
+// const verified_category = [
+//   "Medical",
+//   "Memorial",
+//   "Emergency",
+//   "Nonprofit",
+//   "Education",
+//   "Religion",
+//   "Business",
+//   "Sports",
+//   "Concert",
+//   "Reality Show",
+//   "Entertainment",
+//   "Community",
+//   "Competition",
+//   "Creative",
+//   "Event",
+//   "Faith",
+//   "Family",
+//   "Newlywed",
+//   "Travel",
+//   "Volunteer",
+//   "Wishes"
+// ];
 
 class VerifiedBody extends PureComponent {
   constructor(props) {
@@ -36,7 +36,12 @@ class VerifiedBody extends PureComponent {
       fields: {
         category: {
           value: "",
-          name: "Category"
+          name: "Category",
+          error: null,
+          errorMessage: "",
+          rules: {
+            required: true
+          }
         }
       }
     };
@@ -61,6 +66,18 @@ class VerifiedBody extends PureComponent {
     this._safelySetState(newState);
   };
 
+  onBlur = (res, name) => {
+    const { error, errorMessage } = res;
+    let newForm = { ...this.state };
+    newForm.fields[name] = {
+      ...newForm.fields[name],
+      error,
+      errorMessage
+    };
+
+    this._safelySetState(newForm);
+  };
+
   _safelySetState = (newState, prevState = null) => {
     if (this._isMounted)
       return this.setState(state => ({
@@ -70,10 +87,11 @@ class VerifiedBody extends PureComponent {
   };
 
   render() {
+    const { categories } = this.props;
     const { category } = this.state.fields;
 
-    const categoryItems = verified_category.map((verified_categories, i) => (
-      <option key={verified_categories}>{verified_categories}</option>
+    const categoryItems = categories.map((c, i) => (
+      <option key={c} value={c}>{c}</option>
     ));
 
     return (
@@ -86,6 +104,7 @@ class VerifiedBody extends PureComponent {
             form={this.state.fields}
             options={categoryItems}
             labelTitle=""
+            onBlur={this.onBlur}
             className="verified_page_body_select verified_page_body-round"
             onChange={this._handleChange}
           />
@@ -101,23 +120,25 @@ class VerifiedBody extends PureComponent {
                 <div className="verified_page_first-card">
                   <div className="verified_page_second-card">
                     <div className="verified_page_third-card">
-                      <img
-                        src={redcross}
-                        alt="Red cross"
-                        className="verified_page_third-card-img"
-                      />
-                      <p className="verified_page_third-card-title">hello</p>
+                      <div className="verified_page_third-card-img">
+                        <img
+                          src={redcross}
+                          alt="Red cross"
+                        />
+                      </div>
+                      <div className="verified_page_third-card-title">
+                        <b>
+                          hellohellohel
+                        </b>
+                      </div>
                     </div>
                   </div>
                   <div className="verified_page_first-card-footer">
-                    <Link to="/campaign">
+                    <Link to="/verified_org_campaigns">
                       <button className="verified_footer-firstbtn">
                         VIEW CAMPAIGNS
                       </button>
                     </Link>
-                    <button className="verified_footer-secondbtn">
-                      DONATE
-                    </button>
                   </div>
                 </div>
               </div>

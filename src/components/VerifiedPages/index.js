@@ -15,6 +15,7 @@ class VerifiedPagesComponent extends PureComponent {
 
   componentDidMount() {
     this._isMounted = true;
+    this.props.fetchCategories();
   }
 
   _safelySetState = (newState, prevState = null) => {
@@ -26,7 +27,7 @@ class VerifiedPagesComponent extends PureComponent {
   };
 
   render() {
-    // const { signupUser, utils, isLoading } = this.props;
+    const { categories } = this.props;
 
     return (
       <>
@@ -36,7 +37,7 @@ class VerifiedPagesComponent extends PureComponent {
             <VerifiedDesc />
             <div id={'verified_organization'}>
               {" "}
-              <VerifiedBody />
+              <VerifiedBody categories={categories} />
             </div>
           </div>
           <StartCampaign />

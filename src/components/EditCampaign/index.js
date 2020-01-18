@@ -40,7 +40,8 @@ class EditCampaignComponent extends Component {
             uploadCampaignImage,
             orgTypes,
             userEditCampaign,
-            utils
+            utils,
+            showRequestFeedBack
         } = this.props;
         return (
             <Layout {...this.props}>
@@ -55,7 +56,8 @@ class EditCampaignComponent extends Component {
                         orgTypes={orgTypes}
                         categories={categories}
                         editCampaign={this.props.history.location.state ? this.props.history.location.state.campaign : {}/*this.editCampaign*/}
-                        utils={utils} />
+                        utils={utils}
+                        showRequestFeedBack={showRequestFeedBack} />
                 </div>
             </Layout>
         )

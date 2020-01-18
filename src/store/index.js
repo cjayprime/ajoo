@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 
 import createReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 /*
 Fix for Firefox redux dev tools extension
@@ -28,7 +29,8 @@ const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["auth"]
+  whitelist: ["auth", "misc", "campaigns", "confirm", "setting", "verify", "select"/*, "utils"*/],
+  stateReconciler: autoMergeLevel2
 };
 // This was removed cause anytime a request fires it saves a copy of some of its data (specifically
 // `store.auth.requestStatus`) and I was unable to remove it (maybe with whitelist?) it from the `auth`

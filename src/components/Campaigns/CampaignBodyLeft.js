@@ -79,7 +79,7 @@ export default class CampaignBodyLeft extends PureComponent {
   render() {
     const { openFilterModal } = this.state;
     return (
-      <div className="campaign_body_left">
+      <div className="campaign_body_left" ref={this.props.campaignBodyLeftRef} style={{zIndex: 1000000, top: 0, width: "25%", height: "100%", position: this.props.position}}>
         <div className="campaign_body_left_content-heading campaign_body_left_content-heading-mobile">
           Campaign Filters
         </div>
@@ -136,8 +136,8 @@ export default class CampaignBodyLeft extends PureComponent {
               </label>
             </TitleHeading>
           </div>
-
-          {/* VERIFICATION-CAMPAIGN - radio button appears inside modal */}
+          
+          {/* VERIFICATION-CAMPAIGN - radio button appears inside modal /}
 
           <div className="verifyDesktop">
             <TitleHeading title="VERIFICATION">
@@ -173,6 +173,7 @@ export default class CampaignBodyLeft extends PureComponent {
               </label>
             </TitleHeading>
           </div>
+          */}
         </div>
         {/*  filter campaign for mobile view */}
 

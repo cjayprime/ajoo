@@ -11,7 +11,7 @@ import {
     fetchCategories,
     fetchOrgTypes
 } from "../../store/miscModules/actions.js";
-import { showPercentageProgress } from "../../store/utilsModule/actions.js";
+import { showPercentageProgress, showRequestFeedBack } from "../../store/utilsModule/actions.js";
 import EditCampaignComponent from "../../components/EditCampaign";
 
 class EditCampaignContainer extends Component {
@@ -27,7 +27,8 @@ class EditCampaignContainer extends Component {
             uploadCampaignImage,
             showPercentageProgress,
             orgTypes,
-            utils
+            utils,
+            showRequestFeedBack
         } = this.props;
         return (
             <>
@@ -43,6 +44,7 @@ class EditCampaignContainer extends Component {
                     fetchOrgTypes={fetchOrgTypes}
                     userCreateCampaign={userCreateCampaign}
                     utils={utils}
+                    showRequestFeedBack={showRequestFeedBack}
                 />
             </>
         )
@@ -67,7 +69,8 @@ const mapDispatchToProps = {
     fetchOrgTypes,
     uploadCampaignImage,
     showPercentageProgress,
-    userEditCampaign
+    userEditCampaign,
+    showRequestFeedBack
 };
 
 

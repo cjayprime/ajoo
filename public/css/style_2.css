@@ -164,7 +164,7 @@
     width: 351.24px;
     height: 351.24px;
     border-radius: 50%;
-    background-image: url(../images/doctor_original.svg);
+    background-image: url(../images/doctor_original.png);
   }
 
   .heading_right_image_3 {
@@ -3066,26 +3066,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 124px;
+    padding-top: 100px;
   }
 
   .verified_page_head_banner-heading {
     font-family: Muli;
     font-style: normal;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 75px;
   }
 
   .verified_page_head_banner_desc {
-    margin-top: 37px;
+    margin-top: 15px;
     font-family: Muli;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 25px;
     color: #212121;
-    width: 550px;
     text-align: center;
   }
 
@@ -3112,15 +3111,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    padding: 60px 60px 60px 60px;
   }
 
   .verified_page_desc_left h2 {
     font-family: Muli;
     font-style: normal;
     font-weight: 400;
-    font-size: 36px;
+    font-size: 30px;
     color: #212121;
     display: flex;
     justify-content: center;
@@ -3131,10 +3129,14 @@
     font-family: Muli;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: 30px;
-    width: 700px;
-    height: 175px;
+    font-size: 16px;
+    line-height: 23px;
+    /* width: 700px; */
+    /* height: 175px; */
+  }
+
+  .verified_page_desc_right img {
+    width: 300px;
   }
 
   .verified_page_body_head {
@@ -3204,36 +3206,31 @@
   }
 
   .verified_page-card {
-    margin-bottom: 30px;
+    margin-bottom: 50px;
   }
 
   .verified_page_body_card {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
-    margin-left: 60px;
-    margin-right: 60px;
     padding-bottom: 40px;
   }
 
   .verified_page_first-card {
     width: 284px;
-    height: 450px;
     background: #f9f9f9;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
   }
 
   .verified_page_first-card-footer {
-    display: flex;
-    justify-content: space-between;
     padding-top: 100px;
   }
 
   .verified_footer-firstbtn {
     font-family: Muli;
     font-style: normal;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 12px;
     line-height: 15px;
     color: #f9f9f9;
@@ -3249,27 +3246,8 @@
     cursor: pointer;
   }
 
-  .verified_footer-secondbtn {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 15px;
-    color: #dff0ff;
-    outline: none;
-    width: 90px;
-    height: 44px;
-    background: #0072a3;
-    border: 0.5px solid #d5d5d5;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 81px;
-    margin-right: 15px;
-  }
-
   .verified_page_second-card {
     width: 284px;
-    height: 271px;
     background: #ffffff;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
@@ -3288,21 +3266,29 @@
   }
 
   .verified_page_third-card-img {
-    margin-top: 74px;
-    margin-bottom: 112px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .verified_page_third-card-img img {
+    width: 200px;
+    padding-top: 74px;
+    padding-bottom: 112px;
   }
 
   .verified_page_third-card-title {
+    display: flex;
+    justify-content: center;
+  }
+
+  .verified_page_third-card-title b {
     font-family: Muli;
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
     line-height: 15px;
-    text-align: center;
     text-transform: uppercase;
     color: #000000;
-    display: flex;
-    justify-content: center;
   }
 
   /* END VERIFIED PAGES */
@@ -4772,151 +4758,6 @@
 
   /* end campaign body */
 
-  /* faq  */
-  .faq_card-body-desk {
-    display: none;
-  }
-
-  .faq {
-    margin: 80px 90px;
-  }
-
-  .faq h2 {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 30px;
-    line-height: 45px;
-    color: #212121;
-  }
-
-  .faq_card {
-    margin-top: 30px;
-    background: #f9fafc;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 18px;
-  }
-
-  .faq_card-body {
-    padding: 70px 60px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .ajoo_about {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 60px;
-  }
-
-  .faq_head {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 33px;
-    color: #000000;
-    width: 30%;
-  }
-
-  .faq_desc {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-  }
-
-  .faq_desc p {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 23px;
-    color: #000000;
-    margin-bottom: 19px;
-  }
-
-  .rewards_donation {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
-  }
-
-  .verified_org {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
-  }
-
-  .benefit {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
-  }
-
-  .donors {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
-  }
-  .faq_help p {
-    display: flex;
-    justify-content: center;
-    font-family: Muli;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 25px;
-    color: #000000;
-  }
-
-  .faq_help label {
-    color: #0072a3;
-  }
-
-  .faq_hr {
-    border: 0.5px solid #d5d5d5;
-    margin-top: 15px;
-  }
-
-  /* faq mobile */
-  .collapsible {
-    background-color: #777;
-    color: white;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    margin-bottom: 20px;
-  }
-
-  .collapsible:hover {
-    background-color: #555;
-  }
-
-  /* .collapsible:after {
-    content: "\002B";
-    color: white;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-  } */
-
-  /* .active:after {
-    content: "\2212";
-  } */
-
-  .content {
-    padding: 0 18px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
-  }
-
-  /* end faq */
   /* volunteer verification image body */
   .verify_volunteer_image-body {
     background: #f9fafc;
@@ -5614,4 +5455,23 @@
     color: #212121;
   }
   /* END DONATION */
+
+  /* About */
+
+  .about__container {
+    padding: 100px 120px 30px 120px;
+  }
+
+  .about__container p {
+    display: flex;
+    justify-content: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 23px;
+    color: #000000;
+  }
+
+  /* End About */
 }

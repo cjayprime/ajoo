@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
-import campaigns6 from "../../assets/images/campaigns_6.svg";
-import laptop from "../../assets/images/laptop.svg";
+import campaigns6 from "../../assets/images/campaigns_6.png";
+import laptop from "../../assets/images/laptop.png";
 import meeting from "../../assets/images/meeting.svg";
 
 class BlogPost extends PureComponent {

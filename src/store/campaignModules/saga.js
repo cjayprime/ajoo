@@ -72,6 +72,13 @@ function* createCampaignActionSaga(action) {
     const response = yield call(campaignService.userCreateCampaign, data);
     yield put(setLoading({ request: campaignRequest.userCampaignRequest }));
     if (response.data.status.code === 100) {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.userCampaignRequest,
+          success: true
+        })
+      );
       yield put(setCampaignData(response.data.entity.user));
       yield put({
         type: USER_CREATE_CAMPAIGN_SUCCESS,
@@ -81,6 +88,13 @@ function* createCampaignActionSaga(action) {
         }
       });
     } else {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.userCampaignRequest,
+          success: false
+        })
+      );
       yield put({
         type: USER_CREATE_CAMPAIGN_ERROR,
         payload: response.data.status
@@ -327,7 +341,7 @@ function* verifyPaymentActionSaga(action) {
       yield put({
         type: FETCH_CAMPAIGN_BY_ID,
         payload: {
-          campaignId: action.match.params.campaignId
+          campaignId: action.payload.match.params.campaignId
         }
       });
     } else {
