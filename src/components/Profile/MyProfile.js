@@ -26,6 +26,7 @@ const MyProfile = (props) => {
             </div>
           ) : null}
           {userCampaigns.map(c => {
+            c.status = 0;
             var src = c.imageUrl;
             var title = c.title;
             src = src ? IMAGE_URL + '363_232_' + src : 'images/image-404.jpg';
@@ -65,8 +66,8 @@ const MyProfile = (props) => {
                 </div>
                 <div className="tabContent_button" style={{display: "flex", alignItems: "end"}}>
                   {/*<button className="button_delete">Delete Campaign</button>*/}
-                  <div style={{display: "flex", alignItems: "center", height: 15, padding: 3.5, borderRadius: 5, width: "auto", background: c.status === 1 ? "green" : "orange", color: c.status === 1 ? "white" : "black"}}>
-                    {c.status === 1 ? "Campaign Live" : "Pending Verification"}
+                  <div style={{display: "flex", alignItems: "center", height: 15, padding: 3.5, borderRadius: 5, width: "auto", background: c.status === 2 ? "blue" : c.status === 1 ? "green" : "orange", color: c.status === 2 ? "white" : c.status === 1 ? "white" : "black"}}>
+                    {c.status === 2 ? "Campaign Closed" : c.status === 1 ? "Campaign Live" : "Pending Verification"}
                   </div>
                   <button
                     onClick={e => editCampaign(e, c)}
