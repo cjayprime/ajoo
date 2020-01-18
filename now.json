@@ -2,11 +2,11 @@
   "build": {
     "env": {
       "REACT_APP_API_BASE_URL": "https://services.elta.com.ng/ajo/api/v2",
-      "REACT_APP_ENVIRONMENT": "production",
+      "REACT_APP_ENVIRONMENT": "production"
     }
   },
   "env": {
     "REACT_APP_API_BASE_URL": "https://services.elta.com.ng/ajo/api/v2",
-    "REACT_APP_ENVIRONMENT": "production",
+    "REACT_APP_ENVIRONMENT": "production"
   }
 }
