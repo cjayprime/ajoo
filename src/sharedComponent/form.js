@@ -158,7 +158,12 @@ const FormInputField = function(props){
         id={id}
         value={value}
         name={name}
-        onBlur={/*Added this (was formerly `handleBlur`) so that handleBlur can come from the parent component (src\components\CreateCampaign\CreateCampaignForm.js)props.validate || handleBlur*/(e) => {validate(this, form, e)}}
+        onBlur={
+          /*Added this (was formerly `handleBlur`) so that handleBlur can come from the parent component (src\components\CreateCampaign\CreateCampaignForm.js)props.validate || handleBlur*/
+          (e) => {
+            validate(this, form, e);
+          }
+        }
         className={className}
         type={type || "text"}
         onChange={onChange}

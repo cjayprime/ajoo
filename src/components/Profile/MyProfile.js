@@ -26,7 +26,6 @@ const MyProfile = (props) => {
             </div>
           ) : null}
           {userCampaigns.map(c => {
-            c.status = 0;
             var src = c.imageUrl;
             var title = c.title;
             src = src ? IMAGE_URL + '363_232_' + src : 'images/image-404.jpg';

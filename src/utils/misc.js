@@ -186,6 +186,7 @@ const validateHelper = function(event, fields){
 }
 
 const validate = function(context, fields, event){
+  /*Always omit the `event` parameter to the function, when there it is a submit/next action*/
   
   var passed = true;
   var fieldKeys = Object.keys(fields);

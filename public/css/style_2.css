@@ -1936,14 +1936,26 @@
     margin-bottom: 65px;
   }
 
+  .verification_1 h1 {
+    font-size: 18px;
+    line-height: 25px;
+  }
+
   .verification_1 a {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 25px;
     color: #0072a3;
+    margin: 0;
   }
 
   #organisation_logo {
     padding-top: 10px;
+  }
+
+  .signUp_verification h3 {
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 60px;
   }
 
   .signUp_verification hr {
@@ -1952,6 +1964,21 @@
   }
 
   .verification_2 {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .verification_social {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .verification_person {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .verification_feature {
     display: flex;
     flex-direction: column;
   }
@@ -1966,32 +1993,43 @@
     font-size: 16px;
     line-height: 20px;
     color: #414141;
+    width: 100%;
+  }
+
+  .verification2_column1 h5 {
+    text-align: center;
+    font-size: 14px;
   }
 
   .verification2_column2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .verification2_column3 {
-    width: 20%;
-    padding-left: 35px;
+    padding-left: 0 !important;
+    width: 100% !important;
   }
 
   .verification2_column4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-left: 0 !important;
+    width: 100%;
   }
 
   .verification_2 img {
     padding-bottom: 20px;
   }
 
+  .verification_feature {
+    display: flex;
+    flex-direction: column;
+  }
+
   .verification_form_image {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .verification_form_image img {
@@ -2001,8 +2039,8 @@
 
   .signUp_verification label {
     font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
+    font-weight: normal;
+    font-size: 14px;
     line-height: 15px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -2013,6 +2051,8 @@
   .verificationbutton_center {
     margin-top: 40px;
     margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
   }
 
   .verification_button {
@@ -5454,8 +5494,113 @@
     line-height: 20px;
     color: #212121;
   }
+
   /* END DONATION */
 
+  /* SUCCESS STORIES */
+
+  .success__banner {
+    width: 100%;
+    height: 30vh;
+    background-image: url("../images/mask_group.png");
+  }
+
+  .success__banner-head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 55px;
+    text-align: center;
+    color: #212121;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    padding-top: 100px;
+  }
+
+  .success__stories-campaign {
+    padding: 45px 60px 36px 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+
+  .success__stories-campaign img {
+    width: 100%;
+  }
+
+  .success__card {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 51px;
+  }
+
+  .success__card img {
+    height: 100%;
+  }
+
+  .success__card-label {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 29px;
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success__card-com {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .success__card-com img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .success__card-com span {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: #212121;
+    padding-left: 12px;
+  }
+
+  .success__card-desc {
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success_h3 {
+    margin: 25px 15px 0 15px;
+  }
+
+  .success_h6 {
+    margin: 15px 15px 25px 15px;
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  .success_row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .viewCampaign-success {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    padding-bottom: 25px;
+  }
+
+  /* END OF SUCCESS STORIES */
   /* About */
 
   .about__container {

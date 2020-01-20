@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 // import { Tooltip } from "@material-ui/core";
 import { /*Loop,*/ Edit } from "@material-ui/icons";
 import {
@@ -9,18 +9,32 @@ import "react-circular-progressbar/dist/styles.css";
 
 import uploadIcon from "../assets/images/upload_icon.png";
 
-class ImageUpload extends PureComponent {
+class ImageUpload extends Component {
   selectFile = () => {
-    document.getElementById("upfile").click();
+    this.upload.current.click();
   };
+
+  constructor(props){
+    super(props);
+    this.upload = React.createRef();
+  }
 
   handleChange = evt => {
     const _this = this;
     var reader = new FileReader();
     var file = evt.target.files[0];
-
-    reader.onload = function(upload) {
-      _this.props.setImage(upload.target.result);
+    var props = _this.props;
+    
+    reader.onload = function(e) {
+      if(!_this.props.rejectBase64){
+        
+        _this.props.setImage(e.target.result);
+      
+      }else{
+        
+        _this.props.setImage(file);
+      
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -30,7 +44,6 @@ class ImageUpload extends PureComponent {
 
     return (
       <div
-        id="yourBtn"
         style={{
           width: "100%",
           height: "100%",
@@ -158,6 +171,7 @@ class ImageUpload extends PureComponent {
           accept="image/png, image/jpeg"
           id="upfile"
           type="file"
+          ref={this.upload}
           onChange={this.handleChange}
           style={{ display: "none" }}
         />

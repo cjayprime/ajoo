@@ -5,7 +5,6 @@ function apiClient(endpoint, {body, ...customConfig} = {}) {
   const config = {
     method: body ? 'POST' : 'GET',
     url: process.env.REACT_APP_API_BASE_URL + endpoint,
-    //http://138.197.40.48
     ...customConfig,
     headers: {
       ...headers,

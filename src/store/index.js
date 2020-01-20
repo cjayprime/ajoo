@@ -26,12 +26,12 @@ const composeEnhancers =
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 
-const persistConfig = {
+/*const persistConfig = {
 	key: "root",
 	storage,
-  whitelist: ["auth", "misc", "campaigns", "confirm", "setting", "verify", "select"/*, "utils"*/],
+  whitelist: ["auth", "misc", "campaigns", "confirm", "setting", "verify", "select"/*, "utils"/],
   stateReconciler: autoMergeLevel2
-};
+};*/
 // This was removed cause anytime a request fires it saves a copy of some of its data (specifically
 // `store.auth.requestStatus`) and I was unable to remove it (maybe with whitelist?) it from the `auth`
 // store (I have no idea why the simple whitelist of `auth` didn't just work)

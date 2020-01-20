@@ -221,6 +221,7 @@ class CreateCampaignForm extends Component {
         formError: true
       });
     }
+    
     this.props.uploadCampaignImage({
       data: {
         image,

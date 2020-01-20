@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 import VolunteerVerification from "./VolunteerVerification";
 import Layout from "../../sharedComponent/Layout";
-import { verifyRequest } from "../../store/verifyModules/actions";
+import { verifyRequest } from "../../store/verifyModules/saga";
 //import Footer from "../../sharedComponent/Footer";
 
 class VolunteerVerificationComponent extends PureComponent {

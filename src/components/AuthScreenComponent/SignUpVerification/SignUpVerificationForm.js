@@ -1,74 +1,87 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
+import ImageUpload from "../../../sharedComponent/ImageUpload";
 import LoadableButton from "../../../sharedComponent/LoadableButton";
 import FormInputField from "../../../sharedComponent/form";
+import AlertDialog from "../../../sharedComponent/AlertDialog";
+import { IMAGE_URL, validate, isRequestActive } from "../../../utils/misc";
+import { verifyRequest } from "../../../store/verifyModules/saga";
+import { authRequest } from "../../../store/authModules/saga";
 
-class SigninForm extends PureComponent {
+const preImage = `${IMAGE_URL}363_232_`;
+
+class SigninForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       formError: false,
       hidden: true,
+      index: null,
+      profileImage: "",
+      featureImages: [],
+      documentImage: "",
+      submitted: false,
       fields: {
-        email_address: {
+        facebook: {
           value: "",
           error: null,
           errorMessage: "",
-          name: "Email",
+          name: "facebook",
+          rules: {
+            required: true
+          }
+        },
+        twitter: {
+          value: "",
+          error: null,
+          errorMessage: "",
+          name: "twitter",
+          rules: {
+            required: true
+          }
+        },
+        instagram: {
+          value: "",
+          error: null,
+          errorMessage: "",
+          name: "instagram",
+          rules: {
+            required: true
+          }
+        },
+        ref_first_name: {
+          value: "",
+          error: null,
+          errorMessage: "",
+          name: "first name",
+          rules: {
+            required: true
+          }
+        },
+        ref_last_name: {
+          value: "",
+          error: null,
+          errorMessage: "",
+          name: "last name",
+          rules: {
+            required: true
+          }
+        },
+        ref_email: {
+          value: "",
+          error: null,
+          errorMessage: "",
+          name: "email",
           rules: {
             email: true
           }
         },
-        facebook_profile: {
+        ref_mobile: {
           value: "",
           error: null,
           errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true
-          }
-        },
-        twitter_profile: {
-          value: "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true
-          }
-        },
-        instagram_profile: {
-          value: "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true
-          }
-        },
-        first_name: {
-          value: "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true
-          }
-        },
-        last_name: {
-          value: "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true
-          }
-        },
-        phone_number: {
-          value: "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
+          name: "mobile",
           rules: {
             required: true
           }
@@ -77,40 +90,160 @@ class SigninForm extends PureComponent {
     };
   }
 
-  triggerSignUpVerificationAction = e => {
-    e.preventDefault();
-    this.props.verifySignupUser();
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentDidUpdate(){
+
+    if(this.props.verify.category === "Identification-Document-Upload-Failed"){
+      this.props.verify.category = "";
+      this.setState({documentImage: ""});
+    }
+
+  }
+
+  _safelySetState = (newState, prevState = null) => {
+    if (this._isMounted)
+      return this.setState(state => ({
+        [prevState]: !state[prevState],
+        ...newState
+      }));
   };
 
-  _handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+  triggerSignUpVerificationAction = e => {
+    e.preventDefault();
+
+    this.setState({submitted: true}, () => {
+
+      let data = {};
+      Object.keys(this.state.fields).map(key => {
+        data[key] = this.state.fields[key].value;
+      });
+      
+      if(validate(this, this.state.fields) &&
+        (this.state.featureImages[0] && this.state.featureImages[1] && this.state.featureImages[2] && this.state.documentImage && this.state.profileImage))
+      this.props.verifySignupUser({ data });
+
     });
   };
 
+  triggerProfileImageUpload = () => {
+    const { profileImage } = this.state;
+    const { showPercentageProgress } = this.props;
+    
+    this.props.uploadProfileImage({
+      data: {
+        image: profileImage
+      },
+      showPercentageProgress
+    });
+  };
+
+  setProfileImage = profileImage => {
+    this.setState({ profileImage }, this.triggerProfileImageUpload);
+  };
+
+  triggerFeatureImageUpload = (index) => {
+    const { featureImages } = this.state;
+    const { showPercentageProgress } = this.props;
+    
+    this.props.uploadFeatureImageForVerification({
+      data: {
+        image: featureImages[index],
+        type: index + 1
+      },
+      showPercentageProgress
+    });
+  };
+
+  setFeatureImage = (image, index) => {
+    var featureImages = [...this.state.featureImages];
+    featureImages[index] = image;
+    this.setState({ featureImages, index }, () => this.triggerFeatureImageUpload(index));
+  };
+
+  triggerDocumentImageUpload = () => {
+    const { documentImage } = this.state;
+    const { showPercentageProgress } = this.props;
+    
+    this.props.uploadDocumentImageForVerification({
+      data: {
+        file: documentImage
+      },
+      showPercentageProgress
+    });
+  };
+
+  setDocumentImage = documentImage => {
+    this.setState({ documentImage }, this.triggerDocumentImageUpload);
+  };
+
+  _handleChange = (e, text) => {
+    let newState = { ...this.state };
+    newState.formError = false;
+    if (text && text.hasOwnProperty("name")) {
+      const { name, data } = text;
+      newState.fields[name].error = false;
+      newState.fields[name].value = data;
+      this._safelySetState(newState);
+      return;
+    }
+    const { name, value } = e.target;
+    if (newState.rewardFields && newState.rewardFields.hasOwnProperty(name)) {
+      newState.rewardFields[name].error = false;
+      newState.rewardFields[name].value = value;
+    } else {
+    const { name, value } = e.target;
+      newState.fields[name].error = false;
+      newState.fields[name].value = value;
+    }
+    this._safelySetState(newState);
+
+    validate(this, this.state.fields, e);
+  };
+
+
+
+
+  
   render() {
-    const { /*verify,*/ isLoading } = this.props;
+    const { /*verify,*/ isLoading, utils } = this.props;
     const {
-      facebook_profile,
-      twitter_profile,
-      instagram_profile,
-      first_name,
-      email_address,
-      last_name,
-      phone_number
+      facebook,
+      twitter,
+      instagram,
+      ref_first_name,
+      ref_last_name,
+      ref_email,
+      ref_mobile
     } = this.state.fields;
 
     return (
       <>
+        <AlertDialog
+            open={
+              utils.feedback.for === authRequest.uploadProfileImageRequest ||
+              utils.feedback.for === verifyRequest.verifySignupRequest ||
+              //utils.feedback.for === verifyRequest.verifyVolunteerImageRequest ||
+              utils.feedback.for === verifyRequest.uploadFeatureImageRequest ||
+              utils.feedback.for === verifyRequest.uploadDocumentImageRequest
+            }
+            message={utils.feedback.message}
+            success={utils.feedback.success}
+        />
         <form onSubmit={this.triggerSignUpVerificationAction}>
           <div className="signUp_verification">
             <div className="verification_1">
               <h1>Sign Up Verification</h1>
-              <a>Skip Verification</a>
+              <Link to="/campaigns">Skip Verification</Link>
             </div>
+            
+            
+            
             <h3>Social Information</h3>
             <hr />
-            <div className="verification_2">
+            <div className="verification_social">
               <div className="verification2_column1">
                 <h5>
                   All Social account information are needed for the following
@@ -123,10 +256,11 @@ class SigninForm extends PureComponent {
                 <div className="verification_form">
                   <FormInputField
                     type="text"
-                    placeholder="e.g https://facebook.com/ajoo"
-                    name="facebook_profile"
-                    value={facebook_profile.value}
+                    placeholder="e.g. https://facebook.com/ajoo"
+                    name="facebook"
+                    value={facebook.value}
                     form={this.state.fields}
+                    required
                     labelTitle="FACEBOOK PROFILE"
                     onChange={this._handleChange}
                   />
@@ -134,9 +268,9 @@ class SigninForm extends PureComponent {
                 <div className="verification_form">
                   <FormInputField
                     type="text"
-                    placeholder="https://twitter.com/ajoo"
-                    name="twitter_profile"
-                    value={twitter_profile.value}
+                    placeholder="e.g. https://twitter.com/ajoo"
+                    name="twitter"
+                    value={twitter.value}
                     form={this.state.fields}
                     labelTitle="TWITTER PROFILE"
                     onChange={this._handleChange}
@@ -146,8 +280,8 @@ class SigninForm extends PureComponent {
                   <FormInputField
                     type="text"
                     placeholder="e.g. https://instagram.com/ajoo"
-                    name="instagram_profile"
-                    value={instagram_profile.value}
+                    name="instagram"
+                    value={instagram.value}
                     form={this.state.fields}
                     labelTitle="INSTAGRAM PROFILE"
                     onChange={this._handleChange}
@@ -155,17 +289,36 @@ class SigninForm extends PureComponent {
                 </div>
               </div>
               <div className="verification2_column3">
-                <label>ORGANISATION LOGO</label>
-                <img
-                  alt="verification"
-                  id="organisation_logo"
-                  src="images/drag.svg"
-                />
+                <label style={{ color: !this.state.profileImage && this.state.submitted ?  "red" : "inherit" }}>
+                  {!this.state.featureImages[0] && this.state.submitted ? "PLEASE UPLOAD YOUR ORGANIZATION'S LOGO" : "ORGANIZATION LOGO"}
+                </label>
+                <div style={{height: 240}}>
+                  <ImageUpload
+                    alt="verification"
+                    id="organisation_logo"
+                    image={this.state.profileImage}
+                    setImage={this.setProfileImage}
+                    fileUploadProgress={utils.fileUploadProgress}
+                    isUploading={
+                      isRequestActive(utils.request, authRequest.uploadProfileImageRequest)
+                    }
+                  />
+                </div>
               </div>
             </div>
+
+
+
+
+
+
+
+
+
+
             <h3>Feature Images</h3>
             <hr />
-            <div className="verification_2">
+            <div className="verification_feature">
               <div className="verification2_column1">
                 <h5>
                   Some text will going here most likely describing the kinds of
@@ -175,19 +328,135 @@ class SigninForm extends PureComponent {
               </div>
               <div className="verification_form_image">
                 <div className="signup_verification_form_image">
-                  <img alt="verification" src="images/drag.svg" />
+                  {/*<img alt="verification" src="images/drag.svg" />*/}
+                  <label style={{ color: ! this.state.featureImages[0] && this.state.submitted ?  "red" : "inherit" }}>
+                    {!this.state.featureImages[0] && this.state.submitted ? "SELECT YOUR FIRST FEATURED IMAGE" : "FIRST FEATURED IMAGE"}
+                  </label>
+                  <div style={{height: 275, width: 250}}>
+                    <ImageUpload
+                      alt="verification"
+                      id="organisation_feature_1"
+                      image={this.state.featureImages[0]}
+                      setImage={(image) => this.setFeatureImage(image, 0)}
+                      fileUploadProgress={utils.fileUploadProgress}
+                      isUploading={
+                        this.state.index === 0 &&
+                        isRequestActive(utils.request, verifyRequest.uploadFeatureImageRequest)
+                      }
+                    />
+                  </div>
                 </div>
                 <div className="signup_verification_form_image">
-                  <img alt="verification" src="images/drag.svg" />
+                  {/*<img alt="verification" src="images/drag.svg" />*/}
+                  <label style={{ color: ! this.state.featureImages[1] && this.state.submitted ?  "red" : "inherit" }}>
+                    {! this.state.featureImages[1] && this.state.submitted ? "SELECT YOUR SECOND FEATURED IMAGE" : "SECOND FEATURED IMAGE"}
+                  </label>
+                  <div style={{height: 275, width: 250}}>
+                    <ImageUpload
+                      alt="verification"
+                      id="organisation_feature_2"
+                      image={this.state.featureImages[1]}
+                      setImage={(image) => this.setFeatureImage(image, 1)}
+                      fileUploadProgress={utils.fileUploadProgress}
+                      isUploading={
+                        this.state.index === 1 &&
+                        isRequestActive(utils.request, verifyRequest.uploadFeatureImageRequest)
+                      }
+                    />
+                  </div>
                 </div>
                 <div className="signup_verification_form_image">
-                  <img alt="verification" src="images/drag.svg" />
+                  {/*<img alt="verification" src="images/drag.svg" />*/}
+                  <label style={{ color: ! this.state.featureImages[2] && this.state.submitted ?  "red" : "inherit" }}>
+                    {! this.state.featureImages[2] && this.state.submitted ? "SELECT YOUR THIRD FEATURED IMAGE" : "THIRD FEATURED IMAGE"}
+                  </label>
+                  <div style={{height: 275, width: 250}}>
+                    <ImageUpload
+                      alt="verification"
+                      id="organisation_feature_3"
+                      image={this.state.featureImages[2]}
+                      setImage={(image) => this.setFeatureImage(image, 2)}
+                      fileUploadProgress={utils.fileUploadProgress}
+                      isUploading={
+                        this.state.index === 2 &&
+                        isRequestActive(utils.request, verifyRequest.uploadFeatureImageRequest)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <h3>Contact Person</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h3>Relevant Document</h3>
             <hr />
             <div className="verification_2">
+              <div className="verification2_column1">
+                <h5>
+                  Relevant document include national ID card,
+                  National Voters card, National Passport,
+                   Drivers License.
+                </h5>
+              </div>
+              <div className="signup_verification_form_image">
+                {/*<img alt="verification" src="images/drag.svg" />*/}
+                <label style={{ color: ! this.state.documentImage && this.state.submitted ?  "red" : "inherit" }}>
+                  {! this.state.documentImage && this.state.submitted ? "SELECT A VALID MEANS OF IDENTIFICATION" : "IDENTIFICATION DOCUMENT"}
+                </label>
+                <div style={{height: 275, width: 300}}>
+                  <ImageUpload
+                    alt="verification"
+                    id="organisation_relevant_document"
+                    rejectBase64={true}
+                    image={this.state.documentImage}
+                    setImage={this.setDocumentImage}
+                    fileUploadProgress={utils.fileUploadProgress}
+                    isUploading={
+                      isRequestActive(utils.request, verifyRequest.uploadDocumentImageRequest)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <h3>Contact Person</h3>
+            <hr />
+            <div className="verification_person">
               <div className="verification2_column1">
                 <h5>
                   Some text will going here most likely describing the kinds of
@@ -200,8 +469,8 @@ class SigninForm extends PureComponent {
                   <FormInputField
                     type="text"
                     placeholder="Tonye"
-                    name="first_name"
-                    value={first_name.value}
+                    name="ref_first_name"
+                    value={ref_first_name.value}
                     form={this.state.fields}
                     labelTitle="FIRST NAME"
                     onChange={this._handleChange}
@@ -209,12 +478,12 @@ class SigninForm extends PureComponent {
                 </div>
                 <div className="verification_form">
                   <FormInputField
-                    type="email"
-                    placeholder="234567890-09876543"
-                    name="email_address"
-                    value={email_address.value}
+                    type="text"
+                    placeholder="Dickson"
+                    name="ref_last_name"
+                    value={ref_last_name.value}
                     form={this.state.fields}
-                    labelTitle="EMAIL ADDRESS"
+                    labelTitle="LAST NAME"
                     onChange={this._handleChange}
                   />
                 </div>
@@ -222,12 +491,12 @@ class SigninForm extends PureComponent {
               <div className="verification2_column4">
                 <div className="verification_form">
                   <FormInputField
-                    type="text"
-                    placeholder="Dickson"
-                    name="last_name"
-                    value={last_name.value}
+                    type="email"
+                    placeholder="e.g. email@website.com"
+                    name="ref_email"
+                    value={ref_email.value}
                     form={this.state.fields}
-                    labelTitle="LAST NAME"
+                    labelTitle="EMAIL ADDRESS"
                     onChange={this._handleChange}
                   />
                 </div>
@@ -235,8 +504,8 @@ class SigninForm extends PureComponent {
                   <FormInputField
                     type="text"
                     placeholder="234567890-09876543"
-                    name="phone_number"
-                    value={phone_number.value}
+                    name="ref_mobile"
+                    value={ref_mobile.value}
                     form={this.state.fields}
                     labelTitle="PHONE NUMBER"
                     onChange={this._handleChange}
@@ -249,7 +518,10 @@ class SigninForm extends PureComponent {
               <LoadableButton
                 className="verification_button"
                 btnTitle="Save"
-                isLoading={isLoading}
+                onClick={this.triggerSignUpVerificationAction}
+                isLoading={
+                  isRequestActive(utils.request, verifyRequest.verifySignupRequest)
+                }
               />
             </div>
           </div>

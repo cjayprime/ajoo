@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 
 import Layout from "../../../sharedComponent/Layout";
 import SignUpVerificationForm from "./SignUpVerificationForm";
-import { verifyRequest } from "../../../store/verifyModules/actions";
 
 class SignupVerificationComponent extends PureComponent {
   constructor(props) {
@@ -24,18 +23,23 @@ class SignupVerificationComponent extends PureComponent {
   };
 
   render() {
-    const { verifySignupUser, utils, isLoading, request } = this.props;
+    const { verifySignupUser,  uploadFeatureImageForVerification, uploadDocumentImageForVerification, uploadProfileImage, showPercentageProgress, utils, isLoading, request } = this.props;
 
     return (
       <>
         <Layout
           {...this.props}>
           <SignUpVerificationForm
+            {...this.props}
             verifySignupUser={verifySignupUser}
+            uploadFeatureImageForVerification={uploadFeatureImageForVerification}
+            uploadDocumentImageForVerification={uploadDocumentImageForVerification}
+            uploadProfileImage={uploadProfileImage}
+            showPercentageProgress={showPercentageProgress}
             utils={utils}
-            isLoading={
+            /*isLoading={
               isLoading && request === verifyRequest.verifySignupRequest
-            }
+            }*/
           />
         </Layout>
       </>

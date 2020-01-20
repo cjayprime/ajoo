@@ -2057,6 +2057,8 @@ p {
   .verificationbutton_center {
     margin-top: 40px;
     margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
   }
 
   .verificationbutton_center .verification_button {
@@ -5374,7 +5376,7 @@ p {
   }
 
   /* end campaign body */
-  
+
   /* volunteer verification style */
 
   .verify_volunteer_image-body {
@@ -6080,6 +6082,105 @@ p {
   }
   /* END DONATION */
 
+  /* SUCCESS STORIES */
+
+  .success__banner {
+    width: 100%;
+    height: 40vh;
+    background-image: url("../images/mask_group.png");
+  }
+
+  .success__banner-head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 75px;
+    text-align: center;
+    color: #212121;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    padding-top: 92px;
+  }
+
+  .success__stories-campaign {
+    padding: 45px 60px 36px 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .success__card {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    width: 537px;
+    padding-bottom: 51px;
+  }
+
+  .success__card img {
+    width: 537px;
+    height: 216px;
+  }
+
+  .success__card-label {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 29px;
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success__card-com {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .success__card-com img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .success__card-com span {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: #212121;
+    padding-left: 12px;
+  }
+
+  .success__card-desc {
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success_h3 {
+    margin: 25px 15px 0 15px;
+  }
+
+  .success_h6 {
+    margin: 15px 15px 25px 15px;
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  .success_row {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: auto auto;
+  }
+
+  .viewCampaign-success {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    padding-bottom: 25px;
+  }
+
+  /* END OF SUCCESS STORIES */
   /* About */
 
   .about__container {
@@ -6098,4 +6199,63 @@ p {
   }
 
   /* End About */
+
+  /* Volunteer Document */
+
+  .volunteer_document {
+    background: #f9fafc;
+    padding: 48px 110px 48px 110px;
+  }
+
+  .volunteer_document h3 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    color: #212121;
+    margin-top: 80px;
+  }
+
+  .identify_verification-column1 h5 {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+  }
+
+  .identify_verification-column2 {
+    margin-left: 62px;
+  }
+
+  .volunteer_document hr {
+    border: 0.5px solid #d2d2d2;
+    margin: 20px 0;
+  }
+
+  .identify_verification {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .volunteer_button {
+    width: 249px;
+    height: 56px;
+    background: #0072a3;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid #dde2e5;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-top: 24px;
+  }
+
+  /* End of Volunteer Document */
 }

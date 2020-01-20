@@ -83,13 +83,18 @@ class CampaignComponent extends Component {
 
     
     // If the `Show More` button is clicked then the campaign_id of the first item in the collection will change
-    // cause the item is always fresh, which is the need to write the props into the state in the first place
+    // cause the item is always re-fetched, which is the need to write the props into the state in the first place
+    // so as to show the new (more) items beneath the old ones
     if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
-      prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id !== this.props.allCampaigns.allCampaigns.transactions[0].campaign_id){
-      var transactions = prevState.allCampaigns.transactions.concat(prevProps.allCampaigns.allCampaigns.transactions);
+      this.props.allCampaigns.allCampaigns.transactions[0].campaign_id !== prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id
+      ||
+      (typeof this.props.allCampaigns.allCampaigns !== "undefined" && this.state.allCampaigns.transactions.length === 0)
+      ){
+      var transactions = this.state.allCampaigns.transactions.concat(this.props.allCampaigns.allCampaigns.transactions);
       this.setState({
-        allCampaigns: { ...prevProps.allCampaigns.allCampaigns, transactions }
+        allCampaigns: { ...this.props.allCampaigns.allCampaigns, transactions }
       });
+
     }
 
   }
@@ -104,7 +109,7 @@ class CampaignComponent extends Component {
   };
 
   render() {
-    const { allCampaigns, fetchAllCampaigns, categories, utils } = this.props;
+    const { /*allCampaigns, */fetchAllCampaigns, categories, utils } = this.props;
 
     const isCampaignFetching = isRequestActive(utils.request, campaignRequest.fetchAllCampaignsRequest)
 

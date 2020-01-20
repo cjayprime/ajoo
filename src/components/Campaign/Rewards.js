@@ -4,7 +4,7 @@ import border from "../../assets/images/rewardborder.svg";
 
 const Rewards = (props) => {
     return (
-        <div id="" className="tabcontent" style={{ display: "block", marginTop: 61 }}>
+        <div id="" className="tabcontent" style={{ display: "block", marginTop: 61, textAlign: "center" }}>
             {/*
             <div className="donation">
                 <div className="donation__body">
@@ -43,6 +43,7 @@ const Rewards = (props) => {
             </div>
 
               */}
+            No Rewards for Campaign
         </div>
     )
 }

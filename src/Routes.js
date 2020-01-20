@@ -13,7 +13,7 @@ import {
   EditCampaignContainer,
   SignInContainer,
   SignUpContainer,
-  SignUpVeificationContainer,
+  //SignUpVeificationContainer,
   ProfileContainer,
   PrivacyPolicyContainer,
   TermsOfUseContainer,
@@ -26,19 +26,23 @@ import {
   BlogArticleContainer,
   SignUpIndividualContainer,
   SignUpOrganisationContainer,
+  SignUpVerificationContainer,
   PhoneConfirmationContainer,
   CampaignFeatureImageContainer,
   FaqContainer,
   VolunteerVerificationContainer,
   HowItWorksContainer,
   ProfilePhotoUploadContainer,
-  AboutContainer
+  SuccessContainer,
+  AboutContainer,
+  SignUpVerificationIndividualContainer,
+  VolunteerDocumentContainer
 } from "./container";
 import { setUserData } from "./store/allActions";
 import PrivateRoute from "./sharedComponent/PrivateRoute";
 import ResetPasswordContainer from "./container/ResetPasswordContainer";
 import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
-import SignUpVerificationContainer from "./container/AuthScreens/SignUpVerificationContainer";
+//import SignUpVerificationContainer from "./container/AuthScreens/SignUpVerificationContainer";
 import EmailVerificationContainer from "./container/AuthScreens/EmailVerificationContainer";
 import EmailSentContainer from "./container/AuthScreens/EmailSentContainer";
 
@@ -55,11 +59,6 @@ let routes = {
     { path: "/signin", exact: true, component: SignInContainer },
     { path: "/signup", exact: true, component: SignUpContainer },
     { path: "/signout", exact: true, component: () => <Redirect to={{ pathname: "/signin", state: {} }} /> },
-    {
-      path: "/verify_signup",
-      exact: true,
-      component: SignUpVeificationContainer
-    },
     { path: "/tnc", exact: true, component: PrivacyPolicyContainer },
     { path: "/terms_of_use", exact: true, component: TermsOfUseContainer },
     { path: "/volunteer", exact: true, component: VolunteerContainer },
@@ -112,24 +111,44 @@ let routes = {
       path: "/forgot_password",
       exact: true,
       component: ForgotPasswordContainer
-    },
+    },/*
     {
       path: "/signup_verification",
       exact: true,
       component: SignUpVerificationContainer
-    },
+    }*/
     {
       path: "/send_email",
       exact: true,
       component: EmailSentContainer
     },
     {
+      path: "/success_stories",
+      exact: true,
+      component: SuccessContainer,
+    },
+    {
       path: "/about",
       exact: true,
       component: AboutContainer
+    },
+    {
+      path: "/volunteer_document",
+      exact: true,
+      component: VolunteerDocumentContainer
     }
   ],
   privateRoutes: [
+    {
+      path: "/verify_organization",
+      exact: true,
+      component: SignUpVerificationContainer
+    },
+    {
+      path: "/verify_individual",
+      exact: true,
+      component: SignUpVerificationIndividualContainer,
+    },
     {
       path: "/create_campaigns",
       exact: true,

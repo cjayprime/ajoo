@@ -1,44 +1,30 @@
-import { setLoading } from "../utilsModule/actions";
-
 export const VERIFY_VOLUNTEER_IMAGE = "VERIFY_VOLUNTEER_IMAGE";
-
 export const VERIFY_SIGNUP = "VERIFY_SIGNUP";
+export const VERIFY_SIGNUP_SUCCESS = "VERIFY_SIGNUP_SUCCESS";
+export const VERIFY_SIGNUP_ERROR = "VERIFY_SIGNUP_ERROR";
+export const UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION = "UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION";
+export const UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION_SUCCESS = "UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION_SUCCESS";
+export const UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION_ERROR = "UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION_ERROR";
+export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION";
+export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_SUCCESS = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_SUCCESS";
+export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_ERROR = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_ERROR";
 
-export const verifyRequest = {
-  verifyVolunteerImageRequest: "verifyVolunteerImageRequest",
-  verifySignupRequest: "verifySignupRequest"
-};
+export const volunteerImageUser = data => ({
+  type: VERIFY_VOLUNTEER_IMAGE,
+  payload: data
+});
 
-export const volunteerImageUser = () => dispatch => {
-  dispatch(
-    setLoading({
-      loading: true,
-      request: verifyRequest.verifyVolunteerImageRequest
-    })
-  );
+export const verifySignupUser = data => ({
+  type: VERIFY_SIGNUP,
+  payload: data
+});
 
-  // perform async operations here, and dispatch a success or error action
-  setTimeout(() => {
-    dispatch({
-      type: VERIFY_VOLUNTEER_IMAGE
-    });
-    dispatch(setLoading({}));
-  }, 3000);
-};
+export const uploadFeatureImageForVerification = data => ({
+  type: UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION,
+  payload: data
+});
 
-export const verifySignupUser = () => dispatch => {
-  dispatch(
-    setLoading({
-      loading: true,
-      request: verifyRequest.verifySignupRequest
-    })
-  );
-
-  // perform async operations here, and dispatch a success or error action
-  setTimeout(() => {
-    dispatch({
-      type: VERIFY_SIGNUP
-    });
-    dispatch(setLoading({}));
-  }, 3000);
-};
+export const uploadDocumentImageForVerification = data => ({
+  type: UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION,
+  payload: data
+});

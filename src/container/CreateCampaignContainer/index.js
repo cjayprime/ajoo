@@ -29,8 +29,6 @@ class CreateCampaignContainer extends PureComponent {
       utils
     } = this.props;
 
-    //console.log('CC: ', createdCampaign, uploadCampaignImage)
-
     return (
       <CreateCampaign
         {...this.props}
@@ -51,9 +49,9 @@ class CreateCampaignContainer extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  //console.log(state, state.campaigns.createdCampaign)
-  var { campaigns, utils, misc } = state;
+  var { auth, campaigns, utils, misc } = state;
   return {
+    auth,
     campaignSuccess: campaigns.success,
     categories: misc.categories,
     orgTypes: misc.orgTypes,

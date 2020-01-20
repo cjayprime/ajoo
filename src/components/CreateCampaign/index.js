@@ -15,8 +15,29 @@ class CreateCampaign extends PureComponent {
 
   componentDidMount() {
     this._isMounted = true;
+    this.verify();
     this.props.fetchCategories({});
     this.props.fetchOrgTypes({});
+  }
+
+  componentDidUpdate(){
+
+    this.verify();
+
+  }
+    
+  verify = () => {
+    if(typeof this.props.auth.data !== "undefined"){
+      var location;
+      if(this.props.auth.data.verified === 0 && this.props.auth.data.is_organization === 0){
+        location = "/verify_individual";
+      }else if(this.props.auth.data.verified === 0 && this.props.auth.data.is_organization === 1){
+        location = "/verify_organization";
+      }
+
+      if(location)
+      this.props.history.push(location, { redirectFromCreateCampaign: true });
+    }
   }
 
   componentWillUnmount() { }

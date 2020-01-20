@@ -1,7 +1,8 @@
 import * as actionTypes from "./actions";
 
 const initialState = {
-  success: false
+  success: false,
+  category: ""
 };
 
 const verify = (state = initialState, action) => {
@@ -16,6 +17,13 @@ const verify = (state = initialState, action) => {
       return {
         ...state,
         success: true
+      };
+
+    case actionTypes.UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_ERROR:
+      return {
+        ...state,
+        success: action.payload.code === 100,
+        category: action.payload.category
       };
 
     default:

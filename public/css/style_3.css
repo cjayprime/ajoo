@@ -2022,7 +2022,7 @@
 
   /*SIGN UP VERIFICATION*/
   .signUp_verification {
-    padding: 50px 90px;
+    padding: 50px 50px;
     background-color: #f9fafc;
   }
 
@@ -2030,7 +2030,7 @@
     font-family: Muli;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 33px;
     color: #212121;
   }
@@ -2046,13 +2046,20 @@
   }
 
   .verification_1 a {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 25px;
     color: #0072a3;
+    margin-top: 0;
   }
 
   #organisation_logo {
     padding-top: 10px;
+  }
+
+  .signUp_verification h3 {
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 40px;
   }
 
   .signUp_verification hr {
@@ -2067,8 +2074,24 @@
     padding-bottom: 50px;
   }
 
+  .verification_social {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .verification_feature {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .verification_person {
+    display: flex;
+    flex-direction: column;
+  }
+
   .verification2_column1 {
     padding-bottom: 20px;
+    width: 100%;
   }
 
   .verification2_column1 h5 {
@@ -2084,6 +2107,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-left: 0 !important;
+    width: 100%;
   }
 
   .verification2_column3 {
@@ -2095,6 +2120,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    padding-left: 0;
   }
 
   .verification2_column3 label {
@@ -2111,6 +2138,11 @@
     padding-bottom: 20px;
   }
 
+  .signup_verification_form_image {
+    display: flex;
+    justify-content: center;
+  }
+
   .verification_form_image {
     display: flex;
     flex-direction: column;
@@ -2124,7 +2156,7 @@
 
   .signUp_verification label {
     font-style: normal;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 12px;
     line-height: 15px;
     letter-spacing: 0.08em;
@@ -5491,6 +5523,104 @@
   }
   /* END DONATION */
 
+  /* SUCCESS STORIES */
+
+  .success__banner {
+    width: 100%;
+    height: 30vh;
+    background-image: url("../images/mask_group.png");
+  }
+
+  .success__banner-head {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 23px;
+    line-height: 55px;
+    text-align: center;
+    color: #212121;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    padding-top: 92px;
+  }
+
+  .success__stories-campaign {
+    padding: 45px 40px 36px 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .success__stories-campaign img {
+    width: 100%;
+  }
+
+  .success__card {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 51px;
+    margin-bottom: 40px;
+  }
+
+  .success__card img {
+    height: 100%;
+  }
+
+  .success__card-label {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 29px;
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success__card-com {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .success__card-com img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .success__card-com span {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: #212121;
+    padding-left: 12px;
+  }
+
+  .success__card-desc {
+    padding-left: 32px;
+    padding-right: 24px;
+  }
+
+  .success_h6 {
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  .success_row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .viewCampaign-success {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    padding-bottom: 25px;
+  }
+
+  /* END OF SUCCESS STORIES */
   /* About */
 
   .about__container {
