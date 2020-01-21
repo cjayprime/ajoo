@@ -27,5 +27,4 @@ export { default as HowItWorksContainer } from "./HowItWorksContainer";
 export { default as ProfilePhotoUploadContainer } from "./ProfilePhotoUploadContainer";
 export { default as SuccessContainer } from "./SuccessContainer";
 export { default as AboutContainer } from "./AboutContainer";
-export { default as SignUpVerificationIndividualContainer } from "./AuthScreens/SignUpVerificationIndividualContainer";
 export { default as VolunteerDocumentContainer } from "./VolunteerDocumentContainer";

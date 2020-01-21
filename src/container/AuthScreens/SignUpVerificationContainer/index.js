@@ -26,7 +26,8 @@ class SignUpVeificationContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ verify, utils }) => ({
+const mapStateToProps = ({ auth, verify, utils }) => ({
+  auth,
   verify,
   utils,
   isLoading: utils.loading,

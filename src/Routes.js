@@ -13,7 +13,6 @@ import {
   EditCampaignContainer,
   SignInContainer,
   SignUpContainer,
-  //SignUpVeificationContainer,
   ProfileContainer,
   PrivacyPolicyContainer,
   TermsOfUseContainer,
@@ -35,14 +34,12 @@ import {
   ProfilePhotoUploadContainer,
   SuccessContainer,
   AboutContainer,
-  SignUpVerificationIndividualContainer,
   VolunteerDocumentContainer
 } from "./container";
 import { setUserData } from "./store/allActions";
 import PrivateRoute from "./sharedComponent/PrivateRoute";
 import ResetPasswordContainer from "./container/ResetPasswordContainer";
 import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
-//import SignUpVerificationContainer from "./container/AuthScreens/SignUpVerificationContainer";
 import EmailVerificationContainer from "./container/AuthScreens/EmailVerificationContainer";
 import EmailSentContainer from "./container/AuthScreens/EmailSentContainer";
 
@@ -111,12 +108,7 @@ let routes = {
       path: "/forgot_password",
       exact: true,
       component: ForgotPasswordContainer
-    },/*
-    {
-      path: "/signup_verification",
-      exact: true,
-      component: SignUpVerificationContainer
-    }*/
+    },
     {
       path: "/send_email",
       exact: true,
@@ -140,14 +132,9 @@ let routes = {
   ],
   privateRoutes: [
     {
-      path: "/verify_organization",
+      path: "/verify",
       exact: true,
       component: SignUpVerificationContainer
-    },
-    {
-      path: "/verify_individual",
-      exact: true,
-      component: SignUpVerificationIndividualContainer,
     },
     {
       path: "/create_campaigns",

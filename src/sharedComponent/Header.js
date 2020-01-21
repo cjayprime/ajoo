@@ -89,9 +89,20 @@ class HeaderNav extends PureComponent {
               {typeof user.is_organization !== "undefined" ? (
                 <>
                   <li className="menu_right_li">
+                    
                     {user.is_organization === 0
                       ? `${user.first_name} ${user.last_name}`
-                      : `${user.organization_name}`}
+                      : `${user.organization_name ? user.organization_name : ""}`}
+                    
+                    <div style={{ fontSize: 10, display: "flex", justifyContent: "center", alignItems: "center", height: 15, padding: 1.5, borderRadius: 5, width: "auto",
+                      background: user.verified === 1 ? "green" : "orange",
+                      color: user.verified === 1 ? "white" : "black"
+                    }}>
+                      {user.verified === 1
+                        ? "VERIFIED"
+                        : "UNVERIFIED"}
+                    </div>
+                    
                   </li>
                   <li>
                     <div
