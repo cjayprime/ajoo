@@ -3145,7 +3145,6 @@
 
   .verified_page_head_banner {
     width: 100%;
-    height: 55vh;
     background-image: url("../images/mask_group.png");
   }
 
@@ -3154,6 +3153,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 90px;
+    padding-bottom: 10px;
   }
 
   .verified_page_head_banner-heading {

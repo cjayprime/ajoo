@@ -69,7 +69,7 @@ class HeaderNav extends PureComponent {
                   <Link to="/volunteer">Volunteer</Link>
                 </li>
                 <li className="menu_left_li">
-                  <Link to="/verified_page">Verified Pages</Link>
+                  <Link to="/verified_page">Organizations</Link>
                 </li>
               </>
             )}

@@ -274,12 +274,16 @@ class CampaignHead extends Component {
                 ></div>
               </div>
               <div className="button_home">
-                <button
-                  onClick={this.openInitiatePayment}
-                  className="donateButton"
-                >
-                  Donate to Campaign
-                </button>
+                {
+                  campaign.is_verified === 0
+                  ? <div className="donateButton" style={{ borderRadius: 10, cursor: "initial", background: "orange", color: "black", alignSelf: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>This campaign is not yet verified</div>
+                  : <button
+                      onClick={this.openInitiatePayment}
+                      className="donateButton"
+                    >
+                      Donate to Campaign
+                    </button>
+                }
               </div>
             </div>
           </div>

@@ -22,6 +22,14 @@ export const VERIFY_EMAIL = "VERIFY_EMAIL";
 export const VERIFY_EMAIL_ERROR = "VERIFY_EMAIL_ERROR";
 export const VERIFY_EMAIL_SUCCESS = "VERIFY_EMAIL_SUCCESS";
 
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+
+export const RESET_PASSWORD = "RESET_PASSWORD";
+export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+
 export const SET_USER_DATA = "SET_USER_DATA";
 
 export const signinUser = data => ({
@@ -56,5 +64,15 @@ export const setUserData = data => ({
 
 export const verifyEmail = data => ({
   type: VERIFY_EMAIL,
+  payload: data
+});
+
+export const forgotPassword = data => ({
+  type: FORGOT_PASSWORD,
+  payload: data
+});
+
+export const resetPassword = data => ({
+  type: RESET_PASSWORD,
   payload: data
 });

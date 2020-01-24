@@ -35,7 +35,8 @@ class CampaignComponent extends Component {
   offsetTop = 0;
 
   handleScroll = (e) => {
-    if(campaignBodyLeftRef.current && campaignBodyLeftRef.current.style.display !== "none"){
+    console.log(window.getComputedStyle(campaignBodyLeftRef.current).display)
+    if(campaignBodyLeftRef.current && window.getComputedStyle(campaignBodyLeftRef.current).display !== "none"){
       
       if(!this.offsetTop) 
       this.offsetTop = campaignBodyLeftRef.current.offsetTop;
@@ -116,7 +117,7 @@ class CampaignComponent extends Component {
     return (
       <Layout {...this.props}>
         <CampaignsHead campaignHeadRef={campaignHeadRef} />
-        <div className="campaign_body">
+        <div className="campaign_body" style={{ height: this.state.allCampaigns.transactions.length === 0 ? "100vh" : "auto" }}>
           <CampaignBodyLeft
             position={this.state.position}
             campaignBodyLeftRef={campaignBodyLeftRef}

@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 
-import { confirmUser } from "../../store/confirmModules/actions.js";
 import ResetPasswordComponent from "../../components/ResetPassword";
+
+import { confirmUser } from "../../store/confirmModules/actions.js";
+import { resetPassword } from "../../store/authModules/actions.js";
 
 class ResetPasswordContainer extends PureComponent {
   render() {
@@ -20,13 +22,15 @@ class ResetPasswordContainer extends PureComponent {
 }
 
 const mapStateToProps = ({ confirm, utils }) => ({
+  utils,
   confirm,
   isLoading: utils.loading,
   request: utils.request
 });
 
 const mapDispatchToProps = {
-  confirmUser
+  confirmUser,
+  resetPassword
 };
 
 export default connect(

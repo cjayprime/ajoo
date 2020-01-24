@@ -1,12 +1,14 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 
-import { confirmUser } from "../../store/confirmModules/actions.js";
 import ForgotPasswordComponent from "../../components/ForgotPassword";
+
+import { confirmUser } from "../../store/confirmModules/actions.js";
+import { forgotPassword } from "../../store/authModules/actions.js";
 
 class ForgotPasswordContainer extends PureComponent {
   render() {
-    const { confirmUser, utils, isLoading, request } = this.props;
+    const { confirmUser, utils, isLoading, request, forgotPassword } = this.props;
     return (
       <ForgotPasswordComponent
         {...this.props}
@@ -14,19 +16,22 @@ class ForgotPasswordContainer extends PureComponent {
         utils={utils}
         isLoading={isLoading}
         request={request}
+        forgotPassword={forgotPassword}
       />
     );
   }
 }
 
 const mapStateToProps = ({ confirm, utils }) => ({
+  utils,
   confirm,
   isLoading: utils.loading,
   request: utils.request
 });
 
 const mapDispatchToProps = {
-  confirmUser
+  confirmUser,
+  forgotPassword
 };
 
 export default connect(

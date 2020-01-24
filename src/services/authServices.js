@@ -117,6 +117,38 @@ class AuthService {
     });
   };
 
+  forgotPassword = email => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body: { email },
+        method: "POST"
+      };
+      apiClient(`/account/emailtoresetpassword`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  resetPassword = details => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body: { ...details },
+        method: "POST"
+      };
+      apiClient(`/account/resetpassword`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
   isAuthenticated() {
     const token = localStorage.getItem("token");
     if (token) return this.isAuthTokenValid(token);

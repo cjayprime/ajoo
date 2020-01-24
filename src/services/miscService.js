@@ -13,8 +13,8 @@ class MiscService {
 				})
 				.catch(error => reject(error));
 		});
-  };
-  
+	};
+
 	fetchLga = (stateId) => {
 		return new Promise((resolve, reject) => {
 			apiClient(`/misc/lga/${stateId}`)
@@ -54,6 +54,18 @@ class MiscService {
 					}
 				})
 				.catch(error => reject(error));
+		});
+	};
+
+	helpSupport = body => {
+		return new Promise((resolve, reject) => {
+			apiClient("/email/support", { body })
+				.then(res => {
+					return resolve(res);
+				})
+				.catch(error => {
+					reject(error.response)
+				});
 		});
 	};
 }

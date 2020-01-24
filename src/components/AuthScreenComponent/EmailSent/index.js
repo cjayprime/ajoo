@@ -33,7 +33,7 @@ class EmailSentComponent extends PureComponent {
               <div style={{ textAlign: "center", marginBottom: 30 }}>
                 <p style={{ fontSize: "16px", lineHeight: "24px" }}>
                   Hello {user.first_name}! To verify your account, and finish
-                  your registeration,{" "}
+                  your registration,{" "}
                 </p>
                 <p style={{ fontSize: "16px", lineHeight: "24px" }}>
                   a mail has been sent to your email address.

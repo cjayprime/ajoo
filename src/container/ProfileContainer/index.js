@@ -6,6 +6,7 @@ import {
   fetchUserCampaigns,
   getCampaignDonations
 } from "../../store/campaignModules/actions";
+import { showRequestFeedBack } from "../../store/utilsModule/actions.js";
 
 class ProfileContainer extends PureComponent {
   render() {
@@ -33,6 +34,7 @@ class ProfileContainer extends PureComponent {
 }
 
 const mapStateToProps = ({ auth, utils, campaigns }) => ({
+  utils,
   user: auth.data,
   request: utils.request,
   userCampaigns: campaigns.userCampaigns,
@@ -41,7 +43,8 @@ const mapStateToProps = ({ auth, utils, campaigns }) => ({
 
 const mapDispatchToProps = {
   fetchUserCampaigns,
-  getCampaignDonations
+  getCampaignDonations,
+  showRequestFeedBack
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

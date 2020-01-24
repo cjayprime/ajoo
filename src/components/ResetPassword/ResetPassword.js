@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import FormInputField from "../../sharedComponent/form";
+import AlertDialog from "../../sharedComponent/AlertDialog";
+import { authRequest } from "../../store/authModules/saga";
+import { isRequestActive, validate } from "../../utils/misc";
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -10,6 +13,7 @@ class ResetPassword extends Component {
     this.state = {
       formError: false,
       hidden: true,
+      token: "",
       fields: {
         newPassword: {
           value: "",
@@ -17,8 +21,7 @@ class ResetPassword extends Component {
           error: null,
           errorMessage: "",
           rules: {
-            required: true,
-            password: true
+            required: true
           }
         },
         confirmPassword: {
@@ -27,8 +30,7 @@ class ResetPassword extends Component {
           error: null,
           errorMessage: "",
           rules: {
-            required: true,
-            password: true
+            required: true
           }
         }
       }
@@ -36,11 +38,31 @@ class ResetPassword extends Component {
   }
 
   triggerAction = () => {
-    this.props.confirmUser();
+    
+    //this.props.confirmUser();
+    
+    if(validate(this, this.state.fields)){
+      var { utils } = this.props;
+      if(this.state.fields.newPassword.value != this.state.fields.confirmPassword.value){
+        utils.feedback.for = authRequest.resetPasswordRequest;
+        utils.feedback.message = "The password field must be the same with the confirm password field";
+        utils.feedback.success = false;
+        return;
+      }
+
+      this.props.resetPassword({
+        pass: this.state.fields.newPassword.value,
+        cpass: this.state.fields.confirmPassword.value,
+        token: this.state.token
+      });
+    }
   };
 
   componentDidMount() {
     this._isMounted = true;
+
+    const { match } = this.props;
+    setTimeout(() => this.setState({ token: match.params.token }), 2000);
   }
 
   onBlur = (res, name) => {
@@ -62,43 +84,52 @@ class ResetPassword extends Component {
     newState.fields[name].error = false;
     newState.fields[name].value = value;
     this.setState(newState);
+
+    validate(this, this.state.fields, e);
   };
 
   render() {
-    const { /*confirm, */isLoading } = this.props;
+    const { utils, isLoading } = this.props;
     const { fields } = this.state,
       { newPassword, confirmPassword } = fields;
-
+    
     return (
       <div className="phone_verify">
-        <form>
-          <h1>Reset Password</h1>
-          <div className="phone_verify-form">
-            <FormInputField
-              placeholder="********"
-              name="newPassword"
-              value={newPassword.value}
-              onBlur={this.onBlur}
-              form={this.state.fields}
-              labelTitle="New Password"
-              onChange={this._handleChange}
-            />
-            <FormInputField
-              placeholder="********"
-              name="confirmPassword"
-              value={confirmPassword.value}
-              onBlur={this.onBlur}
-              form={this.state.fields}
-              labelTitle="Confirm Password"
-              onChange={this._handleChange}
-            />
-            <LoadableButton
-              onClick={this.triggerAction}
-              btnTitle="Continue"
-              isLoading={isLoading}
-            />
-          </div>
-        </form>
+        <AlertDialog
+            open={
+              utils.feedback.for === authRequest.resetPasswordRequest
+            }
+            message={utils.feedback.message}
+            success={utils.feedback.success}
+        />
+        <h1>Reset Password</h1>
+        <div className="phone_verify-form">
+          <FormInputField
+            placeholder="********"
+            name="newPassword"
+            value={newPassword.value}
+            onBlur={this.onBlur}
+            form={this.state.fields}
+            labelTitle="New Password"
+            onChange={this._handleChange}
+          />
+          <FormInputField
+            placeholder="********"
+            name="confirmPassword"
+            value={confirmPassword.value}
+            onBlur={this.onBlur}
+            form={this.state.fields}
+            labelTitle="Confirm Password"
+            onChange={this._handleChange}
+          />
+          <LoadableButton
+            onClick={this.triggerAction}
+            btnTitle="Continue"
+            isLoading={
+              isRequestActive(utils.request, authRequest.resetPasswordRequest)
+            }
+          />
+        </div>
       </div>
     );
   }

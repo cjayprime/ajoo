@@ -76,6 +76,28 @@ const auth = (state = initialState, action) => {
         emailVerificationSuccess: true,
         requestStatus: action.payload
       };
+    case Actions.FORGOT_PASSWORD_ERROR:
+      return {
+        ...state,
+        emailVerificationSuccess: false,
+        requestStatus: action.payload
+      };
+    case Actions.FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        emailVerificationSuccess: true,
+        requestStatus: action.payload
+      };
+    case Actions.RESET_PASSWORD_ERROR:
+      return {
+        ...state,
+        requestStatus: action.payload
+      };
+    case Actions.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        requestStatus: action.payload
+      };
     default:
       return state;
   }

@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import SignupVerificationComponent from "../../../components/AuthScreenComponent/SignUpVerification";
 import { uploadProfileImage } from "../../../store/authModules/actions.js";
 import { verifySignupUser, uploadFeatureImageForVerification, uploadDocumentImageForVerification } from "../../../store/verifyModules/actions.js";
-import { showPercentageProgress } from "../../../store/utilsModule/actions.js";
+import { showPercentageProgress, showRequestFeedBack } from "../../../store/utilsModule/actions.js";
 
 class SignUpVeificationContainer extends PureComponent {
   render() {
-    const { verifySignupUser, uploadFeatureImageForVerification, uploadDocumentImageForVerification, uploadProfileImage, showPercentageProgress, utils, isLoading, request } = this.props;
+    const { verifySignupUser, uploadFeatureImageForVerification, uploadDocumentImageForVerification, uploadProfileImage, showPercentageProgress, showRequestFeedBack, utils, isLoading, request } = this.props;
 
     return (
       <SignupVerificationComponent
@@ -18,6 +18,7 @@ class SignUpVeificationContainer extends PureComponent {
         uploadDocumentImageForVerification={uploadDocumentImageForVerification}
         uploadProfileImage={uploadProfileImage}
         showPercentageProgress={showPercentageProgress}
+        showRequestFeedBack={showRequestFeedBack}
         utils={utils}
         isLoading={isLoading}
         request={request}
@@ -39,7 +40,8 @@ const mapDispatchToProps = {
   uploadFeatureImageForVerification,
   uploadDocumentImageForVerification,
   uploadProfileImage,
-  showPercentageProgress
+  showPercentageProgress,
+  showRequestFeedBack
 };
 
 export default connect(

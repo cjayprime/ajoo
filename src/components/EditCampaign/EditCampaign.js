@@ -141,7 +141,7 @@ class EditCampaign extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(Object.keys(this.props.editCampaign).length === 0)
-        this.props.history.push("/profile")
+        this.props.history.push("/profile", { redirectFromCampaign: true })
 
         const {
             utils: { utils },

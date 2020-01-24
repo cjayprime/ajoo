@@ -14,6 +14,10 @@ export const FETCH_ORG_TYPES = "FETCH_ORG_TYPES";
 export const FETCH_ORG_TYPES_ERROR = "FETCH_ORG_TYPES_ERROR";
 export const FETCH_ORG_TYPES_SUCCESS = "FETCH_ORG_TYPES_SUCCESS";
 
+export const HELP_SUPPORT = "HELP_SUPPORT";
+export const HELP_SUPPORT_ERROR = "HELP_SUPPORT_ERROR";
+export const HELP_SUPPORT_SUCCESS = "HELP_SUPPORT_SUCCESS"
+
 export const fetchStates = data => ({
   type: FETCH_STATES,
   payload: data
@@ -33,3 +37,8 @@ export const fetchOrgTypes = data => ({
   type: FETCH_ORG_TYPES,
   payload: data
 });
+
+export const helpSupportAction = data => ({
+  type: HELP_SUPPORT,
+  payload: data
+})

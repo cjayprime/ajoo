@@ -26,6 +26,7 @@ class IndividualProfileSettingContainer extends PureComponent {
       misc,
       user
     } = this.props;
+    console.log(user.last_name)
 
     return (
       <IndividualProfileSettingComponent

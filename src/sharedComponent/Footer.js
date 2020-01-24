@@ -46,7 +46,7 @@ class Footer extends PureComponent {
               <Link to="/volunteer">Volunteer</Link>
             </li>
             <li>
-              <Link to="/verified_page">Verified Pages</Link>
+              <Link to="/verified_page">Organizations</Link>
             </li>
             <li>
               <Link to="/success_stories">Success Stories</Link>
@@ -57,7 +57,7 @@ class Footer extends PureComponent {
               <h5>Company</h5>
             </li>
             <li>
-              <Link to="#">About Us</Link>
+              <Link to="/about">About Us</Link>
             </li>
             <li>
               <Link to="/faq">FAQs</Link>
@@ -66,7 +66,7 @@ class Footer extends PureComponent {
               <Link to="/blog">Blog</Link>
             </li>
             <li>
-              <Link to="#">Help & Support</Link>
+              <Link to="/help">Help & Support</Link>
             </li>
           </ul>
         </div>

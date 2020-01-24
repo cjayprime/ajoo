@@ -87,7 +87,7 @@ class SignUpVerificationIndividual extends Component {
     componentDidMount() {
       this._isMounted = true;
       
-      if(typeof this.props.location.state != "undefined" && this.props.location.state.redirectFromCreateCampaign){
+      if(typeof this.props.location.state != "undefined" && this.props.location.state.redirectFromCampaign){
         this.props.showRequestFeedBack({
           message: "You need to verify your account before you can create campaigns.",
           for: verifyRequest.verifySignupRequest,

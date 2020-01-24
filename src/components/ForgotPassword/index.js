@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 import Layout from "../../sharedComponent/Layout";
 import ForgotPassword from "./ForgotPassword";
-import { confirmRequest } from "../../store/confirmModules/actions";
+//import { confirmRequest } from "../../store/confirmModules/actions";
 
 class ForgotPasswordComponent extends PureComponent {
   constructor(props) {
@@ -11,17 +11,19 @@ class ForgotPasswordComponent extends PureComponent {
   }
 
   render() {
-    const { confirmUser, utils, isLoading, request, location } = this.props;
+    const { confirmUser, utils, isLoading, request, forgotPassword, location } = this.props;
     return (
       <>
-        <Layout route={location.pathname}>
+        <Layout /*route={location.pathname}*/ {...this.props}>
           <div className="phone-confirm-body">
             <ForgotPassword
+              {...this.props}
               confirmUser={confirmUser}
               utils={utils}
-              isLoading={
+              forgotPassword={forgotPassword}
+              /*isLoading={
                 isLoading && request === confirmRequest.confirmationRequest
-              }
+              }*/
             />
           </div>
         </Layout>

@@ -34,7 +34,9 @@ import {
   ProfilePhotoUploadContainer,
   SuccessContainer,
   AboutContainer,
-  VolunteerDocumentContainer
+  VolunteerDocumentContainer,
+  HelpSupportContainer,
+  SupportSentContainer,
 } from "./container";
 import { setUserData } from "./store/allActions";
 import PrivateRoute from "./sharedComponent/PrivateRoute";
@@ -100,7 +102,7 @@ let routes = {
       component: HowItWorksContainer
     },
     {
-      path: "/reset_password",
+      path: "/reset_password/:token",
       exact: true,
       component: ResetPasswordContainer
     },
@@ -128,6 +130,16 @@ let routes = {
       path: "/volunteer_document",
       exact: true,
       component: VolunteerDocumentContainer
+    },
+    {
+      path: "/help",
+      exact: true,
+      component: HelpSupportContainer
+    },
+    {
+      path: "/support_sent",
+      exact: true,
+      component: SupportSentContainer
     }
   ],
   privateRoutes: [
@@ -202,6 +214,15 @@ class Routes extends Component {
                 path={el.path}
               />
             ))}
+            <Route path="/404" component={() => <div style={{
+              width: "100vw",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 200
+            }}>404</div>} />
+            <Redirect to="/404" />
           </Switch>
         </BrowserRouter>
       </Router>

@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 
 import Layout from "../../sharedComponent/Layout";
+import AlertDialog from "../../sharedComponent/AlertDialog";
 import CreateCampaignForm from "./CreateCampaignForm";
+import { campaignRequest } from "../../store/campaignModules/saga";
 
 class CreateCampaign extends PureComponent {
   constructor(props) {
@@ -25,19 +27,12 @@ class CreateCampaign extends PureComponent {
     this.verify();
 
   }
-    
+  
   verify = () => {
-    if(typeof this.props.auth.data !== "undefined"){
-      var location;
-      if(this.props.auth.data.verified === 0 && this.props.auth.data.is_organization === 0){
-        location = "/verify_individual";
-      }else if(this.props.auth.data.verified === 0 && this.props.auth.data.is_organization === 1){
-        location = "/verify_organization";
-      }
-
-      if(location)
-      this.props.history.push(location, { redirectFromCreateCampaign: true });
-    }
+    
+    if(typeof this.props.auth.data !== "undefined" && this.props.auth.data.verified === 0)
+    this.props.history.push("/verify", { redirectFromCampaign: true });
+  
   }
 
   componentWillUnmount() { }
@@ -63,9 +58,15 @@ class CreateCampaign extends PureComponent {
       utils
     } = this.props;
 
-    //console.log(createdCampaign, uploadCampaignImage)
     return (
       <Layout {...this.props}>
+        <AlertDialog
+            open={
+                utils.feedback.for === campaignRequest.userCampaignRequest
+            }
+            message={utils.feedback.message}
+            success={utils.feedback.success}
+        />
         <CreateCampaignForm
           {...this.props}
           createdCampaign={createdCampaign}

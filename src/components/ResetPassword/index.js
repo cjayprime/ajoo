@@ -30,11 +30,12 @@ class ResetPasswordComponent extends PureComponent {
         <Layout route={location.pathname}>
           <div className="phone-confirm-body">
             <ResetPassword
+              {...this.props}
               confirmUser={confirmUser}
               utils={utils}
-              isLoading={
+              /*isLoading={
                 isLoading && request === confirmRequest.confirmationRequest
-              }
+              }*/
             />
           </div>
         </Layout>

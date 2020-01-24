@@ -63,6 +63,18 @@ const misc = (state = initialState, action) => {
         requestStatus: action.payload.status,
         orgTypes: action.payload.data
       };
+    case Actions.HELP_SUPPORT_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      };
+    case Actions.HELP_SUPPORT_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload
+      }
     default:
       return state;
   }

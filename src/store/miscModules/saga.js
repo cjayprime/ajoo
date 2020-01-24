@@ -13,15 +13,19 @@ import {
   FETCH_CATEGORIES_ERROR,
   FETCH_ORG_TYPES,
   FETCH_ORG_TYPES_SUCCESS,
-  FETCH_ORG_TYPES_ERROR
+  FETCH_ORG_TYPES_ERROR,
+  HELP_SUPPORT,
+  HELP_SUPPORT_SUCCESS,
+  HELP_SUPPORT_ERROR,
 } from "./actions";
-import { setLoading } from "../utilsModule/actions";
+import { setLoading, showRequestFeedBack } from "../utilsModule/actions";
 
 export const miscRequest = {
   fetchStateRequest: "fetchStateRequest",
   fetchLgaRequest: "fetchLgaRequest",
   fetchCategoriesRequest: "fetchCategoriesRequest",
-  fetchCampaignTypesRequest: "fetchCampaignTypesRequest"
+  fetchCampaignTypesRequest: "fetchCampaignTypesRequest",
+  helpSupportRequest: "helpSupportRequest"
 };
 
 function* fetchStatesActionSaga(action) {
@@ -142,6 +146,56 @@ function* fetchCampaignTypesActionSaga(action) {
   }
 }
 
+function* helpSupportActionSaga(action) {
+  try {
+    const { data, history } = action.payload;
+    yield put(
+      setLoading({ request: miscRequest.helpSupportRequest, loading: true })
+    );
+    const response = yield call(miscService.helpSupport, data);
+    yield put(setLoading({ request: miscRequest.helpSupportRequest }));
+    if (response.data.status.code === 100) {
+      yield put({
+        type: HELP_SUPPORT_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      setTimeout(() => {
+        if (history) history.push("/support_sent");
+      }, 2000)
+    } else {
+      yield put({
+        type: HELP_SUPPORT_ERROR,
+        payload: response.data.status
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: miscRequest.helpSupportRequest,
+          success: false
+        })
+      );
+
+    }
+  } catch (error) {
+
+    yield put(setLoading({ request: miscRequest.helpSupportRequest }));
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured! Try again",
+        for: miscRequest.helpSupportRequest,
+        success: false
+      })
+    );
+    yield put({
+      type: HELP_SUPPORT_ERROR,
+      payload: error
+    })
+  }
+}
+
 function* fetchStatesActionWatcher() {
   yield takeLatest(FETCH_STATES, fetchStatesActionSaga);
 }
@@ -158,11 +212,16 @@ function* fetchCampaignTypesActionWatcher() {
   yield takeLatest(FETCH_ORG_TYPES, fetchCampaignTypesActionSaga);
 }
 
+function* helpSupportActionWatcher() {
+  yield takeLatest(HELP_SUPPORT, helpSupportActionSaga);
+}
+
 export default function* miscSaga() {
   yield all([
     fetchStatesActionWatcher(),
     fetchLgaActionWatcher(),
     fetchCategoriesActionWatcher(),
-    fetchCampaignTypesActionWatcher()
+    fetchCampaignTypesActionWatcher(),
+    helpSupportActionWatcher()
   ]);
 }

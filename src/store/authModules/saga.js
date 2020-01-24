@@ -20,7 +20,13 @@ import {
   SIGNOUT_ERROR,
   VERIFY_EMAIL,
   VERIFY_EMAIL_SUCCESS,
-  VERIFY_EMAIL_ERROR
+  VERIFY_EMAIL_ERROR,
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_ERROR,
+  FORGOT_PASSWORD_SUCCESS,
+  RESET_PASSWORD,
+  RESET_PASSWORD_ERROR,
+  RESET_PASSWORD_SUCCESS
 } from "./actions";
 import { setLoading, showRequestFeedBack } from "../utilsModule/actions";
 //import auth from "./reducer";
@@ -31,7 +37,9 @@ export const authRequest = {
   signupOrgRequest: "signupOrgRequest",
   signoutRequest: "signoutRequest",
   uploadProfileImageRequest: "uploadProfileImageRequest",
-  verifyEmailRequest: "verifyEmailRequest"
+  verifyEmailRequest: "verifyEmailRequest",
+  forgotPasswordRequest: "forgotPasswordRequest",
+  resetPasswordRequest: "resetPasswordRequest"
 };
 
 function* signinActionSaga(action) {
@@ -43,7 +51,7 @@ function* signinActionSaga(action) {
     const response = yield call(authService.signinUser, data);
 
     yield put(setLoading({ request: authRequest.loginRequest }));
-    
+
     /*if (response.data.status.code === 100) {
       if (response.data.entity.user.verified === 0) {
         yield put(
@@ -77,8 +85,8 @@ function* signinActionSaga(action) {
       history.push("/send_email");
       //window.location = window.location.origin + "/send_email";
 
-    } else if (typeof response.data.entity.user !== "undefined" && ! response.data.entity.user.image_url) {
-      
+    } else if (typeof response.data.entity.user !== "undefined" && !response.data.entity.user.image_url) {
+
       yield put(setUserData(response.data.entity.user));
       yield call(authService.setToken, response.data.entity.token);
       yield put({
@@ -88,7 +96,7 @@ function* signinActionSaga(action) {
       history.push("/upload_profile_photo");
       //window.location = window.location.origin + "/upload_profile_photo";
 
-    } else if(response.data.status.code === 100){
+    } else if (response.data.status.code === 100) {
 
       yield put(setUserData(response.data.entity.user));
       yield call(authService.setToken, response.data.entity.token);
@@ -318,10 +326,10 @@ function* verifyEmailSaga(action) {
     yield put(
       setLoading({ request: authRequest.verifyEmailRequest, loading: true })
     );
-    
+
     const response = yield call(authService.verifyEmail, token);
     yield put(setLoading({ request: authRequest.verifyEmailRequest }));
-    
+
     if (response.data.status.code === 100) {
       yield put({
         type: VERIFY_EMAIL_SUCCESS,
@@ -337,6 +345,79 @@ function* verifyEmailSaga(action) {
     yield put(setLoading({ request: authRequest.verifyEmailRequest }));
     yield put({
       type: VERIFY_EMAIL_ERROR,
+      payload: error
+    });
+  }
+}
+
+function* forgotPasswordSaga(action) {
+  try {
+    const { email } = action.payload;
+    yield put(
+      setLoading({ request: authRequest.forgotPasswordRequest, loading: true })
+    );
+
+    const response = yield call(authService.forgotPassword, email);
+    yield put(setLoading({ request: authRequest.forgotPasswordRequest }));
+    yield put(
+      showRequestFeedBack({
+        message: response.data.status.desc,
+        for: authRequest.forgotPasswordRequest,
+        success: response.data.status.code === 100
+      })
+    );
+
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: response.data.status
+      });
+    } else {
+      yield put({
+        type: FORGOT_PASSWORD_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(setLoading({ request: authRequest.forgotPasswordRequest }));
+    yield put({
+      type: FORGOT_PASSWORD_ERROR,
+      payload: error
+    });
+  }
+}
+
+function* resetPasswordSaga(action) {
+  try {
+    yield put(
+      setLoading({ request: authRequest.resetPasswordRequest, loading: true })
+    );
+
+    const response = yield call(authService.resetPassword, action.payload);
+    yield put(setLoading({ request: authRequest.resetPasswordRequest }));
+    yield put(
+      showRequestFeedBack({
+        message: response.data.status.desc,
+        for: authRequest.resetPasswordRequest,
+        success: response.data.status.code === 100
+      })
+    );
+
+    if (response.data.status.code === 100) {
+      yield put({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: response.data.status
+      });
+    } else {
+      yield put({
+        type: RESET_PASSWORD_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(setLoading({ request: authRequest.resetPasswordRequest }));
+    yield put({
+      type: RESET_PASSWORD_ERROR,
       payload: error
     });
   }
@@ -366,6 +447,14 @@ function* verifyEmailWatcher() {
   yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);
 }
 
+function* forgotPasswordWatcher() {
+  yield takeLatest(FORGOT_PASSWORD, forgotPasswordSaga);
+}
+
+function* resetPasswordWatcher() {
+  yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
+}
+
 export default function* authsSaga() {
   yield all([
     signinActionWatcher(),
@@ -373,6 +462,8 @@ export default function* authsSaga() {
     uploadProfileImageWatcher(),
     signuporgActionWatcher(),
     signoutActionWatcher(),
-    verifyEmailWatcher()
+    verifyEmailWatcher(),
+    forgotPasswordWatcher(),
+    resetPasswordWatcher()
   ]);
 }
