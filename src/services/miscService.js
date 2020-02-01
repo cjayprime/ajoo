@@ -68,6 +68,7 @@ class MiscService {
 				});
 		});
 	};
+	
 }
 
 const instance = new MiscService();

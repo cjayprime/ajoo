@@ -14,10 +14,13 @@ class EditCampaignComponent extends Component {
     }
 
     componentDidMount() {
-        console.log('State: ', this.props.history.location.state)
         this._isMounted = true;
-        this.props.fetchCategories({});
-        this.props.fetchOrgTypes({});
+        const { fetchCategories, fetchOrgTypes, getReward, history } = this.props;
+        fetchCategories({});
+        fetchOrgTypes({});
+        
+        if(history.location.state)
+        getReward({id: history.location.state.campaign._id});
     }
 
     componentWillUnmount() { }
@@ -41,12 +44,23 @@ class EditCampaignComponent extends Component {
             orgTypes,
             userEditCampaign,
             utils,
-            showRequestFeedBack
+            showRequestFeedBack,
+            rewards,
+            getReward,
+            addReward,
+            editReward,
+            deleteReward
         } = this.props;
+        
         return (
             <Layout {...this.props}>
                 <div style={{ backgroundColor: "#f9fafc", marginTop: "0.5px" }}>
                     <EditCampaign {...this.props}
+                        rewards={rewards}
+                        getReward={getReward}
+                        addReward={addReward}
+                        editReward={editReward}
+                        deleteReward={deleteReward}
                         createdCampaign={createdCampaign}
                         uploadCampaignImage={uploadCampaignImage}
                         showPercentageProgress={showPercentageProgress}

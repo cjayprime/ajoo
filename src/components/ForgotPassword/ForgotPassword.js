@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import FormInputField from "../../sharedComponent/form";
-import AlertDialog from "../../sharedComponent/AlertDialog";
 import { authRequest } from "../../store/authModules/saga";
 import { isRequestActive, validate } from "../../utils/misc";
 
@@ -30,12 +29,11 @@ class ForgotPassword extends Component {
 
   triggerAction = () => {
     
-    //this.props.confirmUser();
-
     if(validate(this, this.state.fields))
     this.props.forgotPassword({
       email: this.state.fields.email.value
     });
+    
   };
 
   componentDidMount() {
@@ -72,39 +70,40 @@ class ForgotPassword extends Component {
 
     return (
       <div className="phone_verify">
-        <AlertDialog
-            open={
-              utils.feedback.for === authRequest.forgotPasswordRequest
-            }
-            message={utils.feedback.message}
-            success={utils.feedback.success}
-        />
         <h1>Recover Your Password</h1>
         <div className="phone_verify-form">
-          <div style={{ textAlign: "center", marginBottom: 30 }}>
-            <p style={{ fontSize: "14px", lineHeight: "24px" }}>
-              A mail will be send to the email address given below <br />{" "}
-              Click on the link to continue your password reset
-            </p>
+          {
+            utils.feedback.for === authRequest.forgotPasswordRequest
+            ? <div style={{ color: utils.feedback.success ? "green" : "red" }}>
+                {utils.feedback.message}
+              </div>
+            : <>
+                <div style={{ textAlign: "center", marginBottom: 30 }}>
+                  <p style={{ fontSize: "14px", lineHeight: "24px" }}>
+                    A mail will be send to the email address given below <br />{" "}
+                    Click on the link to continue your password reset
+                  </p>
+                </div>
+                <div>
+                  <FormInputField
+                    name="email"
+                    value={email.value}
+                    onBlur={this.onBlur}
+                    form={fields}
+                    labelTitle="Email"
+                    onChange={this._handleChange}
+                  />
+                </div>
+                <LoadableButton
+                  onClick={this.triggerAction}
+                  btnTitle="Continue"
+                  isLoading={
+                    isRequestActive(utils.request, authRequest.forgotPasswordRequest)
+                  }
+                />
+              </>
+          }
           </div>
-          <div>
-            <FormInputField
-              name="email"
-              value={email.value}
-              onBlur={this.onBlur}
-              form={fields}
-              labelTitle="Email"
-              onChange={this._handleChange}
-            />
-          </div>
-          <LoadableButton
-            onClick={this.triggerAction}
-            btnTitle="Continue"
-            isLoading={
-              isRequestActive(utils.request, authRequest.forgotPasswordRequest)
-            }
-          />
-        </div>
       </div>
     );
   }

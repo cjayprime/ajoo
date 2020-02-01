@@ -40,13 +40,17 @@ class OganizationProfileSettingContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ setting, auth, misc, utils }) => ({
-  misc,
-  setting,
-  user: auth.data,
-  requestStatus: auth.requestStatus,
-  utils
-});
+const mapStateToProps = (state) => {
+  const { setting, auth, misc, utils } = state;
+  return {
+    ...state,
+    misc,
+    setting,
+    user: auth.data,
+    requestStatus: auth.requestStatus,
+    utils
+  }
+};
 
 const mapDispatchToProps = {
   organisationProfileSetting,

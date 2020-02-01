@@ -88,7 +88,6 @@ class CampaignHead extends Component {
         errorMessage: "",
         name: "Comment",
         rules: {
-          required: true,
           maxLength: 240
         }
       }
@@ -407,26 +406,28 @@ class CampaignHead extends Component {
                   className="donate_comment"
                   labelRight={"(" + comment.value.length + "/" + comment.rules.maxLength + ")"}
                 />
-                <FormInputField
-                  placeholder=""
-                  name="anonymous"
-                  type="checkbox"
-                  value={anonymous.value}
-                  onBlur={this.onBlur}
-                  form={this.state.fields}
-                  onChange={() => {
-                    this.setState({
-                      fields: {
-                        ...this.state.fields,
-                        anonymous: {
-                          ...this.state.fields.anonymous,
-                          value: !this.state.fields.anonymous.value
-                        }
-                      }
-                    })
-                  }}
-                  labelTitle="Donate Anonymously"
-                />
+                  <div className="anon_donate">
+                      <FormInputField
+                          placeholder=""
+                          name="anonymous"
+                          type="checkbox"
+                          value={anonymous.value}
+                          onBlur={this.onBlur}
+                          form={this.state.fields}
+                          onChange={() => {
+                              this.setState({
+                                  fields: {
+                                      ...this.state.fields,
+                                      anonymous: {
+                                          ...this.state.fields.anonymous,
+                                          value: !this.state.fields.anonymous.value
+                                      }
+                                  }
+                              })
+                          }}
+                          labelTitle="Donate Anonymously"
+                      />
+                  </div>
               </div>
               <div className="donate_modal-btn" style={{display: "flex", justifyContent: "center"}}>
                 <LoadableButton

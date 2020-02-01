@@ -21,7 +21,8 @@ class CampaignFeatureImage extends PureComponent {
       formError,
       isEdit,
       editImageUrl,
-      triggerImageUpload
+      triggerImageUpload,
+      nextStep
     } = this.props;
 
     return (
@@ -67,11 +68,11 @@ class CampaignFeatureImage extends PureComponent {
                   "There is something wrong! Ensure you've added a campaign"*/
                 }
                 className="campaign_image-btn"
-                btnTitle={isEdit ? "Edit Campaign" : "Submit Campaign"}
+                btnTitle={"Next"}
                 isLoading={
                   isRequestActive(utils.request, campaignRequest.uploadCampaignImageRequest)
                 }
-                onClick={triggerImageUpload}
+                onClick={() => triggerImageUpload(0, nextStep)}
               />
             </div>
           </div>

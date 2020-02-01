@@ -1,14 +1,45 @@
-import React, { PureComponent } from 'react'
-import SuccessComponent from '../../components/Success'
+import React, { Component } from 'react';
+import { connect } from "react-redux";
 
-class SuccessContainer extends PureComponent {
+import { fetchCompletedCampaigns } from "../../store/campaignModules/actions";
+import SuccessComponent from '../../components/Success';
+
+class SuccessContainer extends Component {
     render() {
+        const {
+            utils,
+            fetchCompletedCampaigns,
+            completedCampaigns
+        } = this.props
+        
         return (
             <>
-                <SuccessComponent />
+                <SuccessComponent
+                    {...this.props}
+                    utils={utils}
+                    completedCampaigns={completedCampaigns}
+                    fetchCompletedCampaigns={fetchCompletedCampaigns}
+                />
             </>
         )
     }
 }
 
-export default SuccessContainer;
+const mapStateToProps = (state) => {
+    
+    const { utils, campaigns } = state;
+
+    return {
+        utils,
+        campaigns,
+        userCampaigns: [],
+        completedCampaigns: campaigns.completedCampaigns
+    }
+};
+
+const mapDispatchToProps = {
+    fetchCompletedCampaigns
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SuccessContainer);

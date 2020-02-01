@@ -408,6 +408,11 @@ function* resetPasswordSaga(action) {
         type: RESET_PASSWORD_SUCCESS,
         payload: response.data.status
       });
+      
+      setTimeout(() => {
+        window.location = "/signin";
+      }, 2000);
+
     } else {
       yield put({
         type: RESET_PASSWORD_ERROR,

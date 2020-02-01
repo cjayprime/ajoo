@@ -11,3 +11,8 @@
 label{
     font-size: 13px;
 }
+
+.anon_donate input[type=checkbox]{
+    float: right;
+    margin-top: -15px;
+}

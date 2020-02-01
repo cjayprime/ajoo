@@ -11,7 +11,10 @@ const initialState = {
   editedCampaign: {},
   campaign: {},
   initDonation: {},
-  verifiedPayment: {}
+  verifiedPayment: {},
+  completedCampaigns: {},
+  organizationsData: {},
+  rewards: []
 };
 
 const campaigns = (state = initialState, action) => {
@@ -24,7 +27,6 @@ const campaigns = (state = initialState, action) => {
       };
 
     case Action.USER_CREATE_CAMPAIGN_SUCCESS:
-      console.log(action)
       return {
         ...state,
         success: true,
@@ -49,6 +51,36 @@ const campaigns = (state = initialState, action) => {
           ...action.payload.data
         }
       };
+
+    case Action.FETCH_SUCCESS_STORY_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.FETCH_SUCCESS_STORY_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        completedCampaigns: action.payload.data
+      };
+
+    case Action.FETCH_ORGANIZATIONS_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.FETCH_ORGANIZATIONS_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        organizationsData: action.payload.data
+      }
 
     case Action.FETCH_USER_CAMPAIGNS_ERROR:
       return {
@@ -140,6 +172,63 @@ const campaigns = (state = initialState, action) => {
       };
 
     case Action.GET_CAMPAIGN_DONATION_BY_ID_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      };
+
+    case Action.GET_REWARD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        rewards: action.payload.data
+      };
+
+    case Action.GET_REWARD_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      };
+
+    case Action.ADD_REWARD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status
+      };
+
+    case Action.ADD_REWARD_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      };
+
+    case Action.EDIT_REWARD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status
+      };
+
+    case Action.EDIT_REWARD_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      };
+
+    case Action.DELETE_REWARD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status
+      };
+
+    case Action.DELETE_REWARD_ERROR:
       return {
         ...state,
         success: false,

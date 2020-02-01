@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import ProfileComponent from "../../components/Profile";
@@ -8,7 +8,7 @@ import {
 } from "../../store/campaignModules/actions";
 import { showRequestFeedBack } from "../../store/utilsModule/actions.js";
 
-class ProfileContainer extends PureComponent {
+class ProfileContainer extends Component {
   render() {
     const {
       user,
@@ -18,7 +18,7 @@ class ProfileContainer extends PureComponent {
       getCampaignDonations,
       userDonations
     } = this.props;
-
+    
     return (
       <ProfileComponent
         {...this.props}
@@ -33,13 +33,17 @@ class ProfileContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ auth, utils, campaigns }) => ({
-  utils,
-  user: auth.data,
-  request: utils.request,
-  userCampaigns: campaigns.userCampaigns,
-  userDonations: campaigns.campaignDonations
-});
+const mapStateToProps = (state) =>  {
+  const { auth, utils, campaigns } = state;
+
+  return {
+    utils,
+    user: auth.data,
+    request: utils.request,
+    userCampaigns: campaigns.userCampaigns,
+    userDonations: campaigns.campaignDonations
+  };
+}
 
 const mapDispatchToProps = {
   fetchUserCampaigns,

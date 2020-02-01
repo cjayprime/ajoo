@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 
-class SuccessHead extends PureComponent {
+class SuccessHead extends Component {
     render() {
         return (
             <>

@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
 import Card from "../../sharedComponent/Card";
-// import { CircularProgress } from "@material-ui/core";
-// import { campaignRequest } from "../../store/campaignModules/saga";
 import Spinner from "../../sharedComponent/Spinner";
 import LoadableButton from "../../sharedComponent/LoadableButton";
-import ImageUpload from "../../sharedComponent/ImageUpload";
 import { campaignRequest } from "../../store/campaignModules/saga";
 import { isRequestActive } from "../../utils/misc";
 

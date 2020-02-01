@@ -36,14 +36,15 @@ import {
   AboutContainer,
   VolunteerDocumentContainer,
   HelpSupportContainer,
+  ResetPasswordContainer,
+  ForgotPasswordContainer,
+  EmailVerificationContainer,
+  EmailSentContainer,
   SupportSentContainer,
+  CloseCampaignContainer
 } from "./container";
 import { setUserData } from "./store/allActions";
 import PrivateRoute from "./sharedComponent/PrivateRoute";
-import ResetPasswordContainer from "./container/ResetPasswordContainer";
-import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
-import EmailVerificationContainer from "./container/AuthScreens/EmailVerificationContainer";
-import EmailSentContainer from "./container/AuthScreens/EmailSentContainer";
 
 let routes = {
   publicRoutes: [
@@ -157,6 +158,11 @@ let routes = {
       path: "/edit_campaign",
       exact: true,
       component: EditCampaignContainer
+    },
+    {
+      path: "/close_campaign",
+      exact: true,
+      component: CloseCampaignContainer
     },
     { path: "/profile", exact: true, component: ProfileContainer },
     {

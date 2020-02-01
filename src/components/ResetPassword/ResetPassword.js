@@ -105,6 +105,7 @@ class ResetPassword extends Component {
         <h1>Reset Password</h1>
         <div className="phone_verify-form">
           <FormInputField
+            type="password"
             placeholder="********"
             name="newPassword"
             value={newPassword.value}
@@ -114,6 +115,7 @@ class ResetPassword extends Component {
             onChange={this._handleChange}
           />
           <FormInputField
+            type="password"
             placeholder="********"
             name="confirmPassword"
             value={confirmPassword.value}

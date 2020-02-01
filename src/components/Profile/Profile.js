@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 // import { IMAGE_URL } from "../../utils/misc";
@@ -17,7 +17,7 @@ const tabs = [
   { tab: "Volunteering" }
 ];
 
-class Profile extends PureComponent {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;

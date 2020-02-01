@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-import line from "../../assets/images/line.svg";
 import FormInputField from "../../sharedComponent/form";
 import AlertDialog from "../../sharedComponent/AlertDialog";
-import { campaignRequest } from "../../store/campaignModules/saga";
-import { validateInput, IMAGE_URL, validate } from "../../utils/misc";
 import ImageUpload from "../../sharedComponent/ImageUpload";
-import { isRequestActive } from "../../utils/misc";
 import LoadableButton from "../../sharedComponent/LoadableButton";
+import { campaignRequest } from "../../store/campaignModules/saga";
+
+import { IMAGE_URL, validate, isRequestActive } from "../../utils/misc";
+
+import CloseDonations from "./CloseDonations";
+import DeleteCampaign from "./DeleteCampaign";
 
 const preImage = `${IMAGE_URL}363_232_`;
 
@@ -28,6 +33,10 @@ class EditCampaign extends Component {
         this.state = {
             formError: false,
             image: isEdit ? `${preImage}${editCampaign.imageUrl}` : "",
+            //rewards: [],
+            donation: false,
+            mode: "add",
+            column: {},
             fields: {
                 title: {
                     value: isEdit ? editCampaign.title : "",
@@ -104,7 +113,7 @@ class EditCampaign extends Component {
             },
             rewardFields: {
                 donationAmt: {
-                    value: isEdit ? editCampaign.donationAmt : "",
+                    value: "",
                     error: isEdit ? false : null,
                     errorMessage: "",
                     name: "Donation Amount (N)",
@@ -113,7 +122,7 @@ class EditCampaign extends Component {
                     }
                 },
                 rewardType: {
-                    value: isEdit ? editCampaign.rewardType : "",
+                    value: "",
                     error: isEdit ? false : null,
                     errorMessage: "",
                     name: "Reward Type",
@@ -122,7 +131,7 @@ class EditCampaign extends Component {
                     }
                 },
                 reward: {
-                    value: isEdit ? editCampaign.reward : "",
+                    value: "",
                     error: isEdit ? false : null,
                     errorMessage: "",
                     name: "reward",
@@ -139,36 +148,94 @@ class EditCampaign extends Component {
         this._isMounted = true;
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
+
         if(Object.keys(this.props.editCampaign).length === 0)
         this.props.history.push("/profile", { redirectFromCampaign: true })
 
-        const {
-            utils: { utils },
-            campaignSuccess,
-            createdCampaign
-        } = this.props;
-        if (
-            campaignSuccess !== false &&
-            createdCampaign.hasOwnProperty("campaign_id")
-        ) {
-            if (this.state.step === 3) return null;
-            this.setState({
-                step: 3
-            });
-        }
     }
 
-    componentWillUnmount() {
-        let newState = { ...this.state };
-        Object.keys(newState.fields).map(key => {
-            newState.fields[key].value = "";
-            newState.fields[key].error = null;
-            newState.fields[key].errorMessage = "";
+    setMode = (mode, column) => {
+
+        var donationAmt = "";
+        var rewardType = "";
+        var reward = "";
+        if(mode === "edit"){
+            donationAmt = column.donation;
+            rewardType = column.rewardType;
+            reward = column.reward;
+        }
+
+        this.setState({
+            mode,
+            column,
+            rewardFields: {
+                ...this.state.rewardFields,
+                donationAmt:{
+                    ...this.state.rewardFields.donationAmt,
+                    value: donationAmt
+                },
+                rewardType:{
+                    ...this.state.rewardFields.rewardType,
+                    value: rewardType
+                },
+                reward:{
+                    ...this.state.rewardFields.reward,
+                    value: reward
+                }
+            }
         });
-        this._safelySetState(newState);
-        this.props.userEditCampaign({});
-        this.props.userCreateCampaign({});
+
+    };
+
+    deleteReward = (column) => {
+        const { getReward, deleteReward, editCampaign } = this.props;
+
+        deleteReward({
+          id: column._id,
+          success: () => {
+              this.setMode("add")
+              getReward({id: editCampaign._id});
+          }
+        });
+    }
+
+    editReward = () => {
+        const { donationAmt, rewardType, reward } = this.state.rewardFields;
+        const { getReward, editReward, editCampaign } = this.props;
+        
+        if(validate(this, this.state.rewardFields))
+        editReward({
+            data: {
+                donation:     donationAmt.value,
+                reward_type:  rewardType.value,
+                reward:       reward.value
+            },
+            id: this.state.column._id,
+            success: () => {
+                this.setMode("add")
+                getReward({id: editCampaign._id});
+            }
+        });
+    }
+
+    addReward = () => {
+        const { donationAmt, rewardType, reward } = this.state.rewardFields;
+        const { getReward, addReward, editCampaign } = this.props;
+        
+        if(validate(this, this.state.rewardFields))
+        addReward({
+            data: {
+                campaign:     editCampaign._id,
+                donation:     donationAmt.value,
+                reward_type:  rewardType.value,
+                reward:       reward.value
+            },
+            success: () => {
+                this.setMode("add")
+                getReward({id: editCampaign._id});
+            }
+        });
     }
 
     setImage = image => {
@@ -177,14 +244,6 @@ class EditCampaign extends Component {
 
     triggerCampaignAction = e => {
         e.preventDefault();
-        /*
-        if (!validateInput(this.state.fields)) {
-          console.log(1)
-          return this._safelySetState({
-            formError: true
-          });
-        }
-        */
         let data = {};
         Object.keys(this.state.fields).map(key => {
             data[key] = this.state.fields[key].value;
@@ -291,9 +350,15 @@ class EditCampaign extends Component {
             }));
     };
 
+    toggle = () => {
+
+        this.setState({ donation: ! this.state.donation });
+
+    }
+
     render() {
-        const { image, rewardFields, fields } = this.state;
-        const { utils, categories, orgTypes } = this.props;
+        const { /*image, */rewardFields, fields } = this.state;
+        const { utils, categories, orgTypes, rewards, editCampaign, history } = this.props;
         const
             { goal,
                 title,
@@ -317,47 +382,101 @@ class EditCampaign extends Component {
                 {type}
             </option>
         ));
+        
 
+        const forms = Object.assign(this.state.fields, this.state.rewardFields);
         const form1 = {};
         const form2 = {};
+        const form3 = {};
+        
+        for(var key in forms){
 
-        for (var key in this.state.fields) {
-
-            if (key === "goal" || key === "title" || key === "category" || key === "affiliatedOrganization") {
-
-                form1[key] = this.state.fields[key];
-
-            } else if (key === "summary" || key === "campaign_details" || key === "types") {
-
-                form2[key] = this.state.fields[key];
-
+            if(key === "goal" || key === "title" || key === "category" || key === "affiliatedOrganization"){
+                
+                form1[key] = forms[key];
+                
+            }else if(key === "summary" || key === "campaign_details" || key === "types"){
+                
+                form2[key] = forms[key];
+                
+            }else if(key === "donationAmt" || key === "rewardType" || key === "reward"){
+                
+                form3[key] = forms[key];
+                
             }
 
         }
         
         const validate1 = validate.bind(this, this, form1);
-        const validate2 = validate.bind(this, this, form2);
+        //const validate2 = validate.bind(this, this, form2);
+        const validate3 = validate.bind(this, this, form3);
+
         return (
             <>
                 <AlertDialog
                     open={
                         utils.feedback.for === campaignRequest.userCampaignRequest ||
-                        utils.feedback.for === campaignRequest.uploadCampaignImageRequest
+                        utils.feedback.for === campaignRequest.uploadCampaignImageRequest ||
+                        utils.feedback.for === campaignRequest.addRewardRequest ||
+                        utils.feedback.for === campaignRequest.editRewardRequest ||
+                        utils.feedback.for === campaignRequest.deleteRewardRequest
                     }
                     message={utils.feedback.message}
                     success={utils.feedback.success}
                 />
+                
+                <CloseDonations {...this.props} toggle={this.toggle} open={this.state.donation}/>
+                
+                <DeleteCampaign {...this.props}  toggle={() => {}} open={false}/>
+
                 <div className="edit__campaign">
                     <div className="edit__campaign-head">
                         <div className="edit__campaign-head-title">
                             Edit Campaign
                         </div>
-                        {/*<div className="edit__campaign-heade-2">
-                            <span className="edit__campaign-close">Close Donations</span>
-                            <img src={line} alt="line" className="edit__campaign-line" />
-                            <span className="edit__campaign-delete">Delete Campaign</span>
-                        </div>*/}
+                        <div className="edit__campaign-heade-2">
+                            {
+                                true
+                                ?   <>
+                                        <span className="edit__campaign-close" onClick={this.toggle} style={{ cursor: "pointer" }}>
+                                            Close Donations
+                                        </span>
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
+                                        <span className="edit__campaign-delete" onClick={() => {}} style={{ cursor: "pointer" }}>
+                                            Delete Campaign
+                                        </span>
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
+                                        <span className="edit__campaign-delete" onClick={() => {
+
+                                            history.push({
+                                                pathname: "/close_campaign",
+                                                state: { campaign: editCampaign }
+                                            });
+
+                                        }} style={{ cursor: "pointer" }}>
+                                            Close Campaign
+                                        </span>
+                                    </>
+                                :   <span className="edit__campaign-delete" onClick={() => {
+
+                                        history.push({
+                                            pathname: "/close_campaign",
+                                            state: { campaign: editCampaign }
+                                        });
+
+                                    }} style={{ cursor: "pointer" }}>
+                                        Close Campaign
+                                    </span>
+                            }
+                        </div>
                     </div>
+
+
+
+
+
+
+
                     <div className="campaign__info">
                         <h3 className="campaign__info-title">Campaign Info</h3>
                         <hr className="campaign-hr" />
@@ -432,6 +551,16 @@ class EditCampaign extends Component {
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
                     <div className="campaign__feature-image">
                         <h3 className="campaign__info-title">Campaign Feature Image</h3>
                         <hr className="campaign-hr" />
@@ -470,6 +599,20 @@ class EditCampaign extends Component {
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div className="campaign_description">
                         <h3 className="campaign__info-title">Campaign Description</h3>
                         <hr className="campaign-hr" />
@@ -479,79 +622,86 @@ class EditCampaign extends Component {
                                  National Passport, Drivers License.
                             </div>
                             <div className="campaign__desc-form">
-                                <form>
-                                    <div className="createCampaign_form">
-                                        <FormInputField
-                                            type="textarea"
-                                            name="summary"
-                                            value={summary.value}
-                                            onBlur={this.onBlur}
-                                            form={this.state.fields}
-                                            maxlength="50"
-                                            style={{ resize: "none" }}
-                                            onChange={this._handleChange}
-                                            labelTitle="CAMPAIGN SUMMARY"
-                                            labelRight="0 / 50"
-                                            className="createCampaign_form-summary"
+                                <div className="createCampaign_form">
+                                    <FormInputField
+                                        type="textarea"
+                                        name="summary"
+                                        value={summary.value}
+                                        onBlur={this.onBlur}
+                                        form={this.state.fields}
+                                        maxlength="50"
+                                        style={{ resize: "none" }}
+                                        onChange={this._handleChange}
+                                        labelTitle="CAMPAIGN SUMMARY"
+                                        labelRight="0 / 50"
+                                        className="createCampaign_form-summary"
+                                    />
+                                </div>
+                                <div className="createCampaign_form">
+                                    <FormInputField
+                                        type="select"
+                                        name="types"
+                                        value={types.value}
+                                        form={this.state.fields}
+                                        onBlur={this.onBlur}
+                                        options={orgTypesItem}
+                                        labelTitle="type of campaign"
+                                        onChange={this._handleChange}
+                                        className="editCampaign_type-select editCampaign_type-type editCampaign_type-round"
+                                    />
+                                </div>
+                                <div className="createCampaign_form">
+                                    <label className="createCampaign_desc" style={{ color: campaign_details.error ? "red" : "inherit" }}>
+                                        {campaign_details.error ? campaign_details.errorMessage : 'Campaign Description'}
+                                    </label>
+                                    <div className="createCampaign_form-textarea">
+                                        <CKEditor
+                                            editor={ClassicEditor}
+                                            data={campaign_details.value}
+                                            onInit={editor => {
+                                                this._handleChange(null, {
+                                                    name: "campaign_details",
+                                                    data: this.isEdit ? this.editCampaign.description : ""
+                                                });
+                                            }}
+                                            name="campaign_details"
+                                            onChange={(event, editor) => {
+                                                const data = editor.getData();
+                                                this._handleChange(event, { name: "campaign_details", data });
+                                            }}
+                                            config={{
+                                                ckfinder: {
+                                                    uploadUrl: `/pdf/uploadImage`
+                                                }
+                                            }}
                                         />
                                     </div>
-                                    <div className="createCampaign_form">
-                                        <FormInputField
-                                            type="select"
-                                            name="types"
-                                            value={types.value}
-                                            form={this.state.fields}
-                                            onBlur={this.onBlur}
-                                            options={orgTypesItem}
-                                            labelTitle="type of campaign"
-                                            onChange={this._handleChange}
-                                            className="editCampaign_type-select editCampaign_type-type editCampaign_type-round"
-                                        />
-                                    </div>
-                                    <div className="createCampaign_form">
-                                        <label className="createCampaign_desc" style={{ color: campaign_details.error ? "red" : "inherit" }}>
-                                            {campaign_details.error ? campaign_details.errorMessage : 'Campaign Description'}
-                                        </label>
-                                        <div className="createCampaign_form-textarea">
-                                            <CKEditor
-                                                editor={ClassicEditor}
-                                                data={campaign_details.value}
-                                                onInit={editor => {
-                                                    this._handleChange(null, {
-                                                        name: "campaign_details",
-                                                        data: this.isEdit ? this.editCampaign.description : ""
-                                                    });
-                                                }}
-                                                name="campaign_details"
-                                                onChange={(event, editor) => {
-                                                    const data = editor.getData();
-                                                    this._handleChange(event, { name: "campaign_details", data });
-                                                }}
-                                                config={{
-                                                    ckfinder: {
-                                                        uploadUrl: `/pdf/uploadImage`
-                                                    }
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="verificationbutton_center">
-                                        <LoadableButton
-                                            onClick={this.triggerCampaignAction}
-                                            className="edit-desc-btn"
-                                            btnTitle="Save Changes"
-                                            isLoading={
-                                                isRequestActive(utils.request, campaignRequest.userCampaignRequest)
-                                            }
-                                            type="submit"
-                                        />
-                                    </div>
-                                </form>
+                                </div>
+                                <div className="verificationbutton_center">
+                                    <LoadableButton
+                                        onClick={this.triggerCampaignAction}
+                                        className="edit-desc-btn"
+                                        btnTitle="Save Changes"
+                                        isLoading={
+                                            isRequestActive(utils.request, campaignRequest.userCampaignRequest)
+                                        }
+                                        type="submit"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/*<div className="campaign__rewards">
+
+
+
+
+
+
+
+
+
+                    <div className="campaign__rewards">
                         <h3 className="campaign__info-title">Campaign Rewards</h3>
                         <hr className="campaign-hr" />
                         <div className="campaign__reward-body">
@@ -560,126 +710,120 @@ class EditCampaign extends Component {
                                  National Voters card, National Passport, Drivers License.
                             </div>
                             <div className="campaign__reward-form">
-                                <form method="post">
-                                    <div className="reward-form">
-                                        <div className="reward">
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="select"
-                                                    name="rewardType"
-                                                    value={rewardType.value}
-                                                    form={this.state.rewardFields}
-                                                    onBlur={this.onBlur}
-                                                    options={orgTypesItem}
-                                                    labelTitle="T-shirt or something"
-                                                    onChange={this._handleChange}
-                                                    className="editCampaign_form-select createCampaign_form-type editCampaign_form-round"
-                                                />
-                                            </div>
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="textarea"
-                                                    name="reward"
-                                                    value={reward.value}
-                                                    onBlur={this.onBlur}
-                                                    form={this.state.rewardFields}
-                                                    maxlength="50"
-                                                    style={{ resize: "none" }}
-                                                    onChange={this._handleChange}
-                                                    labelTitle="CAMPAIGN SUMMARY"
-                                                    labelRight="0 / 50"
-                                                    className="editReward-summary"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="reward2">
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="number"
-                                                    name="donationAmt"
-                                                    value={donationAmt.value}
-                                                    onBlur={this.onBlur}
-                                                    form={this.state.rewardFields}
-                                                    required
-                                                    validate={validate1}
-                                                    onChange={this._handleChange}
-                                                    labelTitle="DONATION AMOUNT (N)"
-                                                    placeholder="N5, 000.00"
-                                                    className="editCampaign-amt"
-                                                />
-                                            </div>
-                                        </div>
+                                <div className="createCampaign_form">
+                                    <FormInputField
+                                        type="select"
+                                        name="rewardType"
+                                        value={rewardType.value}
+                                        form={this.state.rewardFields}
+                                        onBlur={this.onBlur}
+                                        options={[<option key={1}>Material</option>, <option key={2}>Non-material</option>]}
+                                        labelTitle="REWARD TYPE"
+                                        validate={validate3}
+                                        onChange={this._handleChange}
+                                        className="editCampaign_type-select editCampaign_type-type editCampaign_type-round"
+                                    />
+                                </div>
+                                <div className="createCampaign_form">
+                                    <FormInputField
+                                        type="textarea"
+                                        name="reward"
+                                        value={reward.value}
+                                        onBlur={this.onBlur}
+                                        form={this.state.rewardFields}
+                                        maxlength="50"
+                                        style={{ resize: "none" }}
+                                        onChange={this._handleChange}
+                                        labelTitle="REWARD"
+                                        validate={validate3}
+                                        labelRight={reward.value.length + " / 50"}
+                                        className="createCampaign_form-summary"
+                                    />
+                                </div>
+                                <div className="createCampaign_form">
+                                    <FormInputField
+                                        type="number"
+                                        name="donationAmt"
+                                        value={donationAmt.value}
+                                        onBlur={this.onBlur}
+                                        form={this.state.rewardFields}
+                                        required
+                                        validate={validate3}
+                                        onChange={this._handleChange}
+                                        labelTitle="DONATION AMOUNT (N)"
+                                        placeholder="N5, 000.00"
+                                        className="editCampaign-amt"
+                                        className="createCampaign_form-title"
+                                    />
+                                </div>
+                                <div className="save_reward">
+                                    <div>
+                                        <LoadableButton
+                                            error={this.formError}
+                                            className="edit_save-btn"
+                                            btnTitle="Reset"
+                                            onClick={() => this.setMode("add")}
+                                        />
                                     </div>
-                                    <hr className="reward-hr" />
-                                    <div className="reward-form-2">
-                                        <div className="reward">
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="select"
-                                                    name="rewardType"
-                                                    value={rewardType.value}
-                                                    form={this.state.rewardFields}
-                                                    onBlur={this.onBlur}
-                                                    options={orgTypesItem}
-                                                    labelTitle="T-shirt or something"
-                                                    onChange={this._handleChange}
-                                                    className="editCampaign_form-select createCampaign_form-type editCampaign_form-round"
-                                                />
-                                            </div>
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="textarea"
-                                                    name="reward"
-                                                    value={reward.value}
-                                                    onBlur={this.onBlur}
-                                                    form={this.state.rewardFields}
-                                                    maxlength="50"
-                                                    style={{ resize: "none" }}
-                                                    onChange={this._handleChange}
-                                                    labelTitle="CAMPAIGN SUMMARY"
-                                                    labelRight="0 / 50"
-                                                    className="editReward-summary"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="reward2">
-                                            <div className="createCampaign_form">
-                                                <FormInputField
-                                                    type="number"
-                                                    name="donationAmt"
-                                                    value={donationAmt.value}
-                                                    onBlur={this.onBlur}
-                                                    form={this.state.rewardFields}
-                                                    required
-                                                    validate={validate1}
-                                                    onChange={this._handleChange}
-                                                    labelTitle="DONATION AMOUNT (N)"
-                                                    placeholder="N5, 000.00"
-                                                    className="editCampaign-amt"
-                                                />
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <LoadableButton
+                                            error={this.formError}
+                                            className="add_reward-btn"
+                                            onClick={() => this.state.mode === "edit" ? this.editReward() : this.addReward()}
+                                            btnTitle={(this.state.mode === "edit" ? "Edit" : "Add") + " Reward"}
+                                            isLoading={
+                                                isRequestActive(utils.request, campaignRequest.addRewardRequest)    ||
+                                                isRequestActive(utils.request, campaignRequest.editRewardRequest)   ||
+                                                isRequestActive(utils.request, campaignRequest.deleteRewardRequest)
+                                            }
+                                        />
                                     </div>
-                                    <div className="save_reward">
-                                        <div>
-                                            <LoadableButton
-                                                error={this.formError}
-                                                className="edit_save-btn"
-                                                btnTitle="Save Changes"
-                                            />
-                                        </div>
-                                        <div>
-                                            <LoadableButton
-                                                error={this.formError}
-                                                className="add_reward-btn"
-                                                btnTitle="Add Reward"
-                                            />
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
+                                {
+                                    rewards.length
+                                    ? 
+                                        <>
+                                            <hr className="campaign-hr" style={{ width: "auto", marginLeft: 0, marginTop: 50, marginBottom: 50 }} />
+                                            <div style={{ width: "auto", overflow: "hidden", overflowX: "auto" }}>
+                                                <table cellPadding="20" style={{ width: "100%", tableLayout: "fixed", borderCollapse: "collapse", borderRadius: 5, background: "#FFF", boxShadow: "1px 1px 4px -1px" }}>
+                                                    <thead>
+                                                        <tr>
+                                                            <td style={{ width: "25%" }}><b>REWARD TYPE</b></td>
+                                                            <td style={{ width: "25%" }}><b>REWARD</b></td>
+                                                            <td style={{ width: "25%" }}><b>DONATION AMOUNT (N)</b></td>
+                                                            <td style={{ width: "5%" }}></td>
+                                                            <td style={{ width: "5%" }}></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style={{ verticalAlign: "bottom" }}>
+                                                    {
+                                                        rewards.map((v, i) => 
+                                                            <tr key={i} style={{ borderBottom: "1px solid #ccc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "pre" }}>
+                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>{v.rewardType}</td>
+                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                    {v.reward}
+                                                                </td>
+                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                    {v.donation}
+                                                                </td>
+                                                                <td style={{ width: "5%" }} onClick={() => this.setMode("edit", v)}>
+                                                                    <EditIcon style={{cursor: "pointer"}} />
+                                                                </td>
+                                                                <td style={{ width: "5%" }} onClick={() => this.deleteReward(v)}>
+                                                                    <DeleteIcon style={{cursor: "pointer", fill: "red"}} />
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </>
+                                    : null
+                                }
                             </div>
                         </div>
-                    </div>*/}
+                    </div>
                 </div>
             </>
         )

@@ -9,6 +9,12 @@ import {
   FETCH_ALL_CAMPAIGNS,
   FETCH_ALL_CAMPAIGNS_SUCCESS,
   FETCH_ALL_CAMPAIGNS_ERROR,
+  FETCH_SUCCESS_STORY,
+  FETCH_SUCCESS_STORY_SUCCESS,
+  FETCH_SUCCESS_STORY_ERROR,
+  FETCH_ORGANIZATIONS,
+  FETCH_ORGANIZATIONS_SUCCESS,
+  FETCH_ORGANIZATIONS_ERROR,
   FETCH_USER_CAMPAIGNS,
   FETCH_USER_CAMPAIGNS_SUCCESS,
   FETCH_USER_CAMPAIGNS_ERROR,
@@ -30,7 +36,19 @@ import {
   GET_CAMPAIGN_DONATION_SUCCESS,
   GET_CAMPAIGN_DONATION_BY_ID,
   GET_CAMPAIGN_DONATION_BY_ID_ERROR,
-  GET_CAMPAIGN_DONATION_BY_ID_SUCCESS
+  GET_CAMPAIGN_DONATION_BY_ID_SUCCESS,
+  GET_REWARD,
+  GET_REWARD_SUCCESS,
+  GET_REWARD_ERROR,
+  ADD_REWARD,
+  ADD_REWARD_SUCCESS,
+  ADD_REWARD_ERROR,
+  EDIT_REWARD,
+  EDIT_REWARD_SUCCESS,
+  EDIT_REWARD_ERROR,
+  DELETE_REWARD,
+  DELETE_REWARD_SUCCESS,
+  DELETE_REWARD_ERROR
 } from "./actions";
 import {
   setLoading,
@@ -47,12 +65,18 @@ export const campaignRequest = {
   fetchCampaignByIdRequest: "fetchCampaignByIdRequest",
   initiateDonationRequest: "initiateDonationRequest",
   verifyPaymentRequest: "verifyPaymentRequest",
-  getCampaignDonationRequest: "getCampaignDonationRequest"
+  getCampaignDonationRequest: "getCampaignDonationRequest",
+  completedCampaignsRequest: "completedCampaignsRequest",
+  getRewardRequest: "getRewardRequest",
+  addRewardRequest: "addRewardRequest",
+  editRewardRequest: "editRewardRequest",
+  deleteRewardRequest: "deleteRewardRequest",
+  organizationsRequest: "organizationsRequest"
 };
 
 function* createCampaignActionSaga(action) {
   try {
-    const { data/*, history*/ } = action.payload;
+    const { data, success } = action.payload;
     if (!data) {
       yield put({
         type: USER_CREATE_CAMPAIGN_SUCCESS,
@@ -87,6 +111,9 @@ function* createCampaignActionSaga(action) {
           createdCampaign: response.data.entity
         }
       });
+
+      if (typeof success === "function") success();
+
     } else {
       yield put(
         showRequestFeedBack({
@@ -150,6 +177,51 @@ function* fetchAllCampaignsActionSaga({ payload }) {
   }
 }
 
+function* fetchCompletedCampaignsActionSaga(action) {
+  try {
+    const data = action.payload;
+    yield put(
+      setLoading({
+        request: campaignRequest.completedCampaignsRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.completedCampaigns, data);
+    yield put(
+      setLoading({ request: campaignRequest.completedCampaignsRequest })
+    );
+    yield put(
+      showRequestFeedBack({
+        message: response.data.status.desc,
+        for: campaignRequest.completedCampaignsRequest,
+        success: true
+      })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FETCH_SUCCESS_STORY_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+    } else {
+      yield put({
+        type: FETCH_SUCCESS_STORY_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.completedCampaignsRequest })
+    );
+    yield put({
+      type: FETCH_SUCCESS_STORY_ERROR,
+      payload: error
+    })
+  }
+}
+
 function* fetchUserCampaignsActionSaga(action) {
   try {
     yield put(
@@ -191,9 +263,11 @@ function* uploadCampaignImageActionSaga(action) {
   try {
     const {
       data,
-      createdCampaign,
-      history,
-      showPercentageProgress
+      //createdCampaign,
+      //history,
+      showPercentageProgress,
+      imageNumber,
+      success
     } = action.payload;
 
     yield put(showPercentageProgress(0));
@@ -206,11 +280,15 @@ function* uploadCampaignImageActionSaga(action) {
     const response = yield call(
       campaignService.uploadCampaignImage,
       data,
-      showPercentageProgress
+      showPercentageProgress,
+      imageNumber
     );
     yield put(
       setLoading({ request: campaignRequest.uploadCampaignImageRequest })
     );
+
+    if (typeof success === "function") success();
+
     if (response.data.status.code === 100) {
       yield put(
         showRequestFeedBack({
@@ -295,7 +373,7 @@ function* fetchCampaignByIdActionSaga(action) {
 
 function* initiateDonationActionSaga(action) {
   try {
-    yield put(setLoading({ request: campaignRequest.initiateDonationRequest, loading : true }));
+    yield put(setLoading({ request: campaignRequest.initiateDonationRequest, loading: true }));
     const response = yield call(
       campaignService.initiateDonation,
       action.payload
@@ -361,7 +439,7 @@ function* verifyPaymentActionSaga(action) {
 
 function* editCampaignActionSaga(action) {
   try {
-    const { data, campaignId/*, history*/ } = action.payload;
+    const { data, campaignId, success/*, history*/ } = action.payload;
     if (!data) {
       yield put(setLoading({ request: campaignRequest.userCampaignRequest }));
       yield put({
@@ -396,6 +474,9 @@ function* editCampaignActionSaga(action) {
           createdCampaign: response.data.entity
         }
       });
+
+      if (typeof success === "function") success();
+
     } else {
       yield put(
         showRequestFeedBack({
@@ -494,12 +575,282 @@ function* getCampaignDonationByIdActionSaga(action) {
   }
 }
 
+
+function* getRewardSaga(action) {
+  try {
+    const { id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.getRewardRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.getReward, id);
+    yield put(
+      setLoading({ request: campaignRequest.getRewardRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_REWARD_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getRewardRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: GET_REWARD_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getRewardRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getRewardRequest })
+    );
+    yield put({
+      type: GET_REWARD_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* addRewardSaga(action) {
+  try {
+    const { data, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.addRewardRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.addReward, data);
+    yield put(
+      setLoading({ request: campaignRequest.addRewardRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: ADD_REWARD_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.addRewardRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: ADD_REWARD_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.addRewardRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.addRewardRequest })
+    );
+    yield put({
+      type: ADD_REWARD_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* editRewardSaga(action) {
+  try {
+    const { data, id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.editRewardRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.editReward, data, id);
+    yield put(
+      setLoading({ request: campaignRequest.editRewardRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: EDIT_REWARD_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.editRewardRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: EDIT_REWARD_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.editRewardRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.editRewardRequest })
+    );
+    yield put({
+      type: EDIT_REWARD_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+function* deleteRewardSaga(action) {
+  try {
+    const { id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.deleteRewardRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.deleteReward, id);
+    yield put(
+      setLoading({ request: campaignRequest.deleteRewardRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: DELETE_REWARD_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.deleteRewardRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: DELETE_REWARD_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.deleteRewardRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.deleteRewardRequest })
+    );
+    yield put({
+      type: DELETE_REWARD_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* organizationActionSaga(action) {
+  try {
+    const data = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.organizationsRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.fetchOrganizations, data);
+    yield put(
+      setLoading({ request: campaignRequest.organizationsRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FETCH_ORGANIZATIONS_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+    } else {
+      yield put({
+        type: FETCH_ORGANIZATIONS_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.organizationsRequest })
+    );
+    yield put({
+      type: FETCH_ORGANIZATIONS_ERROR,
+      payload: error
+    })
+  }
+}
+
 function* fetchUserCampaignsWatcher() {
   yield takeEvery(FETCH_USER_CAMPAIGNS, fetchUserCampaignsActionSaga);
 }
 
 function* fetchAllCampaignsWatcher() {
   yield takeEvery(FETCH_ALL_CAMPAIGNS, fetchAllCampaignsActionSaga);
+}
+
+function* fetchCompletedCampaignsActionWatcher() {
+  yield takeLatest(FETCH_SUCCESS_STORY, fetchCompletedCampaignsActionSaga)
 }
 
 function* userCreateCampaignWatcher() {
@@ -534,10 +885,31 @@ function* getCampaignDonationByIdWatcher() {
   yield takeLatest(GET_CAMPAIGN_DONATION_BY_ID, getCampaignDonationByIdActionSaga);
 }
 
+function* getRewardWatcher() {
+  yield takeLatest(GET_REWARD, getRewardSaga);
+}
+
+function* addRewardWatcher() {
+  yield takeLatest(ADD_REWARD, addRewardSaga);
+}
+
+function* editRewardWatcher() {
+  yield takeLatest(EDIT_REWARD, editRewardSaga);
+}
+
+function* deleteRewardWatcher() {
+  yield takeLatest(DELETE_REWARD, deleteRewardSaga);
+}
+
+function* organizationsWatcher() {
+  yield takeLatest(FETCH_ORGANIZATIONS, organizationActionSaga)
+}
+
 export default function* campaignSaga() {
   yield all([
     userCreateCampaignWatcher(),
     fetchAllCampaignsWatcher(),
+    fetchCompletedCampaignsActionWatcher(),
     fetchUserCampaignsWatcher(),
     uploadCampaignImageWatcher(),
     fetchCampaignByIdWatcher(),
@@ -545,6 +917,11 @@ export default function* campaignSaga() {
     verifyPaymentWatcher(),
     editCampaignWatcher(),
     getCampaignDonationWatcher(),
-    getCampaignDonationByIdWatcher()
+    getCampaignDonationByIdWatcher(),
+    getRewardWatcher(),
+    addRewardWatcher(),
+    editRewardWatcher(),
+    deleteRewardWatcher(),
+    organizationsWatcher()
   ]);
 }

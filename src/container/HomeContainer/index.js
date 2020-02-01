@@ -7,7 +7,6 @@ import { fetchAllCampaigns } from "../../store/campaignModules/actions";
 class HomeContainer extends PureComponent {
   render() {
     const { fetchAllCampaigns, allCampaigns, utils } = this.props;
-
     return (
       <HomeComponent
         fetchAllCampaigns={fetchAllCampaigns}

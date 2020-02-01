@@ -8,6 +8,14 @@ export const FETCH_ALL_CAMPAIGNS = "FETCH_ALL_CAMPAIGNS";
 export const FETCH_ALL_CAMPAIGNS_ERROR = "FETCH_ALL_CAMPAIGNS_ERROR";
 export const FETCH_ALL_CAMPAIGNS_SUCCESS = "FETCH_ALL_CAMPAIGNS_SUCCESS";
 
+export const FETCH_SUCCESS_STORY = "FETCH_SUCCESS_STORY";
+export const FETCH_SUCCESS_STORY_ERROR = "FETCH_SUCCESS_STORY_ERROR";
+export const FETCH_SUCCESS_STORY_SUCCESS = "FETCH_SUCCESS_STORY_SUCCESS";
+
+export const FETCH_ORGANIZATIONS = "FETCH_ORGANIZATIONS";
+export const FETCH_ORGANIZATIONS_ERROR = "FETCH_ORGANIZATIONS_ERROR";
+export const FETCH_ORGANIZATIONS_SUCCESS = "FETCH_ORGANIZATIONS_SUCCESS";
+
 export const FETCH_USER_CAMPAIGNS = "FETCH_USER_CAMPAIGNS";
 export const FETCH_USER_CAMPAIGNS_ERROR = "FETCH_USER_CAMPAIGNS_ERROR";
 export const FETCH_USER_CAMPAIGNS_SUCCESS = "FETCH_USER_CAMPAIGNS_SUCCESS";
@@ -40,6 +48,22 @@ export const GET_CAMPAIGN_DONATION_BY_ID = "GET_CAMPAIGN_DONATION_BY_ID";
 export const GET_CAMPAIGN_DONATION_BY_ID_ERROR = "GET_CAMPAIGN_DONATION_BY_ID_ERROR";
 export const GET_CAMPAIGN_DONATION_BY_ID_SUCCESS = "GET_CAMPAIGN_DONATION_BY_ID_SUCCESS";
 
+export const ADD_REWARD = "ADD_REWARD";
+export const ADD_REWARD_ERROR = "ADD_REWARD_ERROR";
+export const ADD_REWARD_SUCCESS = "ADD_REWARD_SUCCESS";
+
+export const GET_REWARD = "GET_REWARD";
+export const GET_REWARD_ERROR = "GET_REWARD_ERROR";
+export const GET_REWARD_SUCCESS = "GET_REWARD_SUCCESS";
+
+export const EDIT_REWARD = "EDIT_REWARD";
+export const EDIT_REWARD_ERROR = "EDIT_REWARD_ERROR";
+export const EDIT_REWARD_SUCCESS = "EDIT_REWARD_SUCCESS";
+
+export const DELETE_REWARD = "DELETE_REWARD";
+export const DELETE_REWARD_ERROR = "DELETE_REWARD_ERROR";
+export const DELETE_REWARD_SUCCESS = "DELETE_REWARD_SUCCESS";
+
 export const SET_CAMPAIGN_DATA = "SET_CAMPAIGN_DATA";
 
 export const userCreateCampaign = data => ({
@@ -56,6 +80,20 @@ export const fetchAllCampaigns = data => ({
   type: FETCH_ALL_CAMPAIGNS,
   payload: data
 });
+
+export const fetchCompletedCampaigns = data => {
+  return {
+    type: FETCH_SUCCESS_STORY,
+    payload: data
+  }
+};
+
+export const organizationsAction = data => {
+  return {
+    type: FETCH_ORGANIZATIONS,
+    payload: data
+  }
+}
 
 export const fetchUserCampaigns = data => ({
   type: FETCH_USER_CAMPAIGNS,
@@ -94,5 +132,25 @@ export const getCampaignDonations = data => ({
 
 export const getCampaignDonationById = data => ({
   type: GET_CAMPAIGN_DONATION_BY_ID,
+  payload: data
+});
+
+export const getReward = data => ({
+  type: GET_REWARD,
+  payload: data
+});
+
+export const addReward = data => ({
+  type: ADD_REWARD,
+  payload: data
+});
+
+export const editReward = data => ({
+  type: EDIT_REWARD,
+  payload: data
+});
+
+export const deleteReward = data => ({
+  type: DELETE_REWARD,
   payload: data
 });

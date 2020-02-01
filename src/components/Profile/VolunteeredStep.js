@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import ProfileCampaign from "./ProfileCampaign";
 import ProfileCampaignDetails from "./ProfileCampaignDetails";
 
-class VolunteeredStep extends PureComponent {
+class VolunteeredStep extends Component {
   state = {
     step: 1
   };

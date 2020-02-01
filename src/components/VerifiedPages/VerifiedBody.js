@@ -1,34 +1,14 @@
-import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
 import FormInputField from "../../sharedComponent/form";
-import redcross from "../../assets/images/redcross.svg";
+import OrganizationsCard from "../../sharedComponent/OrganizationsCard";
+import Spinner from "../../sharedComponent/Spinner";
+import LoadableButton from "../../sharedComponent/LoadableButton";
+import { isRequestActive } from "../../utils/misc";
+import { campaignRequest } from "../../store/campaignModules/saga";
 
-// const verified_category = [
-//   "Medical",
-//   "Memorial",
-//   "Emergency",
-//   "Nonprofit",
-//   "Education",
-//   "Religion",
-//   "Business",
-//   "Sports",
-//   "Concert",
-//   "Reality Show",
-//   "Entertainment",
-//   "Community",
-//   "Competition",
-//   "Creative",
-//   "Event",
-//   "Faith",
-//   "Family",
-//   "Newlywed",
-//   "Travel",
-//   "Volunteer",
-//   "Wishes"
-// ];
 
-class VerifiedBody extends PureComponent {
+class VerifiedBody extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
@@ -87,7 +67,12 @@ class VerifiedBody extends PureComponent {
   };
 
   render() {
-    const { categories } = this.props;
+    const {
+      categories,
+      organizationsData,
+      isCampaignFetching,
+      utils
+    } = this.props;
     const { category } = this.state.fields;
 
     const categoryItems = categories.map((c, i) => (
@@ -95,57 +80,78 @@ class VerifiedBody extends PureComponent {
     ));
 
     return (
-      <div className="verified_page_body">
-        <div className="verified_page_body_head">
-          <FormInputField
-            type="select"
-            name="category"
-            value={category.value}
-            form={this.state.fields}
-            options={categoryItems}
-            labelTitle=""
-            onBlur={this.onBlur}
-            className="verified_page_body_select verified_page_body-round"
-            onChange={this._handleChange}
-          />
-          <span>28 Verified Organisations</span>
-        </div>
-        <div>
-          <a href id="verified_organization">
-            <h3 className="verified_page_body_title">Verified Organisations</h3>
-          </a>
-          <div className="verified_page_body_card">
-            {Array.apply(null, Array(16)).map((a, i) => (
-              <div className="verified_page-card">
-                <div className="verified_page_first-card">
-                  <div className="verified_page_second-card">
-                    <div className="verified_page_third-card">
-                      <div className="verified_page_third-card-img">
-                        <img
-                          src={redcross}
-                          alt="Red cross"
-                        />
-                      </div>
-                      <div className="verified_page_third-card-title">
-                        <b>
-                          hellohellohel
-                        </b>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="verified_page_first-card-footer">
-                    <Link to="/verified_org_campaigns">
-                      <button className="verified_footer-firstbtn">
-                        VIEW CAMPAIGNS
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <>
+        <div className="verified_page_body">
+          <div className="verified_page_body_head">
+            <FormInputField
+              type="select"
+              name="category"
+              value={category.value}
+              form={this.state.fields}
+              options={categoryItems}
+              labelTitle=""
+              onBlur={this.onBlur}
+              className="verified_page_body_select verified_page_body-round"
+              onChange={this._handleChange}
+            />
+            <span>28 Verified Organisations</span>
+          </div>
+          <div>
+            <a href id="verified_organization">
+              <h3 className="verified_page_body_title">Verified Organisations</h3>
+            </a>
+            <div className="verified_page_body_card">
+              {organizationsData.organizations.length === 0 && isCampaignFetching ? (
+                <Spinner />
+              ) : (
+                  <>
+                    {
+                      typeof organizationsData.organizations === "undefined" ||
+                        organizationsData.organizations.length === 0 ? (
+                          <span
+                            style={{
+                              fontFamily: "Muli",
+                              fontSize: "23px",
+                              marginTop: "30px",
+                              display: "flex",
+                              justifyContent: "center",
+                              textTransform: "uppercase"
+                            }}
+                          >
+                            no verified organizations available yet
+                          </span>
+                        ) : (
+                          <>
+                            {organizationsData.organizations.map(c => (
+                              <div key={c._id}>
+                                <OrganizationsCard
+                                  key={c._id}
+                                  src={c.image_url}
+                                  organization_name={c.organization_name}
+                                />
+                              </div>
+                            ))}
+                          </>
+                        )}
+                  </>
+                )
+              }
+            </div>
+            <div className="orgButton_div">
+              {
+                (organizationsData.organizations.length === 0) ? null :
+                  <LoadableButton
+                    error={false}
+                    className="orgButton"
+                    btnTitle="Show More Organizations"
+                    isLoading={isRequestActive(utils.request, campaignRequest.organizationsRequest)}
+                    onClick={this.props.more}
+                  />
+              }
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

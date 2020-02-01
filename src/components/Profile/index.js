@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import Layout from "../../sharedComponent/Layout";
 import AlertDialog from "../../sharedComponent/AlertDialog";
 import { campaignRequest } from "../../store/campaignModules/saga";
 import Profile from "./Profile";
 
-class ProfileComponent extends PureComponent {
+class ProfileComponent extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
@@ -29,7 +29,7 @@ class ProfileComponent extends PureComponent {
     const { user, userCampaigns, match, request, userDonations, utils } = this.props;
 
     return (
-      <Layout route={match.path} {...this.props}>
+      <Layout {...this.props}>
         <AlertDialog
             open={
                 utils.feedback.for === campaignRequest.userCampaignRequest

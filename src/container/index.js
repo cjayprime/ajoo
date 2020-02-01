@@ -29,4 +29,16 @@ export { default as SuccessContainer } from "./SuccessContainer";
 export { default as AboutContainer } from "./AboutContainer";
 export { default as VolunteerDocumentContainer } from "./VolunteerDocumentContainer";
 export { default as HelpSupportContainer } from "./HelpSupportContainer"
+export { default as ResetPasswordContainer } from "./ResetPasswordContainer";
+export { default as ForgotPasswordContainer } from "./ForgotPasswordContainer";
+export { default as EmailVerificationContainer } from "./AuthScreens/EmailVerificationContainer";
+export { default as EmailSentContainer } from "./AuthScreens/EmailSentContainer";
 export { default as SupportSentContainer } from "./SupportSentContainer"
+export { default as CloseCampaignContainer } from "./CloseCampaignContainer"
+
+
+
+//import ResetPasswordContainer from "./container/ResetPasswordContainer";
+//import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
+//import EmailVerificationContainer from "./container/AuthScreens/EmailVerificationContainer";
+//import EmailSentContainer from "./container/AuthScreens/EmailSentContainer"; 

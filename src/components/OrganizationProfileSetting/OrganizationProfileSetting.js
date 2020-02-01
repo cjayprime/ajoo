@@ -6,6 +6,7 @@ import { settingRequest } from "../../store/profilesettingsModules/saga";
 import BasicInformation from "./BasicInformation";
 import EmailSetting from "./EmailSettings";
 import PasswordSetting from "./PasswordSettings";
+import SignUpVerificationOrganization from "../AuthScreenComponent/SignUpVerification/SignUpVerificationOrganization";
 
 const type = [
     "Profit",
@@ -369,6 +370,25 @@ class OrganizationProfileSetting extends PureComponent {
                   }}
                 ></div>
               </div>
+              <div>
+                <button
+                  className="profile_tablinks"
+                  onClick={() => this.setState({ active: "verification" })}
+                >
+                  Verification Information
+                </button>
+                <div
+                  style={{
+                    height: 5,
+                    width: "100%",
+                    backgroundColor:
+                      this.state.active === "verification"
+                        ? "#0072A3"
+                        : "transparent",
+                    borderRadius: "10px 10px 0px 0px"
+                  }}
+                ></div>
+              </div>
             </div>
 
             {this.state.active === "profile" && (
@@ -424,6 +444,13 @@ class OrganizationProfileSetting extends PureComponent {
                 />
               </div>
             )}
+            {
+              this.state.active === "verification" && 
+              <SignUpVerificationOrganization
+                {...this.props}
+                request={this.props.utils}
+              />
+            }
           </div>
         </div>
 

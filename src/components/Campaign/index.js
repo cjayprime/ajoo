@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import StartCampaign from "../../sharedComponent/StartCampaign";
 import CampaignHead from "./CampaignHead";
 import CampaignTab from "./CampaignTab";
@@ -11,7 +11,7 @@ import { isRequestActive } from "../../utils/misc";
 import CampaignBody from "./CampaignBody";
 import './style.css';
 
-class CampaignComponent extends PureComponent {
+class CampaignComponent extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
@@ -55,6 +55,7 @@ class CampaignComponent extends PureComponent {
       userDonations,
       match
     } = this.props;
+    console.log('Campaign:::: ', campaign)
 
     return (
       <Layout {...this.props}>

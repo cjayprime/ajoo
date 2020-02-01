@@ -31,6 +31,33 @@ class CampaignService {
     });
   };
 
+  completedCampaigns = ({ page, perPage }) => {
+    return new Promise((resolve, reject) => {
+      apiClient(
+        `/campaigns/closed?${!isNaN(page) ? `&page=${page}` : ""}${!isNaN(perPage) ? `&per_page=${perPage}` : ""}`
+      )
+        .then(response => {
+          return resolve(response);
+        })
+        .catch(error => {
+          reject(error.response)
+        })
+    })
+  }
+
+  fetchOrganizations = ({ page, perPage }) => {
+    return new Promise((resolve, reject) => {
+      apiClient(`/organizations?${!isNaN(page) ? `&page=${page}` : ""}${!isNaN(perPage) ? `&per_page=${perPage}` : ""}`
+      )
+        .then(response => {
+          return resolve(response);
+        })
+        .catch(error => {
+          reject(error.response)
+        })
+    })
+  }
+
   fetchUserCampaigns = () => {
     return new Promise((resolve, reject) => {
       apiClient(`/campaigns`)
@@ -43,7 +70,8 @@ class CampaignService {
     });
   };
 
-  uploadCampaignImage = (body, showPercentageProgress) => {
+  uploadCampaignImage = (body, showPercentageProgress, imageNumber) => {
+
     return new Promise((resolve, reject) => {
       const config = {
         onUploadProgress: ({ loaded, total }) => {
@@ -52,7 +80,7 @@ class CampaignService {
         body,
         method: "PUT"
       };
-      apiClient(`/image/upload`, config)
+      apiClient("/image/upload" + (imageNumber ? imageNumber : ""), config)
         .then(res => {
           return resolve(res);
         })
@@ -144,6 +172,69 @@ class CampaignService {
         });
     });
   };
+
+  getReward = (id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      };
+      apiClient(`/reward/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  addReward = (body) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body,
+        method: "POST"
+      };
+      apiClient(`/reward`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  editReward = (body, id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body,
+        method: "PUT"
+      };
+      apiClient(`/reward/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  deleteReward = (id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "DELETE"
+      };
+      apiClient(`/reward/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
 }
 
 const instance = new CampaignService();

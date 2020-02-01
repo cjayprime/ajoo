@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import CampaignComponent from "../../components/Campaign";
@@ -10,7 +10,7 @@ import {
 } from "../../store/campaignModules/actions";
 import { openModalAction } from "../../store/utilsModule/actions";
 
-class CampaignContainer extends PureComponent {
+class CampaignContainer extends Component {
   render() {
     const {
       fetchCampaignById,

@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import {
   userCreateCampaign,
   uploadCampaignImage,
-  userEditCampaign
+  userEditCampaign,
+  addReward
 } from "../../store/campaignModules/actions.js";
 import CreateCampaign from "../../components/CreateCampaign";
 import {
@@ -26,12 +27,14 @@ class CreateCampaignContainer extends PureComponent {
       uploadCampaignImage,
       showPercentageProgress,
       orgTypes,
-      utils
+      utils,
+      addReward
     } = this.props;
 
     return (
       <CreateCampaign
         {...this.props}
+        addReward={addReward}
         categories={categories}
         createdCampaign={createdCampaign}
         showPercentageProgress={showPercentageProgress}
@@ -66,7 +69,8 @@ const mapDispatchToProps = {
   fetchOrgTypes,
   uploadCampaignImage,
   showPercentageProgress,
-  userEditCampaign
+  userEditCampaign,
+  addReward
 };
 
 export default connect(

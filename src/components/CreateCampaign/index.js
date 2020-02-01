@@ -55,20 +55,23 @@ class CreateCampaign extends PureComponent {
       uploadCampaignImage,
       orgTypes,
       userEditCampaign,
-      utils
+      utils,
+      addReward
     } = this.props;
 
     return (
       <Layout {...this.props}>
         <AlertDialog
             open={
-                utils.feedback.for === campaignRequest.userCampaignRequest
+                utils.feedback.for === campaignRequest.userCampaignRequest ||
+                utils.feedback.for === campaignRequest.addRewardRequest
             }
             message={utils.feedback.message}
             success={utils.feedback.success}
         />
         <CreateCampaignForm
           {...this.props}
+          addReward={addReward}
           createdCampaign={createdCampaign}
           uploadCampaignImage={uploadCampaignImage}
           showPercentageProgress={showPercentageProgress}

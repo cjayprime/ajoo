@@ -92,13 +92,24 @@ class Footer extends PureComponent {
             </ul>
             <ul className="footer_column3">
               <li>
-                <i className="fab fa-facebook-square fa-2x"></i>
+                <a href="https://web.facebook.com/ajoonig" target="_blank">
+                  <i className="fab fa-facebook-square fa-2x"></i>
+                </a>
               </li>
               <li>
-                <i className="fab fa-instagram fa-2x"></i>
+                <a href="https://www.instagram.com/ajoo_nig/" target="_blank">
+                  <i className="fab fa-instagram fa-2x"></i>
+                </a>
               </li>
               <li>
-                <i className="fab fa-twitter fa-2x"></i>
+                <a href="https://twitter.com/ajoo_ng" target="_blank">
+                  <i className="fab fa-twitter fa-2x"></i>
+                </a>
+              </li>
+              <li>
+                <a href=" https://www.linkedin.com/company/64648409/admin/content-suggestions/" target="_blank">
+                  <i className="fab fa-linkedin fa-2x"></i>
+                </a>
               </li>
             </ul>
           </div>

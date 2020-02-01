@@ -3,8 +3,10 @@ import React, { Component } from "react";
 import CreateCampaignForm1 from "./createCampaignForm1";
 import CreateCampaignForm2 from "./createCampaignForm2";
 import { campaignRequest } from "../../store/campaignModules/saga";
-import { validateInput, IMAGE_URL, validate } from "../../utils/misc";
+import { IMAGE_URL, validate } from "../../utils/misc";
 import CampaignFeatureImage from "./UploadCampaignImage";
+import CampaignFeatureImages from "./UploadCampaignImages";
+import RewardForm from "./rewardForm";
 
 const preImage = `${IMAGE_URL}363_232_`;
 
@@ -24,6 +26,7 @@ class CreateCampaignForm extends Component {
       step: 1,
       formError: false,
       image: isEdit ? `${preImage}${editCampaign.imageUrl}` : "",
+      rewards: [],
       fields: {
         title: {
           value: isEdit ? editCampaign.title : "",
@@ -121,7 +124,7 @@ class CreateCampaignForm extends Component {
           value: isEdit ? editCampaign.reward : "",
           error: isEdit ? false : null,
           errorMessage: "",
-          name: "reward",
+          name: "Reward",
           rules: {
             required: true,
             maxLength: 50
@@ -135,37 +138,15 @@ class CreateCampaignForm extends Component {
     this._isMounted = true;
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const {
-      utils: { utils },
-      campaignSuccess,
-      createdCampaign
-    } = this.props;
-    if (
-      campaignSuccess !== false &&
-      createdCampaign.hasOwnProperty("campaign_id")
-    ) {
-      if (this.state.step === 3) return null;
-      this.setState({
-        step: 3
-      });
-    }
-  }
+  setRewardForm = reward => {
+    this.setState({reward});
+  };
 
-  componentWillUnmount() {
-    let newState = { ...this.state };
-    Object.keys(newState.fields).map(key => {
-      newState.fields[key].value = "";
-      newState.fields[key].error = null;
-      newState.fields[key].errorMessage = "";
-    });
-    this._safelySetState(newState);
-    this.props.userEditCampaign({});
-    this.props.userCreateCampaign({});
-  }
-
-  setImage = image => {
+  setImage = (image, imageNumber, success) => {
     this.setState({ image });
+
+    if(imageNumber)
+    this.triggerImageUpload(imageNumber, success);
   };
 
   nextStep = () => {
@@ -178,16 +159,9 @@ class CreateCampaignForm extends Component {
     this.setState({ step: step - 1 });
   };
 
-  triggerCampaignAction = e => {
+  triggerCampaignAction = (e, success) => {
     e.preventDefault();
-    /*
-    if (!validateInput(this.state.fields)) {
-      console.log(1)
-      return this._safelySetState({
-        formError: true
-      });
-    }
-    */
+
     let data = {};
     Object.keys(this.state.fields).map(key => {
       data[key] = this.state.fields[key].value;
@@ -196,13 +170,14 @@ class CreateCampaignForm extends Component {
     if (this.isEdit) {
       return this.props.userEditCampaign({
         data,
-        campaignId: this.editCampaign._id
+        campaignId: this.editCampaign._id,
+        success
       });
     }
-    this.props.userCreateCampaign({ data });
+    this.props.userCreateCampaign({ data, success });
   };
 
-  triggerImageUpload = () => {
+  triggerImageUpload = (imageNumber, success) => {
     const { image } = this.state;
     const { createdCampaign, showPercentageProgress, history } = this.props;
 
@@ -211,6 +186,7 @@ class CreateCampaignForm extends Component {
       this.editCampaign.imageUrl &&
       image === `${preImage}${this.editCampaign.imageUrl}`
     ) {
+      console.log('111')
       return history.push(
         `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
       );
@@ -229,8 +205,63 @@ class CreateCampaignForm extends Component {
       },
       createdCampaign,
       history,
-      showPercentageProgress
+      showPercentageProgress,
+      imageNumber,
+      success
     });
+
+  };
+
+  triggerSaveRewardAction = success => {
+    
+    const { createdCampaign } = this.props;
+
+    this.props.addReward({
+      data: {
+        campaign:     createdCampaign._id,
+        donation:     this.state.rewardFields.donationAmt.value,
+        reward_type:  this.state.rewardFields.rewardType.value,
+        reward:       this.state.rewardFields.reward.value
+      },
+      success
+    });
+
+  };
+
+  saveRewardSuccess = () => {
+    
+    var rewards = this.state.rewards;
+    rewards.push(this.state.rewardFields);
+    this.setState({
+      rewards,
+      rewardFields: {
+        ...this.state.rewardFields,
+        donationAmt:{
+          ...this.state.rewardFields.donationAmt,
+          value: ""
+        },
+        rewardType:{
+          ...this.state.rewardFields.rewardType,
+          value: ""
+        },
+        reward:{
+          ...this.state.rewardFields.reward,
+          value: ""
+        }
+      }
+    });
+
+  };
+
+  createCampaignSuccess = () => {
+
+    if(this.state.fields.types.value === "Reward based"){
+      this.nextStep();
+    }else{
+      const { step } = this.state;
+      this.setState({ step: step + 2 });
+    }
+
   };
 
   _handleChange = (e, text) => {
@@ -285,8 +316,9 @@ class CreateCampaignForm extends Component {
   };
 
   render() {
-    const { image, step, rewardFields } = this.state;
-    const { utils, categories, orgTypes } = this.props;
+    const { utils, categories, orgTypes, createdCampaign } = this.props;
+    
+    var { image, rewardFields, step, rewards } = this.state;
 
     const categoriesItem = categories.map(item => (
       <option value={item} key={item}>
@@ -300,18 +332,24 @@ class CreateCampaignForm extends Component {
       </option>
     ));
 
+    const forms = Object.assign(this.state.fields, this.state.rewardFields);
     const form1 = {};
     const form2 = {};
+    const form3 = {};
     
-    for(var key in this.state.fields){
+    for(var key in forms){
 
       if(key === "goal" || key === "title" || key === "category" || key === "affiliatedOrganization"){
         
-        form1[key] = this.state.fields[key];
+        form1[key] = forms[key];
         
       }else if(key === "summary" || key === "campaign_details" || key === "types"){
         
-        form2[key] = this.state.fields[key];
+        form2[key] = forms[key];
+        
+      }else if(key === "donationAmt" || key === "rewardType" || key === "reward"){
+        
+        form3[key] = forms[key];
         
       }
 
@@ -319,6 +357,7 @@ class CreateCampaignForm extends Component {
     
     const validate1 = validate.bind(this, this, form1);
     const validate2 = validate.bind(this, this, form2);
+    const validate3 = validate.bind(this, this, form3);
 
     switch (step) {
       case 1:
@@ -344,6 +383,7 @@ class CreateCampaignForm extends Component {
             _handleChange={this._handleChange}
             campaignRequest={campaignRequest}
             triggerCampaignAction={this.triggerCampaignAction}
+            createCampaignSuccess={this.createCampaignSuccess}
             utils={utils}
             form={this.state}
             validate={validate2}
@@ -353,7 +393,42 @@ class CreateCampaignForm extends Component {
         );
       case 3:
         return (
+          <RewardForm
+            prevStep={this.prevStep}
+            nextStep={this.nextStep}
+            _handleChange={this._handleChange}
+            onBlur={this.onBlur}
+            rewards={rewards}
+            //typeItem={typeItem}
+            triggerSaveRewardAction={this.triggerSaveRewardAction}
+            saveRewardSuccess={this.saveRewardSuccess}
+            utils={utils}
+            form={this.state}
+            validate={validate3}
+            campaignRequest={campaignRequest}
+            isEdit={this.isEdit}
+            editCampaign={this.editCampaign}
+          />
+        );
+      case 4:
+        return (
           <CampaignFeatureImage
+            prevStep={this.prevStep}
+            nextStep={this.nextStep}
+            _handleChange={this._handleChange}
+            imageVal={this.state.image}
+            isEdit={this.isEdit}
+            formError={this.state.formError}
+            campaignRequest={campaignRequest}
+            editImageUrl={this.editCampaign && this.editCampaign.imageUrl}
+            triggerImageUpload={this.triggerImageUpload}
+            utils={utils}
+            setImage={this.setImage}
+          />
+        );
+      case 5:
+        return (
+          <CampaignFeatureImages
             prevStep={this.prevStep}
             _handleChange={this._handleChange}
             imageVal={this.state.image}
@@ -362,6 +437,7 @@ class CreateCampaignForm extends Component {
             campaignRequest={campaignRequest}
             editImageUrl={this.editCampaign && this.editCampaign.imageUrl}
             triggerImageUpload={this.triggerImageUpload}
+            createdCampaign={createdCampaign}
             utils={utils}
             setImage={this.setImage}
           />

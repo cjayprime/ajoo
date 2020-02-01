@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import profile_tab1 from "../../assets/images/profile_tab1.svg";
 
-class ProfileCampaignDetails extends PureComponent {
+class ProfileCampaignDetails extends Component {
   back = e => {
     e.preventDefault();
     this.props.prevStep();

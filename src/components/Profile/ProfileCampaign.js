@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import campaign_2 from "../../assets/images/campaign_2.svg";
 import profile_tab1 from "../../assets/images/profile_tab1.svg";
 import plantain from "../../assets/images/plantain.png";
 
-class ProfileCampaign extends PureComponent {
+class ProfileCampaign extends Component {
   continue = e => {
     e.preventDefault();
     this.props.nextStep();

@@ -3298,27 +3298,16 @@
   .verified_page_third-card {
     width: 259px;
     height: 330px;
+    text-align: center;
+    padding-top: 30px;
     background: #ffffff;
-    margin-top: 12px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1), 0px 1px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
-    padding-top: 12px;
   }
 
-  .verified_page_third-card-img {
-    display: flex;
-    justify-content: center;
-  }
 
   .verified_page_third-card-img img {
     width: 200px;
-    padding-top: 74px;
-    padding-bottom: 112px;
-  }
-
-  .verified_page_third-card-title {
-    display: flex;
-    justify-content: center;
   }
 
   .verified_page_third-card-title b {
@@ -3329,6 +3318,29 @@
     line-height: 15px;
     text-transform: uppercase;
     color: #000000;
+  }
+
+  .orgButton_div {
+    display: flex;
+    justify-content: center;
+  }
+
+  .orgButton {
+    width: 261px;
+    height: 48px;
+    background: #0072a3;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 81px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #dff0ff;
+    outline: none;
+    margin-bottom: 50px;
   }
 
   /* END VERIFIED PAGES */
@@ -5501,7 +5513,6 @@
 
   .success__banner {
     width: 100%;
-    height: 30vh;
     background-image: url("../images/mask_group.png");
   }
 
@@ -5515,6 +5526,7 @@
     color: #212121;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
     padding-top: 100px;
+    padding-bottom: 100px;
   }
 
   .success__stories-campaign {

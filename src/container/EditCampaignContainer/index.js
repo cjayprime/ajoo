@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 import {
     userCreateCampaign,
     uploadCampaignImage,
-    userEditCampaign
+    userEditCampaign,
+    getReward,
+    addReward,
+    editReward,
+    deleteReward
 } from "../../store/campaignModules/actions.js";
 import {
     fetchCategories,
@@ -28,11 +32,21 @@ class EditCampaignContainer extends Component {
             showPercentageProgress,
             orgTypes,
             utils,
-            showRequestFeedBack
+            showRequestFeedBack,
+            rewards,
+            getReward,
+            addReward,
+            editReward,
+            deleteReward
         } = this.props;
         return (
             <>
                 <EditCampaignComponent {...this.props}
+                    rewards={rewards}
+                    getReward={getReward}
+                    addReward={addReward}
+                    editReward={editReward}
+                    deleteReward={deleteReward}
                     categories={categories}
                     createdCampaign={createdCampaign}
                     showPercentageProgress={showPercentageProgress}
@@ -52,13 +66,13 @@ class EditCampaignContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state, state.campaigns.createdCampaign)
     var { campaigns, utils, misc } = state;
     return {
         campaignSuccess: campaigns.success,
         categories: misc.categories,
         orgTypes: misc.orgTypes,
         utils,
+        rewards: campaigns.rewards,
         createdCampaign: campaigns.createdCampaign
     };
 }
@@ -70,7 +84,11 @@ const mapDispatchToProps = {
     uploadCampaignImage,
     showPercentageProgress,
     userEditCampaign,
-    showRequestFeedBack
+    showRequestFeedBack,
+    getReward,
+    addReward,
+    editReward,
+    deleteReward
 };
 
 

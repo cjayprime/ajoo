@@ -25,84 +25,6 @@ const FormInputField = function(props){
     labelRight
   } = props;
 
-  /*
-  function handleBlur(event) {
-    var { name } = event.target;
-    var properties = { ...form };
-    var { rules, value, name: inputName } = properties[name];
-    var re;
-    var valid;
-
-    const setError = error => {
-      onBlur({ ...error, name }, name);
-    };
-
-    if (rules.required && value.length === 0) {
-      return setError({
-        error: true,
-        errorMessage: `${inputName} can't be empty`
-      });
-    }
-    if (rules.maxLength && value.length > rules.maxLength) {
-      return setError({ error: true, errorMessage: "value too long" });
-    }
-    if (rules.minLength && value.length < rules.minLength) {
-      return setError({ error: true, errorMessage: "value too short" });
-    }
-    if (rules.email) {
-      re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      //re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      valid = re.test(value);
-      if (!valid) {
-        return setError({
-          error: true,
-          errorMessage: "Email must be a valid mail"
-        });
-      }
-    }
-    if (rules.password) {
-      re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/;
-      valid = re.test(value);
-      if (!valid) {
-        return setError({
-          error: true,
-          errorMessage:
-            "Atleast a number, a capital letter, and minimum of 8 characters"
-        });
-      }
-    }
-    if (rules.confirmPassword) {
-      if (value !== properties["password"].value) {
-        return setError({
-          error: true,
-          errorMessage: "Must be equal to password input"
-        });
-      }
-    }
-    if (rules.length) {
-      if (value.length !== rules.length) {
-        return setError({
-          error: true,
-          errorMessage: "Your phone number should look like +2348012345678"
-        });
-      }
-    }
-    if (rules.hasPrenumber) {
-      var index = value.split("+234");
-
-      if (index[0] !== "") {
-        return setError({
-          error: true,
-          errorMessage: "Your phone number should start with +234"
-        });
-      }
-    }
-
-    return setError({ error: false, errorMessage: "" });
-  }
-  */
-
-
   if (type === "select") {
     return (
       <div>
@@ -124,7 +46,7 @@ const FormInputField = function(props){
   } else if (type === "textarea") {
     return (
       <div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", width: 410 }}>
           <label style={{ color: form[name].error ? "red" : "inherit" }}>
             {form[name].error ? form[name].errorMessage.toUpperCase() : labelTitle.toUpperCase()}
           </label>
@@ -148,7 +70,7 @@ const FormInputField = function(props){
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 15 }}>
         <label style={{ color: form[name].error ? "red" : "inherit" }}>
           {form[name].error ? form[name].errorMessage.toUpperCase() : labelTitle.toUpperCase()}
         </label>
