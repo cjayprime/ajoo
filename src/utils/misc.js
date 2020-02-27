@@ -99,7 +99,13 @@ const validateHelper = function(event, fields){
     if(typeof this === "undefined") return;
 
     let newForm = { ...this.state };
-    if (typeof newForm.rewardFields !== "undefined" && newForm.rewardFields.hasOwnProperty(name)) {
+    if (typeof newForm.basicInformationFields !== "undefined" && newForm.basicInformationFields.hasOwnProperty(name)) {
+      newForm.basicInformationFields[name] = {
+        ...newForm.basicInformationFields[name],
+        error,
+        errorMessage
+      };
+    } else if (typeof newForm.rewardFields !== "undefined" && newForm.rewardFields.hasOwnProperty(name)) {
       newForm.rewardFields[name] = {
         ...newForm.rewardFields[name],
         error,

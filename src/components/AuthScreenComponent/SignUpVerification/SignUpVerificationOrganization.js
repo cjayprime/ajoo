@@ -9,22 +9,30 @@ import { IMAGE_URL, validate, isRequestActive } from "../../../utils/misc";
 import { verifyRequest } from "../../../store/verifyModules/saga";
 import { authRequest } from "../../../store/authModules/saga";
 
-const preImage = `${IMAGE_URL}363_232_`;
+const preImage = `${IMAGE_URL}100_100_`;
 
 class SigninForm extends Component {
   constructor(props) {
     super(props);
+
+    let { user } = this.props;
+    if (!user) user = {};
+
     this.state = {
       formError: false,
       hidden: true,
       index: null,
-      profileImage: "",
-      featureImages: [],
-      documentImage: "",
+      profileImage: user.image_url ? preImage + "" + user.image_url : "",
+      featureImages: [
+        user.organization_f_img_1 ? IMAGE_URL + "" + user.organization_f_img_1 : "",
+        user.organization_f_img_2 ? IMAGE_URL + "" + user.organization_f_img_2 : "",
+        user.organization_f_img_3 ? IMAGE_URL + "" + user.organization_f_img_3 : ""
+      ],
+      documentImage: user.relevant_doc ? IMAGE_URL + "" + user.relevant_doc : "",
       submitted: false,
       fields: {
         facebook: {
-          value: "",
+          value: user.facebook || "",
           error: null,
           errorMessage: "",
           name: "facebook",
@@ -33,7 +41,7 @@ class SigninForm extends Component {
           }
         },
         twitter: {
-          value: "",
+          value: user.twitter || "",
           error: null,
           errorMessage: "",
           name: "twitter",
@@ -42,7 +50,7 @@ class SigninForm extends Component {
           }
         },
         instagram: {
-          value: "",
+          value: user.instagram || "",
           error: null,
           errorMessage: "",
           name: "instagram",
@@ -51,7 +59,7 @@ class SigninForm extends Component {
           }
         },
         ref_first_name: {
-          value: "",
+          value: user.user_ref ? user.user_ref.first_name : "",
           error: null,
           errorMessage: "",
           name: "first name",
@@ -60,7 +68,7 @@ class SigninForm extends Component {
           }
         },
         ref_last_name: {
-          value: "",
+          value: user.user_ref ? user.user_ref.last_name : "",
           error: null,
           errorMessage: "",
           name: "last name",
@@ -69,7 +77,7 @@ class SigninForm extends Component {
           }
         },
         ref_email: {
-          value: "",
+          value: user.user_ref ? user.user_ref.email : "",
           error: null,
           errorMessage: "",
           name: "email",
@@ -78,7 +86,7 @@ class SigninForm extends Component {
           }
         },
         ref_mobile: {
-          value: "",
+          value: user.user_ref ? user.user_ref.mobile : "",
           error: null,
           errorMessage: "",
           name: "mobile",
@@ -94,11 +102,11 @@ class SigninForm extends Component {
     this._isMounted = true;
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
 
-    if(this.props.verify.category === "Identification-Document-Upload-Failed"){
+    if (this.props.verify.category === "Identification-Document-Upload-Failed") {
       this.props.verify.category = "";
-      this.setState({documentImage: ""});
+      this.setState({ documentImage: "" });
     }
 
   }
@@ -114,16 +122,16 @@ class SigninForm extends Component {
   triggerSignUpVerificationAction = e => {
     e.preventDefault();
 
-    this.setState({submitted: true}, () => {
+    this.setState({ submitted: true }, () => {
 
       let data = {};
       Object.keys(this.state.fields).map(key => {
         data[key] = this.state.fields[key].value;
       });
-      
-      if(validate(this, this.state.fields) &&
+
+      if (validate(this, this.state.fields) &&
         (this.state.featureImages[0] && this.state.featureImages[1] && this.state.featureImages[2] && this.state.documentImage && this.state.profileImage))
-      this.props.verifySignupUser({ data });
+        this.props.verifySignupUser({ data });
 
     });
   };
@@ -131,7 +139,7 @@ class SigninForm extends Component {
   triggerProfileImageUpload = () => {
     const { profileImage } = this.state;
     const { showPercentageProgress } = this.props;
-    
+
     this.props.uploadProfileImage({
       data: {
         image: profileImage
@@ -147,7 +155,7 @@ class SigninForm extends Component {
   triggerFeatureImageUpload = (index) => {
     const { featureImages } = this.state;
     const { showPercentageProgress } = this.props;
-    
+
     this.props.uploadFeatureImageForVerification({
       data: {
         image: featureImages[index],
@@ -166,7 +174,7 @@ class SigninForm extends Component {
   triggerDocumentImageUpload = () => {
     const { documentImage } = this.state;
     const { showPercentageProgress } = this.props;
-    
+
     this.props.uploadDocumentImageForVerification({
       data: {
         file: documentImage
@@ -194,7 +202,7 @@ class SigninForm extends Component {
       newState.rewardFields[name].error = false;
       newState.rewardFields[name].value = value;
     } else {
-    const { name, value } = e.target;
+      const { name, value } = e.target;
       newState.fields[name].error = false;
       newState.fields[name].value = value;
     }
@@ -206,7 +214,7 @@ class SigninForm extends Component {
 
 
 
-  
+
   render() {
     const { /*verify,*/ isLoading, utils } = this.props;
     const {
@@ -222,25 +230,27 @@ class SigninForm extends Component {
     return (
       <>
         <AlertDialog
-            open={
-              utils.feedback.for === authRequest.uploadProfileImageRequest ||
-              utils.feedback.for === verifyRequest.verifySignupRequest ||
-              //utils.feedback.for === verifyRequest.verifyVolunteerImageRequest ||
-              utils.feedback.for === verifyRequest.uploadFeatureImageRequest ||
-              utils.feedback.for === verifyRequest.uploadDocumentImageRequest
-            }
-            message={utils.feedback.message}
-            success={utils.feedback.success}
+          open={
+            utils.feedback.for === authRequest.uploadProfileImageRequest ||
+            utils.feedback.for === verifyRequest.verifySignupRequest ||
+            //utils.feedback.for === verifyRequest.verifyVolunteerImageRequest ||
+            utils.feedback.for === verifyRequest.uploadFeatureImageRequest ||
+            utils.feedback.for === verifyRequest.uploadDocumentImageRequest
+          }
+          message={utils.feedback.message}
+          success={utils.feedback.success}
         />
         <form onSubmit={this.triggerSignUpVerificationAction}>
           <div className="signUp_verification">
-            <div className="verification_1">
-              <h1>Sign Up Verification</h1>
-              <Link to="/campaigns">Skip Verification</Link>
-            </div>
-            
-            
-            
+            {
+              this.props.edit === true
+                ? null
+                : <div className="verification_1">
+                  <h1>Sign Up Verification</h1>
+                  <Link to="/campaigns">Skip Verification</Link>
+                </div>
+            }
+
             <h3>Social Information</h3>
             <hr />
             <div className="verification_social">
@@ -289,10 +299,10 @@ class SigninForm extends Component {
                 </div>
               </div>
               <div className="verification2_column3">
-                <label style={{ color: !this.state.profileImage && this.state.submitted ?  "red" : "inherit" }}>
+                <label style={{ color: !this.state.profileImage && this.state.submitted ? "red" : "inherit" }}>
                   {!this.state.featureImages[0] && this.state.submitted ? "PLEASE UPLOAD YOUR ORGANIZATION'S LOGO" : "ORGANIZATION LOGO"}
                 </label>
-                <div style={{height: 240}}>
+                <div style={{ width: 260, height: 260 }}>
                   <ImageUpload
                     alt="verification"
                     id="organisation_logo"
@@ -329,10 +339,10 @@ class SigninForm extends Component {
               <div className="verification_form_image">
                 <div className="signup_verification_form_image">
                   {/*<img alt="verification" src="images/drag.svg" />*/}
-                  <label style={{ color: ! this.state.featureImages[0] && this.state.submitted ?  "red" : "inherit" }}>
+                  <label style={{ color: !this.state.featureImages[0] && this.state.submitted ? "red" : "inherit" }}>
                     {!this.state.featureImages[0] && this.state.submitted ? "SELECT YOUR FIRST FEATURED IMAGE" : "FIRST FEATURED IMAGE"}
                   </label>
-                  <div style={{height: 275, width: 250}}>
+                  <div style={{ height: 275, width: 250 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_1"
@@ -348,10 +358,10 @@ class SigninForm extends Component {
                 </div>
                 <div className="signup_verification_form_image">
                   {/*<img alt="verification" src="images/drag.svg" />*/}
-                  <label style={{ color: ! this.state.featureImages[1] && this.state.submitted ?  "red" : "inherit" }}>
-                    {! this.state.featureImages[1] && this.state.submitted ? "SELECT YOUR SECOND FEATURED IMAGE" : "SECOND FEATURED IMAGE"}
+                  <label style={{ color: !this.state.featureImages[1] && this.state.submitted ? "red" : "inherit" }}>
+                    {!this.state.featureImages[1] && this.state.submitted ? "SELECT YOUR SECOND FEATURED IMAGE" : "SECOND FEATURED IMAGE"}
                   </label>
-                  <div style={{height: 275, width: 250}}>
+                  <div style={{ height: 275, width: 250 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_2"
@@ -367,10 +377,10 @@ class SigninForm extends Component {
                 </div>
                 <div className="signup_verification_form_image">
                   {/*<img alt="verification" src="images/drag.svg" />*/}
-                  <label style={{ color: ! this.state.featureImages[2] && this.state.submitted ?  "red" : "inherit" }}>
-                    {! this.state.featureImages[2] && this.state.submitted ? "SELECT YOUR THIRD FEATURED IMAGE" : "THIRD FEATURED IMAGE"}
+                  <label style={{ color: !this.state.featureImages[2] && this.state.submitted ? "red" : "inherit" }}>
+                    {!this.state.featureImages[2] && this.state.submitted ? "SELECT YOUR THIRD FEATURED IMAGE" : "THIRD FEATURED IMAGE"}
                   </label>
-                  <div style={{height: 275, width: 250}}>
+                  <div style={{ height: 275, width: 250 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_3"
@@ -409,17 +419,15 @@ class SigninForm extends Component {
             <div className="verification_2">
               <div className="verification2_column1">
                 <h5>
-                  Relevant document include national ID card,
-                  National Voters card, National Passport,
-                   Drivers License.
+                  Relvant document include the organisation’s CAC document.
                 </h5>
               </div>
               <div className="signup_verification_form_image">
                 {/*<img alt="verification" src="images/drag.svg" />*/}
-                <label style={{ color: ! this.state.documentImage && this.state.submitted ?  "red" : "inherit" }}>
-                  {! this.state.documentImage && this.state.submitted ? "SELECT A VALID MEANS OF IDENTIFICATION" : "IDENTIFICATION DOCUMENT"}
+                <label style={{ color: !this.state.documentImage && this.state.submitted ? "red" : "inherit" }}>
+                  {!this.state.documentImage && this.state.submitted ? "SELECT A VALID MEANS OF IDENTIFICATION" : "IDENTIFICATION DOCUMENT"}
                 </label>
-                <div style={{height: 275, width: 300}}>
+                <div style={{ height: 275, width: 300 }}>
                   <ImageUpload
                     alt="verification"
                     id="organisation_relevant_document"
@@ -453,7 +461,7 @@ class SigninForm extends Component {
 
 
 
-            
+
             <h3>Contact Person</h3>
             <hr />
             <div className="verification_person">

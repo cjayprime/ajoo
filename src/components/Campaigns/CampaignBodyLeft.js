@@ -73,12 +73,14 @@ export default class CampaignBodyLeft extends PureComponent {
 
   handleChange = e => {
     const { name, value } = e.target;
-    this.setState({ ...this.state, [name]: value });
+    this.setState({ ...this.state, [name]: value }, () => {
+      this.props.reset(() => this.props.fetchAllCampaigns({ category: this.state.category, type: this.state.campaignType }))
+    });
   };
 
   render() {
-    const { openFilterModal } = this.state;
-    const { allCampaigns } = this.props;
+    //const { openFilterModal } = this.state;
+    //const { allCampaigns } = this.props;
     return (
       <div className="campaign_body_left" ref={this.props.campaignBodyLeftRef} style={{zIndex: 1000000, top: 0, width: "25%", height: "100%", position: this.props.position, zIndex: 1000 }}>
         <div className="campaign_body_left_content-heading campaign_body_left_content-heading-mobile">
@@ -178,7 +180,7 @@ export default class CampaignBodyLeft extends PureComponent {
         </div>
         {/*  filter campaign for mobile view */}
 
-        <div className="filter_campaign">
+        {/*<div className="filter_campaign">
           <button
             className="filter_campaign-btn"
             onClick={this.onOpenFilterModal}
@@ -271,7 +273,7 @@ export default class CampaignBodyLeft extends PureComponent {
             </TitleHeading>
             <button className="filter-btn">FILTER</button>
           </Modal>
-        </div>
+        </div>*/}
       </div>
     );
   }

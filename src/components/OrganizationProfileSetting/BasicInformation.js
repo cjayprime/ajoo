@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import FormInputField from "../../sharedComponent/form";
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import AlertDialog from "../../sharedComponent/AlertDialog";
+import { isRequestActive } from "../../utils/misc";
 
 class BasicInformation extends PureComponent {
   render() {
@@ -155,7 +156,10 @@ class BasicInformation extends PureComponent {
                 error={formError && action === "basicInformationFields"}
                 btnTitle="Save Changes"
                 isLoading={
-                  utils.request === settingRequest.organisationProfileRequest
+                  isRequestActive(
+                    utils.request,
+                    settingRequest.organisationProfileRequest
+                  )
                 }
                 type="submit"
               />

@@ -9,7 +9,7 @@ class VolunteerDocumentComponent extends Component {
         return (
             <>
                 <Layout {...this.props}>
-                    <VolunteerDocument />
+                    <VolunteerDocument  {...this.props} />
                 </Layout>
             </>
         )

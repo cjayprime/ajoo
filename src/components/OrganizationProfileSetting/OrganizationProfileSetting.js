@@ -41,12 +41,17 @@ const type = [
 class OrganizationProfileSetting extends PureComponent {
   constructor(props) {
     super(props);
-    const { user } = this.props;
     this._isMounted = false;
+    this.load();
+  }
+
+  load = () => {
+    const { user } = this.props;
     this.state = {
       active: "profile",
       formError: false,
       action: "",
+      runOnce: false,
       basicInformationFields: {
         organization_name: {
           value: user.organization_name || "",
@@ -123,7 +128,7 @@ class OrganizationProfileSetting extends PureComponent {
       },
       emailChangeField: {
         new_email: {
-          value: "",
+          value: user.email ? user.email : "",
           error: null,
           errorMessage: "",
           name: "Email",
@@ -187,6 +192,18 @@ class OrganizationProfileSetting extends PureComponent {
     }
   }
 
+  componentDidUpdate(){
+    if(this.props.user.email && ! this.state.runOnce){
+      
+      this.load();
+
+      setTimeout(() => {
+        this.setState({ ...this.state, runOnce: true });
+      }, 500);
+
+    }
+  }
+
   componentWillUnmount() {
     this._isMounted = false;
     // let newState = { ...this.state };
@@ -204,7 +221,6 @@ class OrganizationProfileSetting extends PureComponent {
     Object.keys(this.state.basicInformationFields).map(key => {
       return data[key] = this.state.basicInformationFields[key].value;
     });
-    console.log(this.state.basicInformationFields, data);
     if (!validateInput(this.state.basicInformationFields)) {
       return this._safelySetState({
         formError: true,
@@ -212,8 +228,7 @@ class OrganizationProfileSetting extends PureComponent {
       });
     }
     this.props.organisationProfileSetting({
-      data,
-      history: this.props.history
+      data
     });
   };
 
@@ -449,6 +464,7 @@ class OrganizationProfileSetting extends PureComponent {
               <SignUpVerificationOrganization
                 {...this.props}
                 request={this.props.utils}
+                edit={true}
               />
             }
           </div>

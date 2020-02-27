@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
 
-import { fetchCompletedCampaigns } from "../../store/campaignModules/actions";
+import { fetchCompletedCampaigns, closeCampaign, uploadCampaignThankYouImage } from "../../store/campaignModules/actions";
+import { showPercentageProgress } from "../../store/utilsModule/actions.js";
 import CloseCampaignComponent from '../../components/CloseCampaign';
 
 class CloseCampaignContainer extends PureComponent {
@@ -9,7 +10,10 @@ class CloseCampaignContainer extends PureComponent {
 }
 
 const mapDispatchToProps = {
-    fetchCompletedCampaigns
+    fetchCompletedCampaigns,
+    closeCampaign,
+    uploadCampaignThankYouImage,
+    showPercentageProgress
 }
 
 

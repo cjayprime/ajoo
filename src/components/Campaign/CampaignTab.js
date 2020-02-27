@@ -6,10 +6,15 @@ import Comment from "./Comment";
 import Rewards from "./Rewards";
 import Donations from "../Profile/Donations";
 import warn from "../../assets/images/warn.svg";
+import AlertDialog from "../../sharedComponent/AlertDialog";
+import LoadableButton from "../../sharedComponent/LoadableButton";
+import { isRequestActive } from "../../utils/misc";
+import { campaignRequest } from "../../store/campaignModules/saga";
 
 const bg = {
   overlay: {
-    background: "rgba(17, 12, 12, 0.932)"
+    background: "rgba(17, 12, 12, 0.932)",
+    zIndex: 1300
   },
   modal: {
     width: "492px",
@@ -24,7 +29,8 @@ const bg = {
 class CampaignTab extends PureComponent {
   state = {
     active: "description", // Possible values are connect, comments and donations
-    reportOrganisation: false
+    reportOrganisation: false,
+    message: ""
   };
 
   componentDidMount(){
@@ -45,9 +51,16 @@ class CampaignTab extends PureComponent {
     __html: text
   });
 
+  iniateReport = () => {
+    this.props.reportCampaign({
+      campaign_id: this.props.campaign.campaign_id,
+      message: this.state.message
+    });
+  }
+
   render() {
     const { reportOrganisation } = this.state;
-    const { campaign, userDonations } = this.props;
+    const { campaign, userDonations, rewards, utils } = this.props;
 
     return (
       <>
@@ -55,6 +68,13 @@ class CampaignTab extends PureComponent {
           <div className="clearfix"></div>
 
       {/* description tab */}
+          <AlertDialog
+            open={
+                utils.feedback.for === campaignRequest.reportCampaignRequest
+            }
+            message={utils.feedback.message}
+            success={utils.feedback.success}
+          />
           <div className="tab_button">
             <div>
               <button
@@ -134,36 +154,6 @@ class CampaignTab extends PureComponent {
                 </span>
               </button>
             </div>
-            <Modal
-              open={reportOrganisation}
-              onClose={this.onCloseModal}
-              styles={bg}
-              center
-            >
-              <div className="report_modal-body">
-                <h1 className="report_modal-head">Report Campaign</h1>
-                <hr />
-                <form>
-                  <p>
-                    Tell us something about this campaign that should be looked
-                    into.
-                  </p>
-                  <div className="report_div">
-                    <textarea
-                      cols="20"
-                      rows="10"
-                      className="report_modal-card"
-                      placeholder="I have observed some shady things about this campaign and
-                whatnot."
-                    />
-                  </div>
-                  <div className="report_modal-btn">
-                    <button className="report_btn-cancel">Cancel</button>
-                    <button className="report_btn-submit">Submit Report</button>
-                  </div>
-                </form>
-              </div>
-            </Modal>
           </div>
 
           {this.state.active === "description" && (
@@ -175,7 +165,7 @@ class CampaignTab extends PureComponent {
           )}
 
           {this.state.active === "rewards" && (
-            <Rewards />
+            <Rewards rewards={rewards} />
           )}
 
           {this.state.active === "donations" && (
@@ -184,6 +174,44 @@ class CampaignTab extends PureComponent {
             />
           )}
         </div>
+            <Modal
+              open={reportOrganisation}
+              onClose={this.onCloseModal}
+              styles={bg}
+              center
+            >
+              <div className="report_modal-body">
+                <h1 className="report_modal-head">Report Campaign</h1>
+                <hr />
+                  <p>
+                    Tell us something about this campaign that should be looked
+                    into.
+                  </p>
+                  <div className="report_div">
+                    <textarea
+                      cols="20"
+                      rows="10"
+                      className="report_modal-card"
+                      placeholder="I have observed some shady things about this campaign and
+                whatnot."
+                      value={this.state.message}
+                      onChange={e => this.setState({message: e.target.value})}
+                    />
+                  </div>
+                  <div className="report_modal-btn">
+                    <button className="report_btn-cancel">Cancel</button>
+                    <LoadableButton
+                      onClick={this.iniateReport}
+                      style={{display: "block"}}
+                      className="report_btn-submit"
+                      isLoading={isRequestActive(utils.request, campaignRequest.reportCampaignRequest)}
+                      btnTitle="Submit Report"
+                      type="submit"
+                    >
+                    </LoadableButton>
+                  </div>
+              </div>
+            </Modal>
       </>
     );
   }

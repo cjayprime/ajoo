@@ -16,7 +16,7 @@ class CampaignComponent extends Component {
     super(props);
     this._isMounted = false;
     this.state = {
-      page: 2,
+      page: 0,
       perPage: 6,
       lastPage: false,
       allCampaigns: { transactions: [] },
@@ -35,7 +35,7 @@ class CampaignComponent extends Component {
   offsetTop = 0;
 
   handleScroll = (e) => {
-    console.log(window.getComputedStyle(campaignBodyLeftRef.current).display)
+    //console.log(window.getComputedStyle(campaignBodyLeftRef.current).display)
     if(campaignBodyLeftRef.current && window.getComputedStyle(campaignBodyLeftRef.current).display !== "none"){
       
       if(!this.offsetTop) 
@@ -73,31 +73,45 @@ class CampaignComponent extends Component {
 
   componentDidUpdate(prevProps, prevState){
 
-    if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
-      prevProps.allCampaigns.allCampaigns.transactions.length > 0 &&
-      prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id !== this.props.allCampaigns.allCampaigns.transactions[0].campaign_id &&
-      prevState.page === this.state.page)
-      this.setState({
-        page: this.state.page + 1,
-        lastPage: (this.state.page + 1) >= this.props.allCampaigns.allCampaigns.total_pages
-      });
+    setTimeout(() => {
+      if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
+        this.props.allCampaigns.allCampaigns.transactions.length > 0 &&
+        prevProps.allCampaigns.allCampaigns.transactions.length > 0 &&
+        prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id !== this.props.allCampaigns.allCampaigns.transactions[0].campaign_id &&
+        prevState.page === this.state.page)
+        this.setState({
+          page: this.state.page + 1,
+          lastPage: (this.state.page + 1) >= this.props.allCampaigns.allCampaigns.total_pages
+        });
 
-    
-    // If the `Show More` button is clicked then the campaign_id of the first item in the collection will change
-    // cause the item is always re-fetched, which is the need to write the props into the state in the first place
-    // so as to show the new (more) items beneath the old ones
-    if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
-      this.props.allCampaigns.allCampaigns.transactions[0].campaign_id !== prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id
-      ||
-      (typeof this.props.allCampaigns.allCampaigns !== "undefined" && this.state.allCampaigns.transactions.length === 0)
-      ){
-      var transactions = this.state.allCampaigns.transactions.concat(this.props.allCampaigns.allCampaigns.transactions);
-      this.setState({
-        allCampaigns: { ...this.props.allCampaigns.allCampaigns, transactions }
-      });
+      
+      // If the `Show More` button is clicked then the campaign_id of the first item in the collection will change
+      // cause the item is always re-fetched, which is the need to write the props into the state in the first place
+      // so as to show the new (more) items beneath the old ones
+      if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
+        this.props.allCampaigns.allCampaigns.transactions.length > 0 &&
+        prevProps.allCampaigns.allCampaigns.transactions.length > 0 &&
+        this.props.allCampaigns.allCampaigns.transactions[0].campaign_id !== prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id
+        ||
+        (typeof this.props.allCampaigns.allCampaigns !== "undefined" && this.state.allCampaigns.transactions.length === 0)
+        ){
+        var transactions = this.state.allCampaigns.transactions.concat(this.props.allCampaigns.allCampaigns.transactions);
+        this.setState({
+          allCampaigns: { ...this.props.allCampaigns.allCampaigns, transactions }
+        });
 
-    }
+      }
+    }, 1000);
 
+  }
+
+  reset = (updated) => {
+    this.setState({
+      page: 0,
+      perPage: 6,
+      lastPage: false,
+      allCampaigns: { transactions: [] }
+    }, updated);
   }
 
   more = () => {
@@ -116,9 +130,10 @@ class CampaignComponent extends Component {
 
     return (
       <Layout {...this.props}>
-        <CampaignsHead campaignHeadRef={campaignHeadRef} />
+        <CampaignsHead {...this.props} reset={this.reset} campaignHeadRef={campaignHeadRef} />
         <div className="campaign_body" style={{ height: this.state.allCampaigns.transactions.length === 0 ? "100vh" : "auto" }}>
           <CampaignBodyLeft
+            reset={this.reset}
             position={this.state.position}
             campaignBodyLeftRef={campaignBodyLeftRef}
             fetchAllCampaigns={fetchAllCampaigns}

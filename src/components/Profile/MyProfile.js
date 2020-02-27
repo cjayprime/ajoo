@@ -63,16 +63,49 @@ const MyProfile = (props) => {
                     }}
                   ></div>
                 </div>
-                <div className="tabContent_button" style={{display: "flex", alignItems: "end"}}>
+                <div className="tabContent_button" style={{display: "flex", alignItems: "end", flexWrap: "wrap"}}>
                   {/*<button className="button_delete">Delete Campaign</button>*/}
-                  <div style={{display: "flex", alignItems: "center", height: 15, padding: 3.5, borderRadius: 5, width: "auto", background: c.status === 2 ? "blue" : c.status === 1 ? "green" : "orange", color: c.status === 2 ? "white" : c.status === 1 ? "white" : "black"}}>
-                    {c.status === 2 ? "Campaign Closed" : c.status === 1 ? "Campaign Live" : "Pending Verification"}
+                  <div style={{display: "flex", alignItems: "center", height: 15, padding: 3.5, borderRadius: 5, whiteSpace: "pre", width: "auto", 
+                    background:
+                      c.status === 4
+                      ? "red"
+                      : c.status === 3
+                        ? "purple"
+                        : c.status === 2
+                          ? "blue"
+                          : c.status === 1
+                            ? "green"
+                            : "orange",
+                    color:
+                      c.status === 0
+                      ? "black"
+                      : "white"
+                  }}>
+                    {
+                      c.status === 4
+                      ? "Campaign Deleted"
+                      : c.status === 3
+                        ? "Closed for donations"
+                        : c.status === 2
+                          ? "Campaign Closed"
+                          : c.status === 1
+                            ? "Campaign Live"
+                            : "Pending Verification"
+                    }
                   </div>
                   <button
                     onClick={e => editCampaign(e, c)}
                     className="button_edit"
+                    style={{width: 100}}
                   >
                     Edit
+                  </button>
+                  <button
+                    onClick={e => history.push("/campaign/" + c.campaign_id.toLowerCase())}
+                    className="button_edit"
+                    style={{width: 100}}
+                  >
+                    View
                   </button>
                 </div>
               </div>

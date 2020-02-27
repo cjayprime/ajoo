@@ -719,7 +719,6 @@ p {
 
   .campaigns_head_banner {
     width: 100%;
-    height: 40vh;
     background-image: url("../images/mask_group.png");
   }
 
@@ -1969,7 +1968,7 @@ p {
 
   /*SIGN UP VERIFICATION*/
   .signUp_verification {
-    padding: 50px 90px;
+    padding: 50px 20px;
     background-color: #f9fafc;
   }
 
@@ -2006,8 +2005,24 @@ p {
 
   .verification_2 {
     display: flex;
+    flex-direction: row;
     padding-top: 10px;
     padding-bottom: 50px;
+  }
+
+  .verification_social {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .verification_person {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .verification_feature {
+    display: flex;
+    justify-content: space-between;
   }
 
   .verification2_column1 {
@@ -2015,17 +2030,10 @@ p {
   }
 
   .verification2_column2 {
-    padding-left: 35px;
-    width: 43%;
-  }
-
-  .verification2_column3 {
-    width: 20%;
-    padding-left: 35px;
+    width: 33%;
   }
 
   .verification2_column4 {
-    padding-left: 35px;
     width: 30%;
   }
 
@@ -2234,8 +2242,6 @@ p {
 
   /*CREATE CAMPAIGN 1*/
 
-  /* EDIT CAMPAIGN */
-
   .edit__campaign {
     background-color: #f9fafc;
     padding: 47px 110px 20px 110px;
@@ -2303,6 +2309,7 @@ p {
   .campaign__info-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__info-desc {
@@ -2311,9 +2318,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__info-form {
@@ -2345,6 +2351,7 @@ p {
   .campaign__feature-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__feature-desc {
@@ -2353,9 +2360,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__feature-form {
@@ -2381,6 +2387,7 @@ p {
   .campaign__desc-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__desc-desc {
@@ -2389,9 +2396,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__desc-form {
@@ -2416,6 +2422,7 @@ p {
   .campaign__reward-body {
     padding-top: 34px;
     display: flex;
+    justify-content: space-between;
   }
 
   .campaign__reward-desc {
@@ -2425,16 +2432,11 @@ p {
     font-size: 16px;
     line-height: 20px;
     color: #414141;
-    width: 427px;
-    height: 92px;
+    width: 40%;
   }
 
   .campaign__reward-form {
-    margin-left: 38px;
-  }
-
-  .campaign__reward-form .createCampaign_form {
-    margin: 0 !important;
+    margin-left: 48px;
   }
 
   .reward-form {
@@ -2560,7 +2562,7 @@ p {
     margin-top: 30px;
   }
 
-  .edit_save-btn {
+  .add_reward-btn {
     background: #0072a3;
     border: 1px solid #dde2e5;
     box-sizing: border-box;
@@ -2573,9 +2575,10 @@ p {
     font-size: 18px;
     line-height: 23px;
     color: #ffffff;
+    margin-left: 25px;
   }
 
-  .add_reward-btn {
+  .edit_save-btn {
     background: #ffffff;
     border: 1px solid #0072a3;
     box-sizing: border-box;
@@ -2588,7 +2591,6 @@ p {
     color: #0072a3;
     width: 164px;
     height: 56px;
-    margin-left: 25px;
   }
 
   /* EDIT CAMPAIGN */
@@ -2647,7 +2649,7 @@ p {
   /*PROFILE*/
   .profile {
     background-color: #f9fafc;
-    padding: 20px 110px 0 110px;
+    padding: 20px 30px 0 30px;
   }
 
   .edit_profile {

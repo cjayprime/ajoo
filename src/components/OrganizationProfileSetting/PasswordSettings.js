@@ -23,8 +23,8 @@ class PasswordSetting extends PureComponent {
         </div>
         <form onSubmit={triggerOrganisationPasswordProfileAction}>
           <div className="accountSettings_org_column2">
-            <div class="accountSettings_form">
-              <div class="accountSettings_form2">
+            <div className="accountSettings_form">
+              <div className="accountSettings_form2">
                 <FormInputField
                   type="password"
                   name="current_password"
@@ -35,7 +35,7 @@ class PasswordSetting extends PureComponent {
                   labelTitle="CURRENT PASSWORD"
                 />
               </div>
-              <div class="accountSettings_form2">
+              <div className="accountSettings_form2">
                 <FormInputField
                   type="password"
                   name="new_password"
@@ -46,7 +46,7 @@ class PasswordSetting extends PureComponent {
                   labelTitle="NEW PASSWORD"
                 />
               </div>
-              <div class="accountSettings_form2">
+              <div className="accountSettings_form2">
                 <FormInputField
                   type="password"
                   name="cnew_password"

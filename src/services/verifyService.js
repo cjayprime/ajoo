@@ -60,6 +60,37 @@ class VerifyService {
             });
         });
     };
+  
+    getAllRequest = () => {
+        return new Promise((resolve, reject) => {
+            const config = {
+                method: "GET"
+            };
+            apiClient(`/volunteer/getvolunteers`, config)
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(error => {
+                reject(error.response);
+            });
+        });
+    };
+
+    verifyCampaign = (body) => {
+      return new Promise((resolve, reject) => {
+        const config = {
+          body,
+          method: "POST"
+        };
+        apiClient(`/account/verifycampaign`, config)
+          .then(res => {
+            return resolve(res);
+          })
+          .catch(error => {
+            reject(error.response);
+          });
+      });
+    };
 
 }
 

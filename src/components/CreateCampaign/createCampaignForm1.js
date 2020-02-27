@@ -12,6 +12,7 @@ class CreateCampaignForm1 extends Component {
     this.props.nextStep();
     
   };
+  
   render() {
     const {
         form: { fields: field, formError },

@@ -5,7 +5,7 @@ import ImageUpload from "../../../sharedComponent/ImageUpload";
 import LoadableButton from "../../../sharedComponent/LoadableButton";
 import AlertDialog from "../../../sharedComponent/AlertDialog";
 import FormInputField from "../../../sharedComponent/form";
-import { IMAGE_URL, validate, isRequestActive } from "../../../utils/misc";
+import { validate, isRequestActive } from "../../../utils/misc";
 import { verifyRequest } from "../../../store/verifyModules/saga";
 
 class SignUpVerificationIndividual extends Component {
@@ -340,7 +340,7 @@ class SignUpVerificationIndividual extends Component {
                                 btnTitle="Save"
                                 onClick={this.triggerSignUpVerificationAction}
                                 isLoading={
-                                isRequestActive(utils.request, verifyRequest.verifySignupRequest)
+                                  isRequestActive(utils.request, verifyRequest.verifySignupRequest)
                                 }
                             />
                         </div>

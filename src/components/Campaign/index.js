@@ -24,6 +24,18 @@ class CampaignComponent extends Component {
     fetchCampaignById(match.params);
   }
 
+  ranOnce = false;
+
+  componentDidUpdate(){
+    const { getReward, campaign } = this.props;
+
+    if(typeof campaign.campaign !== "undefined" && campaign.campaign._id && this.ranOnce === false){
+      this.ranOnce = true;
+      getReward({id: campaign.campaign._id});
+    }
+    
+  }
+
   componentWillUnmount() {
     store.dispatch({
       type: FETCH_ALL_CAMPAIGNS_SUCCESS,
@@ -53,9 +65,10 @@ class CampaignComponent extends Component {
       requestStatus,
       getCampaignDonationById,
       userDonations,
-      match
+      match,
+      rewards
     } = this.props;
-    console.log('Campaign:::: ', campaign)
+    //console.log('Reward:::', rewards)
 
     return (
       <Layout {...this.props}>
@@ -80,6 +93,7 @@ class CampaignComponent extends Component {
             {campaign.campaign ? (
               <>
                 <CampaignHead
+                  {...this.props}
                   utils={utils}
                   initDonation={initDonation}
                   verifyPaymentAction={verifyPaymentAction}
@@ -92,6 +106,8 @@ class CampaignComponent extends Component {
                 />
                 <CampaignBody campaign={campaign.campaign}/>
                 <CampaignTab
+                  {...this.props}
+                  rewards={rewards}
                   campaign={campaign.campaign}
                   getCampaignDonationById={getCampaignDonationById}
                   userDonations={userDonations}

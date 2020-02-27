@@ -34,7 +34,9 @@ class EditCampaign extends Component {
             formError: false,
             image: isEdit ? `${preImage}${editCampaign.imageUrl}` : "",
             //rewards: [],
-            donation: false,
+            delete: false,
+            close: false,
+            success: false,
             mode: "add",
             column: {},
             fields: {
@@ -150,8 +152,8 @@ class EditCampaign extends Component {
 
     componentDidUpdate() {
 
-        if(Object.keys(this.props.editCampaign).length === 0)
-        this.props.history.push("/profile", { redirectFromCampaign: true })
+        if (Object.keys(this.props.editCampaign).length === 0)
+            this.props.history.push("/profile", { redirectFromCampaign: true })
 
     }
 
@@ -160,7 +162,7 @@ class EditCampaign extends Component {
         var donationAmt = "";
         var rewardType = "";
         var reward = "";
-        if(mode === "edit"){
+        if (mode === "edit") {
             donationAmt = column.donation;
             rewardType = column.rewardType;
             reward = column.reward;
@@ -171,15 +173,15 @@ class EditCampaign extends Component {
             column,
             rewardFields: {
                 ...this.state.rewardFields,
-                donationAmt:{
+                donationAmt: {
                     ...this.state.rewardFields.donationAmt,
                     value: donationAmt
                 },
-                rewardType:{
+                rewardType: {
                     ...this.state.rewardFields.rewardType,
                     value: rewardType
                 },
-                reward:{
+                reward: {
                     ...this.state.rewardFields.reward,
                     value: reward
                 }
@@ -192,50 +194,50 @@ class EditCampaign extends Component {
         const { getReward, deleteReward, editCampaign } = this.props;
 
         deleteReward({
-          id: column._id,
-          success: () => {
-              this.setMode("add")
-              getReward({id: editCampaign._id});
-          }
+            id: column._id,
+            success: () => {
+                this.setMode("add")
+                getReward({ id: editCampaign._id });
+            }
         });
     }
 
     editReward = () => {
         const { donationAmt, rewardType, reward } = this.state.rewardFields;
         const { getReward, editReward, editCampaign } = this.props;
-        
-        if(validate(this, this.state.rewardFields))
-        editReward({
-            data: {
-                donation:     donationAmt.value,
-                reward_type:  rewardType.value,
-                reward:       reward.value
-            },
-            id: this.state.column._id,
-            success: () => {
-                this.setMode("add")
-                getReward({id: editCampaign._id});
-            }
-        });
+
+        if (validate(this, this.state.rewardFields))
+            editReward({
+                data: {
+                    donation: donationAmt.value,
+                    reward_type: rewardType.value,
+                    reward: reward.value
+                },
+                id: this.state.column._id,
+                success: () => {
+                    this.setMode("add")
+                    getReward({ id: editCampaign._id });
+                }
+            });
     }
 
     addReward = () => {
         const { donationAmt, rewardType, reward } = this.state.rewardFields;
         const { getReward, addReward, editCampaign } = this.props;
-        
-        if(validate(this, this.state.rewardFields))
-        addReward({
-            data: {
-                campaign:     editCampaign._id,
-                donation:     donationAmt.value,
-                reward_type:  rewardType.value,
-                reward:       reward.value
-            },
-            success: () => {
-                this.setMode("add")
-                getReward({id: editCampaign._id});
-            }
-        });
+
+        if (validate(this, this.state.rewardFields))
+            addReward({
+                data: {
+                    campaign: editCampaign._id,
+                    donation: donationAmt.value,
+                    reward_type: rewardType.value,
+                    reward: reward.value
+                },
+                success: () => {
+                    this.setMode("add")
+                    getReward({ id: editCampaign._id });
+                }
+            });
     }
 
     setImage = image => {
@@ -261,7 +263,7 @@ class EditCampaign extends Component {
     triggerImageUpload = (e) => {
 
         e.preventDefault();
-        
+
         const { image } = this.state;
         const { editCampaign, createdCampaign, showPercentageProgress, history } = this.props;
 
@@ -271,12 +273,12 @@ class EditCampaign extends Component {
             image === `${preImage}${this.editCampaign.imageUrl}`
         ) {
             //return history.push(
-             //   `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
+            //   `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
             //)
             this.props.showRequestFeedBack({
-              message: "You need to select an image first!",
-              for: campaignRequest.uploadCampaignImageRequest,
-              success: false
+                message: "You need to select an image first!",
+                for: campaignRequest.uploadCampaignImageRequest,
+                success: false
             });
 
             return;
@@ -287,7 +289,7 @@ class EditCampaign extends Component {
                 formError: true
             });
         }
-        
+
         this.props.uploadCampaignImage({
             data: {
                 image,
@@ -350,10 +352,12 @@ class EditCampaign extends Component {
             }));
     };
 
-    toggle = () => {
+    toggle = (type, success) => {
 
-        this.setState({ donation: ! this.state.donation });
-
+        this.setState({
+            [type]: ! this.state[type],
+            success
+        });
     }
 
     render() {
@@ -382,34 +386,35 @@ class EditCampaign extends Component {
                 {type}
             </option>
         ));
-        
+
 
         const forms = Object.assign(this.state.fields, this.state.rewardFields);
         const form1 = {};
         const form2 = {};
         const form3 = {};
-        
-        for(var key in forms){
 
-            if(key === "goal" || key === "title" || key === "category" || key === "affiliatedOrganization"){
-                
+        for (var key in forms) {
+
+            if (key === "goal" || key === "title" || key === "category" || key === "affiliatedOrganization") {
+
                 form1[key] = forms[key];
-                
-            }else if(key === "summary" || key === "campaign_details" || key === "types"){
-                
+
+            } else if (key === "summary" || key === "campaign_details" || key === "types") {
+
                 form2[key] = forms[key];
-                
-            }else if(key === "donationAmt" || key === "rewardType" || key === "reward"){
-                
+
+            } else if (key === "donationAmt" || key === "rewardType" || key === "reward") {
+
                 form3[key] = forms[key];
-                
+
             }
 
         }
-        
+
         const validate1 = validate.bind(this, this, form1);
         //const validate2 = validate.bind(this, this, form2);
         const validate3 = validate.bind(this, this, form3);
+        //console.log("Campaign Status: ", editCampaign.status)
 
         return (
             <>
@@ -419,15 +424,17 @@ class EditCampaign extends Component {
                         utils.feedback.for === campaignRequest.uploadCampaignImageRequest ||
                         utils.feedback.for === campaignRequest.addRewardRequest ||
                         utils.feedback.for === campaignRequest.editRewardRequest ||
-                        utils.feedback.for === campaignRequest.deleteRewardRequest
+                        utils.feedback.for === campaignRequest.deleteRewardRequest ||
+                        utils.feedback.for === campaignRequest.closeDonationRequest ||
+                        utils.feedback.for === campaignRequest.deleteCampaignRequest
                     }
                     message={utils.feedback.message}
                     success={utils.feedback.success}
                 />
-                
-                <CloseDonations {...this.props} toggle={this.toggle} open={this.state.donation}/>
-                
-                <DeleteCampaign {...this.props}  toggle={() => {}} open={false}/>
+
+                <CloseDonations {...this.props} toggle={this.toggle} open={this.state.close} />
+
+                <DeleteCampaign {...this.props} toggle={this.toggle} open={this.state.delete} />
 
                 <div className="edit__campaign">
                     <div className="edit__campaign-head">
@@ -436,46 +443,33 @@ class EditCampaign extends Component {
                         </div>
                         <div className="edit__campaign-heade-2">
                             {
-                                true
-                                ?   <>
-                                        <span className="edit__campaign-close" onClick={this.toggle} style={{ cursor: "pointer" }}>
-                                            Close Donations
-                                        </span>
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
-                                        <span className="edit__campaign-delete" onClick={() => {}} style={{ cursor: "pointer" }}>
-                                            Delete Campaign
-                                        </span>
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
-                                        <span className="edit__campaign-delete" onClick={() => {
+                                editCampaign.status === 0 || editCampaign.status === 2 || editCampaign.status === 4
+                                ?       editCampaign.status === 0
+                                        ?   <span className="edit__campaign-close">This campaign is awaiting verification</span>
+                                        :   <span className="edit__campaign-delete">{"This campaign has been " + (editCampaign.status === 2 ? "closed" : "deleted")}</span>
+                                    :   this.state.success === true || (editCampaign.status === 3)
+                                            ?   <span className="edit__campaign-delete" onClick={() => {
 
-                                            history.push({
-                                                pathname: "/close_campaign",
-                                                state: { campaign: editCampaign }
-                                            });
+                                                    history.push({
+                                                        pathname: "/close_campaign",
+                                                        state: { campaign: editCampaign }
+                                                    });
 
-                                        }} style={{ cursor: "pointer" }}>
-                                            Close Campaign
-                                        </span>
-                                    </>
-                                :   <span className="edit__campaign-delete" onClick={() => {
-
-                                        history.push({
-                                            pathname: "/close_campaign",
-                                            state: { campaign: editCampaign }
-                                        });
-
-                                    }} style={{ cursor: "pointer" }}>
-                                        Close Campaign
-                                    </span>
+                                                }} style={{ cursor: "pointer" }}>
+                                                    Close Campaign
+                                                </span>
+                                            :   <>
+                                                    <span className="edit__campaign-close" onClick={() => this.toggle("close")} style={{ cursor: "pointer" }}>
+                                                        Close Donations
+                                                    </span>
+                                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
+                                                    <span className="edit__campaign-delete" onClick={() => this.toggle("delete")} style={{ cursor: "pointer" }}>
+                                                        Delete Campaign
+                                                    </span>
+                                                </>
                             }
                         </div>
                     </div>
-
-
-
-
-
-
 
                     <div className="campaign__info">
                         <h3 className="campaign__info-title">Campaign Info</h3>
@@ -487,7 +481,7 @@ class EditCampaign extends Component {
                             </div>
                             <div className="campaign__info-form">
                                 <form method="post">
-                                    <div className="createCampaign_form">
+                                    <div style={{ marginTop: 0 }} className="createCampaign_form">
                                         <FormInputField
                                             type="number"
                                             placeholder="N 4,000,000"
@@ -552,15 +546,6 @@ class EditCampaign extends Component {
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
                     <div className="campaign__feature-image">
                         <h3 className="campaign__info-title">Campaign Feature Image</h3>
                         <hr className="campaign-hr" />
@@ -570,7 +555,7 @@ class EditCampaign extends Component {
                                 Suggestions are welcome and will be very helpful for anyone involved.
                             </div>
                             <div className="campaign__feature-form">
-                                <div style={{ height: 260, width: 260, marginTop: 30, marginLeft: 25 }}>
+                                <div style={{ height: 260, width: 260 }}>
                                     <ImageUpload
                                         image={this.state.image}
                                         setImage={this.setImage}
@@ -581,7 +566,7 @@ class EditCampaign extends Component {
                                         }
                                     />
                                 </div>
-                                <div style={{ display: "flex", justifyContent: "center", cursor: "pointer" }}>
+                                <div style={{ display: "flex", justifyContent: "center", cursor: "pointer", marginBottom: 40 }}>
                                     <LoadableButton
                                         error={
                                             false
@@ -600,19 +585,6 @@ class EditCampaign extends Component {
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div className="campaign_description">
                         <h3 className="campaign__info-title">Campaign Description</h3>
                         <hr className="campaign-hr" />
@@ -622,7 +594,7 @@ class EditCampaign extends Component {
                                  National Passport, Drivers License.
                             </div>
                             <div className="campaign__desc-form">
-                                <div className="createCampaign_form">
+                                <div style={{ marginTop: 0 }} className="createCampaign_form">
                                     <FormInputField
                                         type="textarea"
                                         name="summary"
@@ -692,25 +664,16 @@ class EditCampaign extends Component {
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
                     <div className="campaign__rewards">
                         <h3 className="campaign__info-title">Campaign Rewards</h3>
                         <hr className="campaign-hr" />
                         <div className="campaign__reward-body">
-                            <div className="campaign__reward-desc">
+                            <div className="campaign__reward-desc" style={{ flexShrink: 0 }}>
                                 Relevant document include national ID card,
                                  National Voters card, National Passport, Drivers License.
                             </div>
                             <div className="campaign__reward-form">
-                                <div className="createCampaign_form">
+                                <div style={{ marginTop: 0 }} className="createCampaign_form">
                                     <FormInputField
                                         type="select"
                                         name="rewardType"
@@ -772,22 +735,24 @@ class EditCampaign extends Component {
                                             onClick={() => this.state.mode === "edit" ? this.editReward() : this.addReward()}
                                             btnTitle={(this.state.mode === "edit" ? "Edit" : "Add") + " Reward"}
                                             isLoading={
-                                                isRequestActive(utils.request, campaignRequest.addRewardRequest)    ||
-                                                isRequestActive(utils.request, campaignRequest.editRewardRequest)   ||
+                                                isRequestActive(utils.request, campaignRequest.addRewardRequest) ||
+                                                isRequestActive(utils.request, campaignRequest.editRewardRequest) ||
                                                 isRequestActive(utils.request, campaignRequest.deleteRewardRequest)
                                             }
                                         />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                                 {
                                     rewards.length
-                                    ? 
+                                        ?
                                         <>
                                             <hr className="campaign-hr" style={{ width: "auto", marginLeft: 0, marginTop: 50, marginBottom: 50 }} />
                                             <div style={{ width: "auto", overflow: "hidden", overflowX: "auto" }}>
                                                 <table cellPadding="20" style={{ width: "100%", tableLayout: "fixed", borderCollapse: "collapse", borderRadius: 5, background: "#FFF", boxShadow: "1px 1px 4px -1px" }}>
                                                     <thead>
-                                                        <tr>
+                                                        <tr style={{ verticalAlign: "top" }}>
                                                             <td style={{ width: "25%" }}><b>REWARD TYPE</b></td>
                                                             <td style={{ width: "25%" }}><b>REWARD</b></td>
                                                             <td style={{ width: "25%" }}><b>DONATION AMOUNT (N)</b></td>
@@ -796,33 +761,31 @@ class EditCampaign extends Component {
                                                         </tr>
                                                     </thead>
                                                     <tbody style={{ verticalAlign: "bottom" }}>
-                                                    {
-                                                        rewards.map((v, i) => 
-                                                            <tr key={i} style={{ borderBottom: "1px solid #ccc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "pre" }}>
-                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>{v.rewardType}</td>
-                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
-                                                                    {v.reward}
-                                                                </td>
-                                                                <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
-                                                                    {v.donation}
-                                                                </td>
-                                                                <td style={{ width: "5%" }} onClick={() => this.setMode("edit", v)}>
-                                                                    <EditIcon style={{cursor: "pointer"}} />
-                                                                </td>
-                                                                <td style={{ width: "5%" }} onClick={() => this.deleteReward(v)}>
-                                                                    <DeleteIcon style={{cursor: "pointer", fill: "red"}} />
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    }
+                                                        {
+                                                            rewards.map((v, i) =>
+                                                                <tr key={i} style={{ borderBottom: "1px solid #ccc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "pre" }}>
+                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>{v.rewardType}</td>
+                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                        {v.reward}
+                                                                    </td>
+                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                        {v.donation}
+                                                                    </td>
+                                                                    <td style={{ width: "5%" }} onClick={() => this.setMode("edit", v)}>
+                                                                        <EditIcon style={{ cursor: "pointer" }} />
+                                                                    </td>
+                                                                    <td style={{ width: "5%" }} onClick={() => this.deleteReward(v)}>
+                                                                        <DeleteIcon style={{ cursor: "pointer", fill: "red" }} />
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        }
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </>
-                                    : null
+                                        : null
                                 }
-                            </div>
-                        </div>
                     </div>
                 </div>
             </>

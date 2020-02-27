@@ -32,7 +32,7 @@ export default class CampaignBodyRight extends PureComponent {
                       textTransform: "uppercase"
                     }}
                   >
-                    There are currently no campaigns
+                    No campaigns found
                   </span>
                 ) : (
                     <div
@@ -41,10 +41,10 @@ export default class CampaignBodyRight extends PureComponent {
                         position: "relative"
                       }}
                     >
-                      {allCampaigns.transactions.map(c => (
-                        <div className="campaign_body-card" key={c._id}>
+                      {allCampaigns.transactions.map((c, i) => (
+                        <div className="campaign_body-card" key={i}>
                           <Card
-                            key={c._id}
+                            key={i}
                             campaignId={c.campaign_id}
                             src={c.imageUrl}
                             percent={c.percent}

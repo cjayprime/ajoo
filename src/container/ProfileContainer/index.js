@@ -40,6 +40,7 @@ const mapStateToProps = (state) =>  {
     utils,
     user: auth.data,
     request: utils.request,
+    rewards: campaigns.rewards,
     userCampaigns: campaigns.userCampaigns,
     userDonations: campaigns.campaignDonations
   };

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 // import ellipse from "../../assets/images/Ellipse_2.png";
-import { validateInput, IMAGE_URL } from "../../utils/misc";
+import { validateInput, IMAGE_URL, validate } from "../../utils/misc";
 import { settingRequest } from "../../store/profilesettingsModules/saga";
 import BasicInformation from "./BasicInformation";
 import EmailSetting from "./EmailSettings";
@@ -12,12 +12,17 @@ const preImage = `${IMAGE_URL}100_100_`;
 class IndividualProfileSetting extends Component {
   constructor(props) {
     super(props);
-    const { user } = this.props;
     this._isMounted = false;
+    this.load();
+  }
+
+  load = () => {
+    const { user } = this.props;
     this.state = {
       active: "profile",
       formError: false,
       action: "",
+      runOnce: false,
       image: user.image_url ? `${preImage}${user.image_url}` : "",
       basicInformationFields: {
         first_name: {
@@ -39,7 +44,7 @@ class IndividualProfileSetting extends Component {
           }
         },
         mobile: {
-          value: user.mobile,
+          value: user.mobile || "",
           name: "mobile",
           error: false,
           errorMessage: "",
@@ -68,7 +73,7 @@ class IndividualProfileSetting extends Component {
       },
       emailChangeField: {
         new_email: {
-          value: "",
+          value: user.email ? user.email : "",
           error: null,
           errorMessage: "",
           name: "Email",
@@ -121,6 +126,7 @@ class IndividualProfileSetting extends Component {
         }
       }
     };
+
   }
 
   componentDidMount() {
@@ -129,6 +135,18 @@ class IndividualProfileSetting extends Component {
       this.props.fetchLga({
         stateId: this.state.basicInformationFields.state.value
       });
+    }
+  }
+
+  componentDidUpdate(){
+    if(this.props.user.email && ! this.state.runOnce){
+
+      this.load();
+
+      setTimeout(() => {
+        this.setState({ ...this.state, runOnce: true });
+      }, 500);
+
     }
   }
 
@@ -158,10 +176,14 @@ class IndividualProfileSetting extends Component {
         formError: true
       });
     }
-
+    
     Object.keys(this.state.basicInformationFields).map(key => {
       return data[key] = this.state.basicInformationFields[key].value;
     });
+    
+    if(! validate(this, this.state.basicInformationFields)){
+      return;
+    }
 
     if (!validateInput(this.state.basicInformationFields)) {
       return this._safelySetState({
@@ -188,12 +210,12 @@ class IndividualProfileSetting extends Component {
       new_email: new_email.value,
       password: password.value
     };
-    if (!validateInput(this.state.emailChangeField)) {
+    /*if (!validateInput(this.state.emailChangeField)) {
       return this._safelySetState({
         formError: true,
         action: "emailChangeField"
       });
-    }
+    }*/
     this.props.individualEmailSetting({ data, history: this.props.history });
   };
 
@@ -210,12 +232,12 @@ class IndividualProfileSetting extends Component {
       new_password: new_password.value,
       cnew_password: cnew_password.value
     };
-    if (!validateInput(this.state.passwordChangeField)) {
+    /*if (!validateInput(this.state.passwordChangeField)) {
       return this._safelySetState({
         formError: true,
         action: "passwordChangeField"
       });
-    }
+    }*/
     this.props.individualProfilePasswordSetting({
       data,
       history: this.props.history
@@ -235,7 +257,8 @@ class IndividualProfileSetting extends Component {
         }
       }
     };
-    this._safelySetState(newState);
+    
+    this.setState(newState);
     if (name === "state") {
       this.props.fetchLga({ stateId: value });
     }
@@ -254,14 +277,15 @@ class IndividualProfileSetting extends Component {
         }
       }
     };
-    this._safelySetState(newState);
+    this.setState(newState);
   };
 
   _safelySetState = (newState, prevState = null) => {
-    if (this._isMounted)
+    if (this._isMounted){
       return this.setState({
         ...newState
       });
+    }
   };
 
   render() {

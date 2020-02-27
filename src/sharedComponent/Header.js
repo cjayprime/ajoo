@@ -98,9 +98,13 @@ class HeaderNav extends PureComponent {
                       background: user.verified === 1 ? "green" : "orange",
                       color: user.verified === 1 ? "white" : "black"
                     }}>
-                      {user.verified === 1
-                        ? "VERIFIED"
-                        : "UNVERIFIED"}
+                      {
+                        user.is_volunteer > 0
+                        ? "VOLUNTEER"
+                        : user.verified === 1
+                            ? "VERIFIED"
+                            : "UNVERIFIED"
+                      }
                     </div>
                     
                   </li>

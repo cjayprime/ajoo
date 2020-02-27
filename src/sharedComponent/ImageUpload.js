@@ -10,6 +10,8 @@ import "react-circular-progressbar/dist/styles.css";
 import uploadIcon from "../assets/images/upload_icon.png";
 
 class ImageUpload extends Component {
+  state = { image: "" };
+
   selectFile = () => {
     this.upload.current.click();
   };
@@ -23,9 +25,12 @@ class ImageUpload extends Component {
     const _this = this;
     var reader = new FileReader();
     var file = evt.target.files[0];
-    var props = _this.props;
+    //var props = _this.props;
     
     reader.onload = function(e) {
+      
+      _this.setState({ image: e.target.result });
+
       if(!_this.props.rejectBase64){
         
         _this.props.setImage(e.target.result);
@@ -48,8 +53,8 @@ class ImageUpload extends Component {
           width: "100%",
           height: "100%",
           position: "relative",
-          backgroundImage: !!image
-            ? `linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.13)), url(${image})`
+          backgroundImage: (!!image) || this.state.image
+            ? `linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.13)), url(${(image || this.state.image)})`
             : null,
           backgroundSize: "cover",
           backgroundRepeat: "noRepeat",

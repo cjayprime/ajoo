@@ -13,10 +13,11 @@ class CampaignService {
     });
   };
 
-  fetchAllCampaigns = ({ time, verify, category, page, perPage }) => {
+  fetchAllCampaigns = ({ time, search, verify, category, page, perPage }) => {
     return new Promise((resolve, reject) => {
       apiClient(
-        `/campaigns/all?${time ? `time=${time}` : ""}
+        `/campaigns/all?${time ? `time=${time}` : ""}${
+          search ? `&search=${search}` : ""}
         ${verify ? `&verify=${verify}` : ""}
         ${category ? `&category=${category}` : ""}
         ${page ? `&page=${page}` : ""}
@@ -69,6 +70,20 @@ class CampaignService {
         });
     });
   };
+
+  fetchOrganizationCampaigns = ({ page, perPage, organizationId }) => {
+    return new Promise((resolve, reject) => {
+      apiClient(`/campaigns/organizations/${organizationId}
+      ${!isNaN(page) ? `&page=${page}` : ""}
+      ${!isNaN(perPage) ? `&per_page=${perPage}` : ""}`)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response)
+        })
+    })
+  }
 
   uploadCampaignImage = (body, showPercentageProgress, imageNumber) => {
 
@@ -226,6 +241,138 @@ class CampaignService {
         method: "DELETE"
       };
       apiClient(`/reward/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  closeCampaign = (message, id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body: { message },
+        method: "POST"
+      };
+      apiClient(`/campaign/closecampaign/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  closeDonation = (id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "POST"
+      };
+      apiClient(`/campaign/closedonations/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  deleteCampaign = (id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "DELETE"
+      };
+      apiClient(`/campaign/delete/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  uploadThankYouImage = (body, showPercentageProgress, imageNumber) => {
+
+    return new Promise((resolve, reject) => {
+      const config = {
+        onUploadProgress: ({ loaded, total }) => {
+          showPercentageProgress((loaded * 100) / total);
+        },
+        body,
+        method: "PUT"
+      };
+      apiClient("/image/message" + (imageNumber ? imageNumber : ""), config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  uploadVolunteerBillImage = (body, showPercentageProgress) => {
+
+    const formData = new FormData();
+    formData.append('file', body.file);
+    return new Promise((resolve, reject) => {
+        const config = {
+            onUploadProgress: ({ loaded, total }) => {
+                showPercentageProgress((loaded * 100) / total);
+            },
+            body: formData,
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        apiClient(`/volunteer/verification/electricity`, config)
+        .then(res => {
+            return resolve(res);
+        })
+        .catch(error => {
+            reject(error.response);
+        });
+    });
+  };
+
+  uploadVolunteerIdentificationDocument = (body, showPercentageProgress) => {
+
+    const formData = new FormData();
+    formData.append('file', body.file);
+    return new Promise((resolve, reject) => {
+        const config = {
+            onUploadProgress: ({ loaded, total }) => {
+                showPercentageProgress((loaded * 100) / total);
+            },
+            body: formData,
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        apiClient(`/volunteer/verification/nationalid`, config)
+        .then(res => {
+            return resolve(res);
+        })
+        .catch(error => {
+            reject(error.response);
+        });
+    });
+  };
+
+  reportCampaign = (body) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        body,
+        method: "POST"
+      };
+      apiClient(`/campaign/report`, config)
         .then(res => {
           return resolve(res);
         })

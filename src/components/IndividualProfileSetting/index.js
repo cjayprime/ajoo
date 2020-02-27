@@ -36,7 +36,7 @@ class IndividualProfileSettingComponent extends PureComponent {
       uploadProfileImage,
       fetchLga
     } = this.props;
-
+    
     return (
       <>
         <Layout {...this.props}>

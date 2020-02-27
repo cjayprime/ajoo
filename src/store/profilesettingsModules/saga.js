@@ -228,22 +228,29 @@ function* profilePasswordActionSaga(action) {
 
 function* organisationProfileActionSaga(action) {
   try {
-    const { data, history } = action.payload;
+    const { data } = action.payload;
     yield put(
-      setLoading({ request: settingRequest.organisationProfileRequest })
+      setLoading({ request: settingRequest.organisationProfileRequest, loading: true })
     );
     const response = yield call(
       settingService.organisationProfileRequest,
       data
     );
-    yield put(setLoading({}));
+    yield put(setLoading({ request: settingRequest.organisationProfileRequest, loading: false }));
+    console.log(response.data, '::: DATA')
+    yield put(
+      showRequestFeedBack({
+        message: response.data.status.desc,
+        for: settingRequest.organisationProfileRequest,
+        success: response.data.status.code === 100
+      })
+    );
     if (response.data.status.code === 100) {
       yield put(updateUserData(response.data.entity.user));
       yield put({
         type: ORGANISATION_SETTING_SUCCESS,
         payload: response.data.status
       });
-      history.push("/");
     } else {
       yield put({
         type: ORGANISATION_SETTING_ERROR,

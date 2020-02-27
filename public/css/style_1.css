@@ -517,7 +517,7 @@ label {
   justify-content: space-around;
   display: flex;
   flex-direction: column;
-  width: 363px;
+  /* width: 363px; */
 }
 
 .card img {
@@ -624,7 +624,6 @@ label {
 
 .campaigns_head_banner {
   width: 100%;
-  height: 40vh;
   background-image: url("../images/mask_group.png");
 }
 
@@ -647,11 +646,11 @@ label {
   border: none;
   border-bottom: 1px solid #ccc;
   font-size: 16px;
-  background-color: none;
+  /*background-color: none;
   background-image: url("../images/searchicon.svg");
   background-position: 10px 20px;
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px !important;
+  background-repeat: no-repeat;*/
+  padding: 12px 50px 12px 40px !important;
   outline: none;
   border: 1px solid #d5d5d5 !important;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
@@ -1171,7 +1170,7 @@ label {
   font-style: normal;
   font-weight: normal;
   margin-top: -15px;
-  width: 65%;
+  width: 100%;
 }
 
 .footerUp a {
@@ -2022,7 +2021,7 @@ label span {
 
 /*SIGN UP VERIFICATION*/
 .signUp_verification {
-  padding: 50px 90px;
+  padding: 50px 20px;
   background-color: #f9fafc;
 }
 
@@ -2059,23 +2058,24 @@ label span {
 
 .verification_2 {
   display: flex;
+  flex-direction: row;
   padding-top: 10px;
   padding-bottom: 50px;
 }
 
 .verification_social {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
 }
 
 .verification_person {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
 }
 
 .verification_feature {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
 }
 
 .verification2_column1 {
@@ -2083,23 +2083,20 @@ label span {
 }
 
 .verification2_column2 {
-  padding-left: 35px;
-  width: 43%;
-}
-
-.verification2_column3 {
-  width: 20%;
-  padding-left: 35px;
+  width: 33%;
 }
 
 .verification2_column4 {
-  padding-left: 35px;
   width: 30%;
 }
 
 /* .verification_2 img {
     width: 100%;
   } */
+
+.signup_verification_form_image {
+  margin-left: 48px;
+}
 
 .verification_form_image {
   display: flex;
@@ -2170,6 +2167,7 @@ label span {
 
 .createCampaign_form {
   margin-top: 20px;
+  width: 410px;
 }
 
 .createCampaign_column3 h1 {
@@ -2369,6 +2367,7 @@ label span {
 .campaign__info-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__info-desc {
@@ -2377,9 +2376,8 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__info-form {
@@ -2411,6 +2409,7 @@ label span {
 .campaign__feature-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__feature-desc {
@@ -2419,13 +2418,15 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__feature-form {
   margin-left: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .edit__camp-img-btn {
@@ -2447,6 +2448,7 @@ label span {
 .campaign__desc-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__desc-desc {
@@ -2455,9 +2457,8 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__desc-form {
@@ -2482,6 +2483,7 @@ label span {
 .campaign__reward-body {
   padding-top: 34px;
   display: flex;
+  justify-content: space-between;
 }
 
 .campaign__reward-desc {
@@ -2491,17 +2493,11 @@ label span {
   font-size: 16px;
   line-height: 20px;
   color: #414141;
-  width: 427px;
-  height: 92px;
-  flex-shrink: 0;
+  width: 40%;
 }
 
 .campaign__reward-form {
   margin-left: 48px;
-}
-
-.campaign__reward-form .createCampaign_form {
-  margin: 0 !important;
 }
 
 .reward-form {
@@ -2574,8 +2570,6 @@ label span {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 410px;
-  display: block;
 }
 
 .editCampaign_type-round {
@@ -2716,7 +2710,7 @@ label span {
 /*PROFILE*/
 .profile {
   background-color: #f9fafc;
-  padding: 20px 90px 0 90px;
+  padding: 20px 30px 0 30px;
 }
 
 .edit_profile {
@@ -5641,7 +5635,7 @@ label span {
   display: flex;
   justify-content: space-between;
   margin-top: -80px;
-  padding: 100px;
+  padding: 100px 50px;
 }
 
 .volunteerWork1 {

@@ -14,9 +14,7 @@ class VerifiedPagesContainer extends PureComponent {
       organizationsAction,
       organizationsData,
       utils
-    } = this.props
-
-    console.log(organizationsData, "hey verify")
+    } = this.props;
 
     return (
       <>

@@ -26,13 +26,13 @@ class Footer extends PureComponent {
               <Link to="/campaigns">Campaigns</Link>
             </li>
             <li>
-              <Link to="#">Rewards</Link>
+              <Link to="/campaigns">Rewards</Link>
             </li>
             <li>
-              <Link to="#">Donations</Link>
+              <Link to="/campaigns">Non-Rewards</Link>
             </li>
             <li>
-              <Link to="#">Community</Link>
+              <Link to="/volunteer">Community</Link>
             </li>
           </ul>
           <ul className="footerUp_column2" id="footerColumn2">

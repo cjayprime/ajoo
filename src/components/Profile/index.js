@@ -26,8 +26,8 @@ class ProfileComponent extends Component {
   }
 
   render() {
-    const { user, userCampaigns, match, request, userDonations, utils } = this.props;
-
+    const { user, userCampaigns, request, userDonations, utils } = this.props;
+    
     return (
       <Layout {...this.props}>
         <AlertDialog

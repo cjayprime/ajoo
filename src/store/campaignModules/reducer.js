@@ -14,7 +14,11 @@ const initialState = {
   verifiedPayment: {},
   completedCampaigns: {},
   organizationsData: {},
-  rewards: []
+  organizationCampaignsData: {},
+  rewards: [],
+  closeCampaign: {},
+  closeDonation: {},
+  deleteCampaign: {}
 };
 
 const campaigns = (state = initialState, action) => {
@@ -235,6 +239,81 @@ const campaigns = (state = initialState, action) => {
         requestStatus: action.payload
       };
 
+    case Action.FETCH_ORGANIZATION_CAMPAIGNS_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        organizationCampaignsData: action.payload.data
+      }
+
+    case Action.FETCH_ORGANIZATION_CAMPAIGNS_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.CLOSE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        closeCampaign: action.payload.data
+      }
+
+    case Action.CLOSE_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.CLOSE_DONATION_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        closeDonation: action.payload.data
+      }
+
+    case Action.CLOSE_DONATION_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.DELETE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        deleteCampaign: action.payload.data
+      }
+
+    case Action.DELETE_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    
+    case Action.REPORT_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        //deleteCampaign: action.payload.data
+      }
+
+    case Action.REPORT_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    
     default:
       return state;
   }

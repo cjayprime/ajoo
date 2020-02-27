@@ -61,7 +61,7 @@ class Layout extends PureComponent {
           {...this.props}
         />
         <div className="container">
-          <SearchBar toggleSearch={this.toggleSearch} openSearch={openSearch} />
+          <SearchBar {...this.props} toggleSearch={this.toggleSearch} openSearch={openSearch} />
           <MobileSideNav
             toggleMobileSideNav={this.toggleMobileSideNav}
             openMobileSideNav={openMobileSideNav}

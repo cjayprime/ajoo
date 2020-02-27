@@ -6,8 +6,13 @@ import {
   fetchCampaignById,
   iniateDonationAction,
   verifyPaymentAction,
-  getCampaignDonationById
+  getCampaignDonationById,
+  getReward,
+  reportCampaign
 } from "../../store/campaignModules/actions";
+import {
+  verifyCampaign
+} from "../../store/verifyModules/actions";
 import { openModalAction } from "../../store/utilsModule/actions";
 
 class CampaignContainer extends Component {
@@ -41,9 +46,11 @@ class CampaignContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ utils, campaigns }) => ({
+const mapStateToProps = ({ auth, utils, campaigns }) => ({
+  auth,
   utils,
   campaign: campaigns.campaign,
+  rewards: campaigns.rewards,
   initDonation: campaigns.initDonation,
   requestStatus: campaigns.requestStatus,
   userDonations: campaigns.campaignDonations
@@ -53,7 +60,10 @@ const mapDispatchToProps = {
   iniateDonationAction,
   verifyPaymentAction,
   openModalAction,
-  getCampaignDonationById
+  getCampaignDonationById,
+  getReward,
+  verifyCampaign,
+  reportCampaign
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignContainer);

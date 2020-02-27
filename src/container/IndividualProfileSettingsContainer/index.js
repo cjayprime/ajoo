@@ -8,7 +8,7 @@ import {
 } from "../../store/profilesettingsModules/actions.js";
 import IndividualProfileSettingComponent from "../../components/IndividualProfileSetting";
 import { fetchStates, fetchLga } from "../../store/miscModules/actions";
-import { showPercentageProgress } from "../../store/utilsModule/actions.js";
+import { showPercentageProgress, showRequestFeedBack } from "../../store/utilsModule/actions.js";
 import { uploadProfileImage } from "../../store/allActions.js";
 
 class IndividualProfileSettingContainer extends PureComponent {
@@ -26,7 +26,6 @@ class IndividualProfileSettingContainer extends PureComponent {
       misc,
       user
     } = this.props;
-    console.log(user.last_name)
 
     return (
       <IndividualProfileSettingComponent
@@ -62,7 +61,8 @@ const mapDispatchToProps = {
   individualProfilePasswordSetting,
   showPercentageProgress,
   fetchStates,
-  fetchLga
+  fetchLga,
+  showRequestFeedBack
 };
 
 export default connect(

@@ -65,7 +65,7 @@ let routes = {
     // { path: "/non_volunteer", exact: true, component: NonVolunteerContainer },
     { path: "/verified_page", exact: true, component: VerifiedPagesContainer },
     {
-      path: "/verified_org_campaigns",
+      path: "/verified_org_campaigns/:organizationId",
       exact: true,
       component: VerifiedOrganisationContainer
     },

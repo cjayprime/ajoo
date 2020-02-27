@@ -73,6 +73,7 @@ class VerifiedBody extends Component {
       isCampaignFetching,
       utils
     } = this.props;
+    console.log('Organizations Data', organizationsData.organizations)
     const { category } = this.state.fields;
 
     const categoryItems = categories.map((c, i) => (
@@ -97,9 +98,9 @@ class VerifiedBody extends Component {
             <span>28 Verified Organisations</span>
           </div>
           <div>
-            <a href id="verified_organization">
+            <div id="verified_organization">
               <h3 className="verified_page_body_title">Verified Organisations</h3>
-            </a>
+            </div>
             <div className="verified_page_body_card">
               {organizationsData.organizations.length === 0 && isCampaignFetching ? (
                 <Spinner />
@@ -126,6 +127,7 @@ class VerifiedBody extends Component {
                               <div key={c._id}>
                                 <OrganizationsCard
                                   key={c._id}
+                                  organizationId={c._id}
                                   src={c.image_url}
                                   organization_name={c.organization_name}
                                 />

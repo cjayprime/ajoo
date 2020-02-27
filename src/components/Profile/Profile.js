@@ -10,13 +10,6 @@ import Rewards from "./Rewards";
 import volunteerImg from "../../assets/images/non_volunteer.svg";
 // import VolunteeredStep from "./VolunteeredStep";
 
-const tabs = [
-  { tab: "Campaigns" },
-  { tab: "Donations" },
-  { tab: "Rewards" },
-  { tab: "Volunteering" }
-];
-
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +30,23 @@ class Profile extends Component {
   };
 
   render() {
-    const { user, userCampaigns, request, history, userDonations } = this.props;
+    const { user, userCampaigns, request, history, userDonations, rewards } = this.props;
+
+    var tabs;
+    
+    if(user.is_organization === 1){
+      tabs = [
+        { tab: "Campaigns" },
+        { tab: "Donations" }
+      ];
+    }else{
+      tabs = [
+        { tab: "Campaigns" },
+        { tab: "Donations" },
+        { tab: "Rewards" },
+        { tab: "Volunteering" }
+      ];
+    }
 
     return (
       <>
@@ -95,6 +104,7 @@ class Profile extends Component {
 
             {this.state.active === "Campaigns" && (
               <MyProfile
+                {...this.props}
                 userCampaigns={userCampaigns}
                 userDonations={userDonations}
                 request={request}
@@ -109,7 +119,7 @@ class Profile extends Component {
               />
             )}
 
-            {this.state.active === "Rewards" && <Rewards Polygon={Polygon} />}
+            {this.state.active === "Rewards" && <Rewards Polygon={Polygon} rewards={rewards} />}
 
             {this.state.active === "Volunteering" && (
               <div id="" className="">
