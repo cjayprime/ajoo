@@ -9,13 +9,13 @@ import { campaignRequest } from "../../store/campaignModules/saga";
 
 import { IMAGE_URL, validate, isRequestActive } from "../../utils/misc";
 
-const VolunteerList = ({ url, title }) => {
+const VolunteerList = ({ url, title, name }) => {
   return (
-    <div className="campaign--volunteers-list-item">
-      <img src={`${IMAGE_URL}363_232_${url}`} alt={`${title}`} />
+    <div className="campaign--volunteers-list-item" style={{width: 150}}>
+      <img src={`${IMAGE_URL}60_60_${url}`} alt={`${title}`} />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p>Preye Adebusola</p>
-        <div style={{ marginTop: 20 }}>
+        <p>{name}</p>
+        {/*<div style={{ marginTop: 20 }}>
             <StarRatings
                 rating={4}
                 numberOfStars={5}
@@ -28,7 +28,7 @@ const VolunteerList = ({ url, title }) => {
                 name="rating"
                 className="review-star"
             />
-        </div>
+  </div>*/}
       </div>
     </div>
   );
@@ -119,7 +119,6 @@ export default class CloseCampaign extends Component {
     render() {
         const { fields: message } = this.state;
         const { utils, campaign } = this.props;
-        
         return (
             <>
                 <AlertDialog
@@ -154,11 +153,11 @@ export default class CloseCampaign extends Component {
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <div>
                                         CAMPAIGN GOAL
-                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N 230, 000.00</div>
+                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N{campaign.pledged === null ? 0 : campaign.pledged}</div>
                                     </div>
                                     <div>
                                         CAMPAIGN DONATIONS
-                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N 242, 579.00</div>
+                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N{campaign.amount}</div>
                                     </div>
                                 </div>
                             </div>
@@ -232,14 +231,19 @@ export default class CloseCampaign extends Component {
 
 
                     <div className="campaign__info">
-                        <h3 className="campaign__info-title">Volunteer Rating</h3>
+                        <h3 className="campaign__info-title">Volunteer</h3>
                         <hr className="campaign-hr" />
-                        <div className="campaign--volunteers-list" style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
+                        <div className="campaign--volunteers-list" style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
+                            {
+                                this.props.campaigns.volunteers.map((v, i) => (
+                                    <VolunteerList
+                                        key={i}
+                                        name={v.first_name + " " + v.last_name}
+                                        title={v.first_name + " " + v.last_name}
+                                        url={v.image_url}
+                                    />
+                                ))
+                            }
                         </div>
                         <div className="campaign__info-body">
                             <div className="campaign__info-desc">

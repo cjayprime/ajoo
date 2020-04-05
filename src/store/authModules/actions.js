@@ -32,8 +32,44 @@ export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 
 export const SET_USER_DATA = "SET_USER_DATA";
 
+export const FACEBOOK_LOGIN_SUCCESS = "FACEBOOK_LOGIN_SUCCESS";
+export const FACEBOOK_LOGIN_ERROR = "FACEBOOK_LOGIN_ERROR";
+export const FACEBOOK_LOGIN = "FACEBOOK_LOGIN";
+
+export const FACEBOOK_SIGNUP_SUCCESS = "FACEBOOK_SIGNUP_SUCCESS";
+export const FACEBOOK_SIGNUP_ERROR = "FACEBOOK_SIGNUP_ERROR";
+export const FACEBOOK_SIGNUP = "FACEBOOK_SIGNUP";
+
+export const FETCH_FACEBOOK_DETAILS = "FETCH_FACEBOOK_DETAILS";
+export const FETCH_FACEBOOK_DETAILS_ERROR = "FETCH_FACEBOOK_DETAILS_ERROR";
+export const FETCH_FACEBOOK_DETAILS_SUCCESS = "FETCH_FACEBOOK_DETAILS_SUCCESS";
+
+export const FACEBOOK_ORG_SIGNUP_SUCCESS = "FACEBOOK_ORG_SIGNUP_SUCCESS";
+export const FACEBOOK_ORG_SIGNUP_ERROR = "FACEBOOK_ORG_SIGNUP_ERROR";
+export const FACEBOOK_ORG_SIGNUP = "FACEBOOK_ORG_SIGNUP";
+
 export const signinUser = data => ({
   type: SIGNIN,
+  payload: data
+});
+
+export const facebookLogin = data => ({
+  type: FACEBOOK_LOGIN,
+  payload: data
+});
+
+export const facebookSignup = data => ({
+  type: FACEBOOK_SIGNUP,
+  payload: data
+});
+
+export const getFacebookSignupDetails = data => ({
+  type: FETCH_FACEBOOK_DETAILS,
+  payload: data
+})
+
+export const facebookOrgSignup = data => ({
+  type: FACEBOOK_ORG_SIGNUP,
   payload: data
 });
 

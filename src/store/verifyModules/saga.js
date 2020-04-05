@@ -63,6 +63,11 @@ function* verifySignupSaga(action){
           success: true
         })
       );
+      
+      setTimeout(() => {
+        window.location = window.location.origin;
+      }, 2000);
+
     } else {
       yield put(
         showRequestFeedBack({

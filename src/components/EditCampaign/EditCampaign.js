@@ -355,7 +355,7 @@ class EditCampaign extends Component {
     toggle = (type, success) => {
 
         this.setState({
-            [type]: ! this.state[type],
+            [type]: !this.state[type],
             success
         });
     }
@@ -414,7 +414,6 @@ class EditCampaign extends Component {
         const validate1 = validate.bind(this, this, form1);
         //const validate2 = validate.bind(this, this, form2);
         const validate3 = validate.bind(this, this, form3);
-        //console.log("Campaign Status: ", editCampaign.status)
 
         return (
             <>
@@ -444,29 +443,29 @@ class EditCampaign extends Component {
                         <div className="edit__campaign-heade-2">
                             {
                                 editCampaign.status === 0 || editCampaign.status === 2 || editCampaign.status === 4
-                                ?       editCampaign.status === 0
-                                        ?   <span className="edit__campaign-close">This campaign is awaiting verification</span>
-                                        :   <span className="edit__campaign-delete">{"This campaign has been " + (editCampaign.status === 2 ? "closed" : "deleted")}</span>
-                                    :   this.state.success === true || (editCampaign.status === 3)
-                                            ?   <span className="edit__campaign-delete" onClick={() => {
+                                    ? editCampaign.status === 0
+                                        ? <span className="edit__campaign-close">This campaign is awaiting verification</span>
+                                        : <span className="edit__campaign-delete">{"This campaign has been " + (editCampaign.status === 2 ? "closed" : "deleted")}</span>
+                                    : this.state.success === true || (editCampaign.status === 3)
+                                        ? <span className="edit__campaign-delete" onClick={() => {
 
-                                                    history.push({
-                                                        pathname: "/close_campaign",
-                                                        state: { campaign: editCampaign }
-                                                    });
+                                            history.push({
+                                                pathname: "/close_campaign",
+                                                state: { campaign: editCampaign }
+                                            });
 
-                                                }} style={{ cursor: "pointer" }}>
-                                                    Close Campaign
+                                        }} style={{ cursor: "pointer" }}>
+                                            Close Campaign
                                                 </span>
-                                            :   <>
-                                                    <span className="edit__campaign-close" onClick={() => this.toggle("close")} style={{ cursor: "pointer" }}>
-                                                        Close Donations
+                                        : <>
+                                            <span className="edit__campaign-close" onClick={() => this.toggle("close")} style={{ cursor: "pointer" }}>
+                                                Close Donations
                                                     </span>
-                                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
-                                                    <span className="edit__campaign-delete" onClick={() => this.toggle("delete")} style={{ cursor: "pointer" }}>
-                                                        Delete Campaign
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
+                                            <span className="edit__campaign-delete" onClick={() => this.toggle("delete")} style={{ cursor: "pointer" }}>
+                                                Delete Campaign
                                                     </span>
-                                                </>
+                                        </>
                             }
                         </div>
                     </div>
@@ -476,8 +475,7 @@ class EditCampaign extends Component {
                         <hr className="campaign-hr" />
                         <div className="campaign__info-body">
                             <div className="campaign__info-desc">
-                                All Social account information are needed for the following reasons. like blah blah blah..
-                                 some content will go here explaining why this entire process is necessary and how it helps for verification.
+                                Please provide details of your campaign.
                             </div>
                             <div className="campaign__info-form">
                                 <form method="post">
@@ -551,8 +549,7 @@ class EditCampaign extends Component {
                         <hr className="campaign-hr" />
                         <div className="campaign__feature-body">
                             <div className="campaign__feature-desc">
-                                Some text will going here most likely describing the kinds of images that are expected to be uploaded from.
-                                Suggestions are welcome and will be very helpful for anyone involved.
+                                Please provide an image relating to your campaign. This image will be used as the campaign poster for your publication. The campaign feature image visually explains your campaign to the donors and might help you get funded.
                             </div>
                             <div className="campaign__feature-form">
                                 <div style={{ height: 260, width: 260 }}>
@@ -744,48 +741,48 @@ class EditCampaign extends Component {
                                 </div>
                             </div>
                         </div>
-                                {
-                                    rewards.length
-                                        ?
-                                        <>
-                                            <hr className="campaign-hr" style={{ width: "auto", marginLeft: 0, marginTop: 50, marginBottom: 50 }} />
-                                            <div style={{ width: "auto", overflow: "hidden", overflowX: "auto" }}>
-                                                <table cellPadding="20" style={{ width: "100%", tableLayout: "fixed", borderCollapse: "collapse", borderRadius: 5, background: "#FFF", boxShadow: "1px 1px 4px -1px" }}>
-                                                    <thead>
-                                                        <tr style={{ verticalAlign: "top" }}>
-                                                            <td style={{ width: "25%" }}><b>REWARD TYPE</b></td>
-                                                            <td style={{ width: "25%" }}><b>REWARD</b></td>
-                                                            <td style={{ width: "25%" }}><b>DONATION AMOUNT (N)</b></td>
-                                                            <td style={{ width: "5%" }}></td>
-                                                            <td style={{ width: "5%" }}></td>
+                        {
+                            rewards.length
+                                ?
+                                <>
+                                    <hr className="campaign-hr" style={{ width: "auto", marginLeft: 0, marginTop: 50, marginBottom: 50 }} />
+                                    <div style={{ width: "auto", overflow: "hidden", overflowX: "auto" }}>
+                                        <table cellPadding="20" style={{ width: "100%", tableLayout: "fixed", borderCollapse: "collapse", borderRadius: 5, background: "#FFF", boxShadow: "1px 1px 4px -1px" }}>
+                                            <thead>
+                                                <tr style={{ verticalAlign: "top" }}>
+                                                    <td style={{ width: "25%" }}><b>REWARD TYPE</b></td>
+                                                    <td style={{ width: "25%" }}><b>REWARD</b></td>
+                                                    <td style={{ width: "25%" }}><b>DONATION AMOUNT (N)</b></td>
+                                                    <td style={{ width: "5%" }}></td>
+                                                    <td style={{ width: "5%" }}></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody style={{ verticalAlign: "bottom" }}>
+                                                {
+                                                    rewards.map((v, i) =>
+                                                        <tr key={i} style={{ borderBottom: "1px solid #ccc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "pre" }}>
+                                                            <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>{v.rewardType}</td>
+                                                            <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                {v.reward}
+                                                            </td>
+                                                            <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
+                                                                {v.donation}
+                                                            </td>
+                                                            <td style={{ width: "5%" }} onClick={() => this.setMode("edit", v)}>
+                                                                <EditIcon style={{ cursor: "pointer" }} />
+                                                            </td>
+                                                            <td style={{ width: "5%" }} onClick={() => this.deleteReward(v)}>
+                                                                <DeleteIcon style={{ cursor: "pointer", fill: "red" }} />
+                                                            </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody style={{ verticalAlign: "bottom" }}>
-                                                        {
-                                                            rewards.map((v, i) =>
-                                                                <tr key={i} style={{ borderBottom: "1px solid #ccc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "pre" }}>
-                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>{v.rewardType}</td>
-                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
-                                                                        {v.reward}
-                                                                    </td>
-                                                                    <td style={{ padding: 20, overflow: "hidden", textOverflow: "ellipsis", width: "25%" }}>
-                                                                        {v.donation}
-                                                                    </td>
-                                                                    <td style={{ width: "5%" }} onClick={() => this.setMode("edit", v)}>
-                                                                        <EditIcon style={{ cursor: "pointer" }} />
-                                                                    </td>
-                                                                    <td style={{ width: "5%" }} onClick={() => this.deleteReward(v)}>
-                                                                        <DeleteIcon style={{ cursor: "pointer", fill: "red" }} />
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </>
-                                        : null
-                                }
+                                                    )
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </>
+                                : null
+                        }
                     </div>
                 </div>
             </>

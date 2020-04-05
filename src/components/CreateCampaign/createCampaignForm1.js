@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import FormInputField from "../../sharedComponent/form";
+import { moneyFormat } from "../../utils/misc"
 
 class CreateCampaignForm1 extends Component {
   continue = e => {
@@ -51,6 +52,7 @@ class CreateCampaignForm1 extends Component {
                 labelTitle="CAMPAIGN GOAL"
                 className="createCampaign_form-goal"
               />
+              <span style={{fontSize: 12, color: "grey"}}>5% ({! isNaN(goal.value) ? "N" + moneyFormat(0.05 * goal.value) : "N0.00"}) commission will be removed upon claiming the money</span>
             </div>
             <div className="createCampaign_form">
               <FormInputField

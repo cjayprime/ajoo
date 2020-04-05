@@ -26,7 +26,19 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   RESET_PASSWORD,
   RESET_PASSWORD_ERROR,
-  RESET_PASSWORD_SUCCESS
+  RESET_PASSWORD_SUCCESS,
+  FACEBOOK_LOGIN,
+  FACEBOOK_LOGIN_ERROR,
+  FACEBOOK_LOGIN_SUCCESS,
+  FACEBOOK_SIGNUP,
+  FACEBOOK_SIGNUP_ERROR,
+  FACEBOOK_SIGNUP_SUCCESS,
+  FACEBOOK_ORG_SIGNUP,
+  FACEBOOK_ORG_SIGNUP_ERROR,
+  FACEBOOK_ORG_SIGNUP_SUCCESS,
+  FETCH_FACEBOOK_DETAILS,
+  FETCH_FACEBOOK_DETAILS_ERROR,
+  FETCH_FACEBOOK_DETAILS_SUCCESS
 } from "./actions";
 import { setLoading, showRequestFeedBack } from "../utilsModule/actions";
 //import auth from "./reducer";
@@ -39,7 +51,11 @@ export const authRequest = {
   uploadProfileImageRequest: "uploadProfileImageRequest",
   verifyEmailRequest: "verifyEmailRequest",
   forgotPasswordRequest: "forgotPasswordRequest",
-  resetPasswordRequest: "resetPasswordRequest"
+  resetPasswordRequest: "resetPasswordRequest",
+  facebookLoginRequest: "facebookLoginRequest",
+  facebookSignupRequest: "facebookSignupRequest",
+  facebookOrgSignupRequest: "facebookOrgSignupRequest",
+  facebookSignupDetailsRequest: "facebookSignupDetailsRequest"
 };
 
 function* signinActionSaga(action) {
@@ -133,6 +149,202 @@ function* signinActionSaga(action) {
       type: SIGNIN_ERROR,
       payload: error
     });
+  }
+}
+
+function* facebookLoginActionSaga(action) {
+  try {
+    const data = action.payload;
+    yield put(
+      setLoading({ request: authRequest.facebookLoginRequest, loading: true }))
+    const response = yield call(authService.facebookLogin, data);
+
+    yield put(setLoading({ request: authRequest.facebookLoginRequest }));
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FACEBOOK_LOGIN_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookLoginRequest,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: FACEBOOK_LOGIN_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookLoginRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: authRequest.facebookLoginRequest })
+    );
+    yield put({
+      type: FACEBOOK_LOGIN_ERROR,
+      payload: { status: error, data: undefined }
+    })
+  }
+}
+
+function* facebookSignupActionSaga(action) {
+  try {
+    const data = action.payload;
+    yield put(
+      setLoading({ request: authRequest.facebookSignupRequest, loading: true }))
+    const response = yield call(authService.facebookSignup, data);
+
+    yield put(setLoading({ request: authRequest.facebookSignupRequest }));
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FACEBOOK_SIGNUP_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookSignupRequest,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: FACEBOOK_SIGNUP_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookSignupRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: authRequest.facebookSignupRequest })
+    );
+    yield put({
+      type: FACEBOOK_SIGNUP_ERROR,
+      payload: { status: error, data: undefined }
+    })
+  }
+}
+
+function* facebookDetailsActionSaga(action) {
+  try {
+    const data = action.payload;
+    yield put(
+      setLoading({ request: authRequest.facebookSignupDetailsRequest, loading: true }))
+    const response = yield call(authService.getFacebookDetails, data);
+
+    yield put(setLoading({ request: authRequest.facebookSignupDetailsRequest }));
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FETCH_FACEBOOK_DETAILS_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookSignupDetailsRequest,
+          success: true
+        })
+      );
+    } else {
+      yield put({
+        type: FETCH_FACEBOOK_DETAILS_ERROR,
+        payload: { status: response.data.status }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookSignupDetailsRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(setLoading({ request: authRequest.facebookSignupDetailsRequest }));
+    yield put(
+      showRequestFeedBack({
+        message: "An error occure. Try again",
+        for: authRequest.signupRequest,
+        success: false
+      })
+    );
+    yield put({
+      type: FETCH_FACEBOOK_DETAILS_ERROR,
+      payload: { status: error }
+    })
+  }
+}
+
+function* facebookOrgSignupActionSaga(action) {
+  try {
+    const data = action.payload;
+    yield put(
+      setLoading({ request: authRequest.facebookOrgSignupRequest, loading: true }))
+    const response = yield call(authService.facebookOrgSignup, data);
+
+    yield put(setLoading({ request: authRequest.facebookOrgSignupRequest }));
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FACEBOOK_ORG_SIGNUP_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookOrgSignupRequest,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: FACEBOOK_ORG_SIGNUP_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: authRequest.facebookOrgSignupRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: authRequest.facebookOrgSignupRequest })
+    );
+    yield put({
+      type: FACEBOOK_ORG_SIGNUP_ERROR,
+      payload: { status: error, data: undefined }
+    })
   }
 }
 
@@ -408,7 +620,7 @@ function* resetPasswordSaga(action) {
         type: RESET_PASSWORD_SUCCESS,
         payload: response.data.status
       });
-      
+
       setTimeout(() => {
         window.location = "/signin";
       }, 2000);
@@ -460,6 +672,23 @@ function* resetPasswordWatcher() {
   yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
 }
 
+function* facebookLoginWatcher() {
+  yield takeLatest(FACEBOOK_LOGIN, facebookLoginActionSaga)
+}
+
+function* facebookSignupWatcher() {
+  yield takeLatest(FACEBOOK_SIGNUP, facebookSignupActionSaga)
+}
+
+function* facebookOrgSignupWatcher() {
+  yield takeLatest(FACEBOOK_ORG_SIGNUP, facebookOrgSignupActionSaga)
+}
+
+function* facebookDetailsWatcher() {
+  yield takeLatest(FETCH_FACEBOOK_DETAILS,
+    facebookDetailsActionSaga)
+}
+
 export default function* authsSaga() {
   yield all([
     signinActionWatcher(),
@@ -469,6 +698,10 @@ export default function* authsSaga() {
     signoutActionWatcher(),
     verifyEmailWatcher(),
     forgotPasswordWatcher(),
-    resetPasswordWatcher()
+    resetPasswordWatcher(),
+    facebookLoginWatcher(),
+    facebookSignupWatcher(),
+    facebookOrgSignupWatcher(),
+    facebookDetailsWatcher()
   ]);
 }

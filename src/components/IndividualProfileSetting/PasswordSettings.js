@@ -7,13 +7,13 @@ import AlertDialog from "../../sharedComponent/AlertDialog";
 class PasswordSetting extends PureComponent {
   render() {
     const {
-        form: { passwordChangeField: fields, action, formError },
-        settingRequest,
-        request,
-        triggerIndividualPasswordProfileAction,
-        _handleChange,
-        onBlur
-      } = this.props,
+      form: { passwordChangeField: fields, action, formError },
+      settingRequest,
+      request,
+      triggerIndividualPasswordProfileAction,
+      _handleChange,
+      onBlur
+    } = this.props,
       { current_password, new_password, cnew_password } = fields;
     return (
       <div className="campaigns_div" id="profile_div">

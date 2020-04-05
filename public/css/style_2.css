@@ -78,22 +78,23 @@
   /* DONATIONS. REWARD. COMMUNITY */
   .heading_container {
     padding: 10px 0 10px 32px;
-    /* display: flex;
-        flex-direction: row; */
-    height: 90vh;
-    width: 120wh;
+    height: 100vw;
     position: relative;
   }
 
   .heading_left {
     font-family: "Muli", sans-serif;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(30%);
+    padding-top: 111px;
   }
 
   .heading_title {
     color: #0072a3;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 45px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   }
 
@@ -114,6 +115,27 @@
     color: #fff;
     width: 242px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .profile__start-button {
+    margin-left: 50px;
+  }
+
+  .heading_button-reduce {
+    background: #0072a3;
+    margin-top: 30px;
+    border-radius: 50px;
+    color: #fff;
+    /* width: 202px; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .heading_button_text-reduce {
+    padding: 17px 39px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
   }
 
   .heading_button_text {
@@ -209,7 +231,8 @@
   /* WHY AJOO */
   .why_ajoo_container {
     padding: 10px 100px;
-    margin: 400px 0 150px 0;
+    margin: 200px 0;
+    position: relative;
   }
 
   .why_ajoo_heading {
@@ -228,12 +251,9 @@
   }
 
   .why_ajoo_content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-bottom: 60px;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 50px;
   }
 
   .why_ajoo_content_item {
@@ -241,11 +261,9 @@
     font-style: normal;
     font-weight: normal;
     margin-bottom: 50px;
-    width: 50%;
     font-size: 18px;
     line-height: 23px;
     text-align: center;
-    /* Night */
     color: #414141;
   }
 
@@ -578,11 +596,10 @@
 
   .topCampaigns_row2 {
     margin-top: 10px;
-    display: flex;
-    flex-direction: row;
+    display: grid;
     margin-bottom: 43px;
-    justify-content: space-between;
     flex-wrap: wrap;
+    grid-template-columns: auto auto;
   }
 
   .topCampaigns_row2 img {
@@ -1310,9 +1327,7 @@
 
   .footer_row {
     display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
   }
 
   .footer_row ul {
@@ -1330,27 +1345,6 @@
   .footer_column3 {
     padding-bottom: 30px;
     order: -1;
-  }
-
-  .footer_column1 {
-    width: max-content;
-  }
-
-  .footer_column1 li {
-    padding-right: 40px;
-  }
-
-  .footer_column2 {
-    align-self: flex-end;
-    transform: translateY(-15px);
-  }
-
-  .footer_column2 li {
-    padding-right: 40px;
-  }
-
-  .footer_column3 li {
-    padding-right: 40px;
   }
 
   /*FOOTER*/
@@ -1371,18 +1365,19 @@
     padding: 40px 30px;
   }
 
-  .terms_of_use h4 {
+  .terms_of_use h5 {
     font-style: normal;
     font-weight: normal;
     padding-bottom: 25px;
+    font-size: 14px;
   }
 
-  .terms_of_use ol {
+  .terms_of_use ul {
     margin-left: 50px;
   }
 
   .terms_of_use li {
-    list-style-type: decimal;
+    list-style-type: disc;
     font-size: 18px;
     line-height: 23px;
   }
@@ -1962,45 +1957,35 @@
     margin: 20px 0;
   }
 
-  .verification_2 {
-    display: flex;
-    justify-content: space-between;
-  }
-
   .verification_social {
     display: flex;
     flex-direction: column;
   }
 
-  .verification_person {
+  .verification_feature {
     display: flex;
     flex-direction: column;
   }
 
-  .verification2_column1 {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
-    font-family: Muli;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 20px;
-    color: #414141;
-    width: 100%;
-  }
-
-  .verification2_column1 h5 {
-    text-align: center;
-    font-size: 14px;
+  .verification_2 {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    grid-gap: 60px;
   }
 
   .verification2_column2 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .verify2-form {
+    width: 60%;
+  }
+
+  .verification_person {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding-left: 0 !important;
-    width: 100% !important;
   }
 
   .verification2_column4 {
@@ -2009,16 +1994,6 @@
     justify-content: center;
     padding-left: 0 !important;
     width: 100%;
-  }
-
-  .verification_2 img {
-    padding-bottom: 20px;
-  }
-
-  .verification_feature {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
   }
 
   .verification_form_image {
@@ -2613,7 +2588,7 @@
 
   .edit_profile {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .profile_name {
@@ -3727,13 +3702,12 @@
 
   .verified_org_body {
     background: #ffffff;
-    margin-top: 76px;
+    margin-top: 1px;
     padding: 0px 70px 72px 70px;
   }
 
   .verified_org_head_banner {
     width: 100%;
-    height: 40vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6009,4 +5983,88 @@
   }
 
   /* End About */
+
+  /* Success Story section on home style */
+
+  .home-success {
+    padding: 40px 32px;
+    margin: 100px 0px;
+  }
+
+  .stories {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 50px;
+    margin-top: 44px;
+  }
+
+  .story-body {
+    margin-top: 20px;
+  }
+
+  .stories img {
+    width: 100%;
+  }
+
+  .success-category {
+    display: flex;
+    align-items: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 31px;
+  }
+
+  /* End of success story on home style */
+
+  /* campaign stat */
+
+  .stat {
+    padding: 10px 50px;
+    margin: 144px 0px;
+  }
+
+  .stat-number {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #0072a3;
+    margin-top: 18.8px;
+  }
+
+  .stat-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .stat-text {
+    font-family: Muli;
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #414141;
+    margin-top: 18px;
+  }
+
+  .campaign-stat {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .stat-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  /* campaign state */
 }

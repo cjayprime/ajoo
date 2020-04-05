@@ -11,7 +11,7 @@ class SuccessContainer extends Component {
             fetchCompletedCampaigns,
             completedCampaigns
         } = this.props
-        
+
         return (
             <>
                 <SuccessComponent
@@ -26,7 +26,7 @@ class SuccessContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    
+
     const { utils, campaigns } = state;
 
     return {

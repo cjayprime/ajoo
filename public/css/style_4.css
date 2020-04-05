@@ -88,19 +88,16 @@
 
   /* DONATIONS. REWARD. COMMUNITY */
   .heading_container {
-    padding: 10px 0 10px 32px;
-    /* display: flex;
-        flex-direction: row; */
-    height: 90vh;
-    width: 120wh;
+    padding: 10px 20px;
+    height: 100vw;
     position: relative;
+    display: block;
   }
 
   .heading_left {
     font-family: "Muli", sans-serif;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(30%);
+    padding-top: 111px;
   }
 
   .heading_title {
@@ -108,7 +105,7 @@
     font-family: Muli;
     font-style: normal;
     font-weight: bold;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 45px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   }
@@ -116,7 +113,7 @@
   .heading_text {
     font-style: normal;
     font-weight: 100;
-    width: 296px;
+    width: auto;
     margin-top: 23px;
     font-size: 16px;
     line-height: 20px;
@@ -131,6 +128,28 @@
     width: 196px;
     height: 48px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .profile__start-button {
+    margin-left: 0px;
+    display: flex;
+  }
+
+  .heading_button-reduce {
+    background: #0072a3;
+    margin-top: 30px;
+    border-radius: 50px;
+    color: #fff;
+    width: 202px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .heading_button_text-reduce {
+    padding: 14px 20px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
   }
 
   .heading_button_text {
@@ -185,10 +204,10 @@
   }
 
   .heading_right_image_3 {
-    width: 127.64px;
-    height: 127.64px;
-    right: 213.36px;
-    top: 535.25px;
+    width: 100.64px;
+    height: 100.64px;
+    right: 10.36px;
+    top: 435.25px;
     background: url(../images/home_3.png);
   }
 
@@ -204,7 +223,7 @@
     width: 39.57px;
     height: 39.57px;
     right: 185px;
-    top: 642.84px;
+    top: 542.84px;
     background: #f0b500;
   }
 
@@ -226,8 +245,8 @@
 
   /* WHY AJOO */
   .why_ajoo_container {
-    padding: 32px;
-    margin: 150px 0 150px 0;
+    padding: 10px 20px;
+    margin: 0px 0 100px 0;
   }
 
   .why_ajoo_heading {
@@ -235,10 +254,17 @@
     text-align: center;
   }
 
+  .circle {
+    display: none;
+  }
+
   .why_ajoo_content {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 60px;
+    justify-content: space-between;
   }
 
   .why_ajoo_content_item {
@@ -290,7 +316,7 @@
     width: 100vw;
     height: 100vw;
     padding: 0;
-    background: rgba(246, 233, 254, 0.3);
+    background: transparent;
   }
 
   .asking_for_fund_image1-mob {
@@ -1197,6 +1223,7 @@
   #organisations h2 {
     font-size: 26px;
     line-height: 33px;
+    padding: 0px;
   }
 
   #trusted_images {
@@ -1292,15 +1319,13 @@
 
   /*FOOTER*/
   footer {
-    padding: 36px 8px;
+    padding: 36px 20px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .footer_row {
     display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
   }
 
   .footer_row ul {
@@ -1317,20 +1342,22 @@
 
   .footer_column3 {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     padding-bottom: 35px;
     order: -1;
   }
 
   .footer_column1 {
+    display: flex;
+    justify-content: space-evenly;
     padding-bottom: 35px;
   }
 
-  .footer_column1 li {
-    padding-right: 40px;
+  .footer_column2 {
+    text-align: center;
   }
 
-  .footer_column3 li {
+  .footer_column1 li {
     padding-right: 40px;
   }
 
@@ -1362,20 +1389,20 @@
     padding: 30px 20px;
   }
 
-  .terms_of_use h4 {
+  .terms_of_use h5 {
     font-style: normal;
     font-weight: normal;
     padding-bottom: 20px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 18px;
   }
 
-  .terms_of_use ol {
+  .terms_of_use ul {
     margin-left: 30px;
   }
 
   .terms_of_use li {
-    list-style-type: decimal;
+    list-style-type: disc;
     font-size: 14px;
     line-height: 18px;
   }
@@ -1425,6 +1452,22 @@
     width: 100%;
     margin-top: 20px;
     margin-left: 0;
+  }
+
+  .campaign--body {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .campaign--body-content {
+    width: 100%;
+  }
+
+  .campaign--owner-message,
+  .campaign--more-image,
+  .campaign--owner-message-title {
+    min-width: 80%;
+    padding: 5%;
   }
 
   .facebook_twitter_button {
@@ -1819,7 +1862,7 @@
   .hr_or {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 0 20px;
     margin-top: 25px;
   }
 
@@ -1975,6 +2018,10 @@
     padding-bottom: 50px;
   }
 
+  .verify2-form {
+    width: 100%;
+  }
+
   .verification_social {
     display: flex;
     flex-direction: column;
@@ -2006,7 +2053,7 @@
 
   .verification2_column2 {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     padding-left: 0 !important;
     width: 100%;
@@ -2597,7 +2644,8 @@
 
   .edit_profile {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column-reverse;
+    align-items: center;
   }
 
   .profile_name {
@@ -3131,6 +3179,7 @@
   .profileSettings_column1 {
     margin-top: 20px;
     margin-bottom: 20px;
+    width: auto;
   }
 
   .profileSettings_column2 {
@@ -3150,7 +3199,6 @@
     font-size: 16px;
     line-height: 20px;
     font-weight: 500;
-    text-align: center;
   }
 
   .profileSettings_form1 {
@@ -3350,7 +3398,6 @@
 
   .accountSettings_column2 {
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-bottom: 20px;
     margin-left: 0;
@@ -3358,7 +3405,6 @@
 
   .accountSettings_org_column2 {
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-bottom: 20px;
     margin-left: 0;
@@ -3419,7 +3465,7 @@
   }
 
   .accountSettings_form2 input[type="text"] {
-    width: 370px;
+    width: 410px;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -3430,7 +3476,7 @@
   }
 
   .accountSettings_form2 input[type="password"] {
-    width: 370px;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -3781,13 +3827,12 @@
 
   .verified_org_body {
     background: #ffffff;
-    margin-top: 76px;
+    margin-top: 1px;
     padding: 0px 30px 32px 30px;
   }
 
   .verified_org_head_banner {
     width: 100%;
-    height: 40vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3981,7 +4026,7 @@
   }
 
   .verified_org-card-img-body img {
-    width: 280px;
+    width: 240px;
     padding-bottom: 30px;
   }
 
@@ -4028,7 +4073,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 44px;
   }
 
   .verified_org-card-social p.verified_org-card-email {
@@ -4316,13 +4360,14 @@
   }
 
   .signup_individual-column2 {
-    margin-left: 40px;
-    width: 83%;
+    margin-left: 0px;
+    width: 100%;
   }
 
   .signup_indi {
     display: flex;
     justify-content: space-between;
+    padding: 0 20px;
   }
 
   .signup_indi h4 {
@@ -4350,7 +4395,7 @@
     font-size: 18px;
     line-height: 23px;
     color: #ffffff;
-    width: 300px;
+    width: 100%;
     height: 56px;
     border: 1px solid #dde2e5;
     outline: none;
@@ -4364,7 +4409,7 @@
     margin-top: 49px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 0 20px;
   }
 
   .face-pass span {
@@ -4381,6 +4426,7 @@
 
   .signup_indi-form {
     margin-top: 54px;
+    padding: 0 20px;
   }
 
   .signup_indi-form-name {
@@ -4684,14 +4730,14 @@
   }
 
   .signup_org-column2 {
-    align-items: center;
-    margin-left: 40px;
-    width: 83%;
+    margin-left: 0px;
+    width: 100%;
   }
 
   .signup_org {
     display: flex;
     justify-content: space-around;
+    padding: 0 20px;
   }
 
   .signup_org h4 {
@@ -4719,7 +4765,7 @@
     font-size: 18px;
     line-height: 23px;
     color: #ffffff;
-    width: 300px;
+    width: 100%;
     height: 56px;
     border: 1px solid #dde2e5;
     outline: none;
@@ -4731,6 +4777,7 @@
 
   .signup_org-form {
     margin-top: 37px;
+    padding: 0 20px;
   }
 
   .signup_org-form-name label {
@@ -5957,4 +6004,99 @@
   }
 
   /* End About */
+
+  /* Success Story section on home style */
+
+  .home-success {
+    padding: 40px 32px;
+    margin-top: 200px;
+  }
+
+  .home-success h2 {
+    font-size: 30px;
+    line-height: 45px;
+  }
+
+  .stories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 44px;
+  }
+
+  .story-body {
+    margin-top: 20px;
+  }
+
+  .stories img {
+    width: 100%;
+  }
+
+  .success-category {
+    display: flex;
+    align-items: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 31px;
+  }
+
+  /* End of success story on home style */
+
+  /* campaign stat */
+
+  .stat {
+    padding: 10px 50px;
+    margin: 144px 0px;
+  }
+
+  /* .stat-icon {
+        width: 40px;
+      } */
+
+  .stat-number {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #0072a3;
+    margin-top: 18.8px;
+  }
+
+  .stat-text {
+    font-family: Muli;
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #414141;
+    margin-top: 18px;
+  }
+
+  .campaign-stat {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .stat-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  /* campaign state */
 }

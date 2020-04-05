@@ -1,20 +1,25 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import FormInputField from "../../sharedComponent/form";
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import AlertDialog from "../../sharedComponent/AlertDialog";
+import { isRequestActive } from "../../utils/misc";
 
-class PasswordSetting extends PureComponent {
+class PasswordSetting extends Component {
   render() {
+    console.log(this.props.form, "Hey I'm form here")
     const {
-        form: { passwordChangeField: fields, action, formError },
-        settingRequest,
-        utils,
-        triggerOrganisationPasswordProfileAction,
-        _handleChange,
-        onBlur
-      } = this.props,
-      { current_password, new_password, cnew_password } = fields;
+      form: { passwordChangeField: fields, action, formError },
+      settingRequest,
+      utils,
+      triggerOrganisationPasswordProfileAction,
+      _handleChange,
+      onBlur
+    } = this.props;
+    const { current_password, password, cnew_password } = fields;
+
+    //console.log(fields, "Hey I'm fields");
+    //console.log(formError, "Hey I'm action")
     return (
       <div className="campaigns_div" id="profile_div">
         <div className="accountSettings_column1">
@@ -30,7 +35,7 @@ class PasswordSetting extends PureComponent {
                   name="current_password"
                   value={current_password.value}
                   onBlur={onBlur}
-                  form={fields}
+                  form={this.props.form.passwordChangeField}
                   onChange={_handleChange}
                   labelTitle="CURRENT PASSWORD"
                 />
@@ -38,10 +43,10 @@ class PasswordSetting extends PureComponent {
               <div className="accountSettings_form2">
                 <FormInputField
                   type="password"
-                  name="new_password"
-                  value={new_password.value}
+                  name="password"
+                  value={password.value}
                   onBlur={onBlur}
-                  form={fields}
+                  form={this.props.form.passwordChangeField}
                   onChange={_handleChange}
                   labelTitle="NEW PASSWORD"
                 />
@@ -52,7 +57,7 @@ class PasswordSetting extends PureComponent {
                   name="cnew_password"
                   value={cnew_password.value}
                   onBlur={onBlur}
-                  form={fields}
+                  form={this.props.form.passwordChangeField}
                   onChange={_handleChange}
                   labelTitle="CONFIRM NEW PASSWORD"
                 />
@@ -72,8 +77,10 @@ class PasswordSetting extends PureComponent {
               error={formError && action === "passwordChangeField"}
               btnTitle="Save Changes"
               isLoading={
-                utils.request ===
-                settingRequest.organisationPasswordSettingRequest
+                isRequestActive(
+                  utils.request,
+                  settingRequest.organisationPasswordSettingRequest
+                )
               }
               type="submit"
             />

@@ -25,9 +25,9 @@ class PrivacyPolicyComponent extends PureComponent {
 	render () {
     return (
       <>
-				<Layout>
-          <PrivacyPolicy />
-				</Layout>
+		<Layout>
+        	<PrivacyPolicy />
+		</Layout>
       </>
     )
   }

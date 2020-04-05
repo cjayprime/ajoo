@@ -94,6 +94,26 @@ export const REPORT_CAMPAIGN = "REPORT_CAMPAIGN";
 export const REPORT_CAMPAIGN_ERROR = "REPORT_CAMPAIGN_ERROR";
 export const REPORT_CAMPAIGN_SUCCESS = "REPORT_CAMPAIGN_SUCCESS";
 
+export const GET_VOLUNTEER_CAMPAIGN = "GET_VOLUNTEER_CAMPAIGN";
+export const GET_VOLUNTEER_CAMPAIGN_ERROR = "GET_VOLUNTEER_CAMPAIGN_ERROR";
+export const GET_VOLUNTEER_CAMPAIGN_SUCCESS = "GET_VOLUNTEER_CAMPAIGN_SUCCESS";
+
+export const GET_CAMPAIGN_VOLUNTEER = "GET_CAMPAIGN_VOLUNTEER";
+export const GET_CAMPAIGN_VOLUNTEER_ERROR = "GET_CAMPAIGN_VOLUNTEER_ERROR";
+export const GET_CAMPAIGN_VOLUNTEER_SUCCESS = "GET_CAMPAIGN_VOLUNTEER_SUCCESS";
+
+export const GET_TOTAL_DONATIONS = "GET_TOTAL_DONATIONS";
+export const GET_TOTAL_DONATIONS_ERROR = "GET_TOTAL_DONATIONS_ERROR";
+export const GET_TOTAL_DONATIONS_SUCCESS = "GET_TOTAL_DONATIONS_SUCCESS";
+
+export const GET_TOTAL_CAMPAIGNS = "GET_TOTAL_CAMPAIGNS";
+export const GET_TOTAL_CAMPAIGNS_ERROR = "GET_TOTAL_CAMPAIGNS_ERROR";
+export const GET_TOTAL_CAMPAIGNS_SUCCESS = "GET_TOTAL_CAMPAIGNS_SUCCESS";
+
+export const GET_TOTAL_CLOSED = "GET_TOTAL_CLOSED";
+export const GET_TOTAL_CLOSED_ERROR = "GET_TOTAL_CLOSED_ERROR";
+export const GET_TOTAL_CLOSED_SUCCESS = "GET_TOTAL_CLOSED_SUCCESS";
+
 export const userCreateCampaign = data => ({
   type: USER_CREATE_CAMPAIGN,
   payload: data
@@ -222,3 +242,28 @@ export const reportCampaign = data => ({
   type: REPORT_CAMPAIGN,
   payload: data
 });
+
+export const getCampaignsOfAVolunteer = data => ({
+  type: GET_CAMPAIGN_VOLUNTEER,
+  payload: data
+});
+
+export const getVolunteersOfACampaign = data => ({
+  type: GET_VOLUNTEER_CAMPAIGN,
+  payload: data
+});
+
+export const getTotalDonations = data => ({
+  type: GET_TOTAL_DONATIONS,
+  payload: data
+});
+
+export const getTotalCampaigns = data => ({
+  type: GET_TOTAL_CAMPAIGNS,
+  payload: data
+});
+
+export const getTotalClosed = data => ({
+  type: GET_TOTAL_CLOSED,
+  payload: data
+})

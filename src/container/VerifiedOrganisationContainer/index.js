@@ -12,7 +12,8 @@ class VerifiedOrganisationContainer extends Component {
       organizationCampaignsAction,
       organizationsData
     } = this.props;
-    
+
+    console.log(organizationCampaigns, "Hey try me")
     return <VerifiedOrganisationComponent
       {...this.props}
       utils={utils}

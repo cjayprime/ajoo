@@ -57,7 +57,11 @@ class CampaignComponent extends Component {
   componentDidMount() {
     this._isMounted = true;
     var { page, perPage } = this.state;
-    this.props.fetchAllCampaigns({ page: 1, perPage });
+    var is_reward = undefined;
+    if(typeof this.props.location.state !== "undefined" && typeof this.props.location.state.is_reward !== "undefined")
+    is_reward = this.props.location.state.is_reward;
+
+    this.props.fetchAllCampaigns({ page: 1, perPage, is_reward });
     this.props.fetchCategories();
 
     this.setState({

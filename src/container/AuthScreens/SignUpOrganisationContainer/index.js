@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 
-import { signupOrg } from "../../../store/allActions";
+import { signupOrg, facebookOrgSignup, getFacebookSignupDetails } from "../../../store/allActions";
 import SignUpOrganisationComponent from "../../../components/AuthScreenComponent/SignUpOrganisation";
 import { fetchStates, fetchLga } from "../../../store/miscModules/actions";
 
@@ -12,6 +12,10 @@ class SignUpOrganisationContainer extends PureComponent {
       utils,
       fetchStates,
       fetchLga,
+      facebookOrgSignup,
+      facebookOrgRegister,
+      getFacebookDetails,
+      getFacebookSignupDetails,
       misc } = this.props;
 
     return (
@@ -22,6 +26,10 @@ class SignUpOrganisationContainer extends PureComponent {
         utils={utils || {}}
         fetchStates={fetchStates}
         fetchLga={fetchLga}
+        facebookOrgRegister={facebookOrgRegister}
+        facebookOrgSignup={facebookOrgSignup}
+        getFacebookDetails={getFacebookDetails}
+        getFacebookSignupDetails={getFacebookSignupDetails}
       />
     );
   }
@@ -30,13 +38,17 @@ class SignUpOrganisationContainer extends PureComponent {
 const mapStateToProps = ({ utils, auth, misc }) => ({
   auth,
   misc,
-  utils
+  utils,
+  facebookOrgRegister: auth.facebookOrgSignup,
+  getFacebookDetails: auth.facebookSignupDetails
 });
 
 const mapDispatchToProps = {
   signupOrg,
   fetchStates,
-  fetchLga
+  fetchLga,
+  facebookOrgSignup,
+  getFacebookSignupDetails
 };
 
 export default connect(

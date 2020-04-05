@@ -22,9 +22,9 @@ class VerifiedOrganisationCard extends PureComponent {
 
     return (
       <>
-        <p className="verified_org-report">
+        {/* <p className="verified_org-report">
           <img src={report} />
-        </p>
+        </p> */}
 
         <div className="verified_org-card">
           <div className="verified_org-card-img-body">
@@ -52,7 +52,7 @@ class VerifiedOrganisationCard extends PureComponent {
                 <p>{organization.organization_address}</p>
               </div>
               <div>
-                <button>Donate to Organisation</button>
+                {/* <button>Donate to Organisation</button> */}
               </div>
             </div>
             <div className="verified_org-card-social">

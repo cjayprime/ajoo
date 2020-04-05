@@ -26,10 +26,16 @@ class Footer extends PureComponent {
               <Link to="/campaigns">Campaigns</Link>
             </li>
             <li>
-              <Link to="/campaigns">Rewards</Link>
+              <a href="/campaigns" onClick={(e) => {
+                e.preventDefault();
+                this.props.history.push("/campaigns", { is_reward: 1 })
+              }}>Rewards</a>
             </li>
             <li>
-              <Link to="/campaigns">Non-Rewards</Link>
+              <a href="/campaigns" onClick={(e) => {
+                e.preventDefault();
+                this.props.history.push("/campaigns", { is_reward: 0 })
+              }}>Non-Rewards</a>
             </li>
             <li>
               <Link to="/volunteer">Community</Link>
@@ -63,7 +69,7 @@ class Footer extends PureComponent {
               <Link to="/faq">FAQs</Link>
             </li>
             <li>
-              <Link to="/blog">Blog</Link>
+              <a href="https://medium.com/ajoo-notes" target="_blank">Blog</a>
             </li>
             <li>
               <Link to="/help">Help & Support</Link>
@@ -75,43 +81,43 @@ class Footer extends PureComponent {
 
         <footer>
           <div className="footer_row">
-            <ul className="footer_column1">
-              <li>
+            <div className="footer_column1">
+              <div>
                 <Link to="/terms_of_use">Terms of Use</Link>
-              </li>
-              <li>
-                <Link to="/tnc">Legal</Link>
-              </li>
-            </ul>
-            <ul className="footer_column2">
-              <li>
+              </div>
+              <div>
+                <Link to="/privacy-policy">Privacy Policy</Link>
+              </div>
+            </div>
+            <div className="footer_column2">
+              <div>
                 <Link to="#">
-                  Copyright &copy; 2019 Ajoo. All Rights Reserved
+                  Copyright &copy; 2020 Ajoo. All Rights Reserved
                 </Link>
-              </li>
-            </ul>
-            <ul className="footer_column3">
-              <li>
+              </div>
+            </div>
+            <div className="footer_column3">
+              <div>
                 <a href="https://web.facebook.com/ajoonig" target="_blank">
                   <i className="fab fa-facebook-square fa-2x"></i>
                 </a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <a href="https://www.instagram.com/ajoo_nig/" target="_blank">
                   <i className="fab fa-instagram fa-2x"></i>
                 </a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <a href="https://twitter.com/ajoo_ng" target="_blank">
                   <i className="fab fa-twitter fa-2x"></i>
                 </a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <a href=" https://www.linkedin.com/company/64648409/admin/content-suggestions/" target="_blank">
                   <i className="fab fa-linkedin fa-2x"></i>
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </footer>
       </>

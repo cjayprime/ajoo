@@ -263,56 +263,58 @@ class SigninForm extends Component {
                 </h5>
               </div>
               <div className="verification2_column2">
-                <div className="verification_form">
-                  <FormInputField
-                    type="text"
-                    placeholder="e.g. https://facebook.com/ajoo"
-                    name="facebook"
-                    value={facebook.value}
-                    form={this.state.fields}
-                    required
-                    labelTitle="FACEBOOK PROFILE"
-                    onChange={this._handleChange}
-                  />
+                <div className="verify2-form">
+                  <div className="verification_form">
+                    <FormInputField
+                      type="text"
+                      placeholder="e.g. https://facebook.com/ajoo"
+                      name="facebook"
+                      value={facebook.value}
+                      form={this.state.fields}
+                      required
+                      labelTitle="FACEBOOK PROFILE"
+                      onChange={this._handleChange}
+                    />
+                  </div>
+                  <div className="verification_form">
+                    <FormInputField
+                      type="text"
+                      placeholder="e.g. https://twitter.com/ajoo"
+                      name="twitter"
+                      value={twitter.value}
+                      form={this.state.fields}
+                      labelTitle="TWITTER PROFILE"
+                      onChange={this._handleChange}
+                    />
+                  </div>
+                  <div className="verification_form">
+                    <FormInputField
+                      type="text"
+                      placeholder="e.g. https://instagram.com/ajoo"
+                      name="instagram"
+                      value={instagram.value}
+                      form={this.state.fields}
+                      labelTitle="INSTAGRAM PROFILE"
+                      onChange={this._handleChange}
+                    />
+                  </div>
                 </div>
-                <div className="verification_form">
-                  <FormInputField
-                    type="text"
-                    placeholder="e.g. https://twitter.com/ajoo"
-                    name="twitter"
-                    value={twitter.value}
-                    form={this.state.fields}
-                    labelTitle="TWITTER PROFILE"
-                    onChange={this._handleChange}
-                  />
-                </div>
-                <div className="verification_form">
-                  <FormInputField
-                    type="text"
-                    placeholder="e.g. https://instagram.com/ajoo"
-                    name="instagram"
-                    value={instagram.value}
-                    form={this.state.fields}
-                    labelTitle="INSTAGRAM PROFILE"
-                    onChange={this._handleChange}
-                  />
-                </div>
-              </div>
-              <div className="verification2_column3">
-                <label style={{ color: !this.state.profileImage && this.state.submitted ? "red" : "inherit" }}>
-                  {!this.state.featureImages[0] && this.state.submitted ? "PLEASE UPLOAD YOUR ORGANIZATION'S LOGO" : "ORGANIZATION LOGO"}
-                </label>
-                <div style={{ width: 260, height: 260 }}>
-                  <ImageUpload
-                    alt="verification"
-                    id="organisation_logo"
-                    image={this.state.profileImage}
-                    setImage={this.setProfileImage}
-                    fileUploadProgress={utils.fileUploadProgress}
-                    isUploading={
-                      isRequestActive(utils.request, authRequest.uploadProfileImageRequest)
-                    }
-                  />
+                <div className="verify2-img">
+                  <label style={{ color: !this.state.profileImage && this.state.submitted ? "red" : "inherit" }}>
+                    {!this.state.featureImages[0] && this.state.submitted ? "PLEASE UPLOAD YOUR ORGANIZATION'S LOGO" : "ORGANIZATION LOGO"}
+                  </label>
+                  <div style={{ width: 260, height: 260 }}>
+                    <ImageUpload
+                      alt="verification"
+                      id="organisation_logo"
+                      image={this.state.profileImage}
+                      setImage={this.setProfileImage}
+                      fileUploadProgress={utils.fileUploadProgress}
+                      isUploading={
+                        isRequestActive(utils.request, authRequest.uploadProfileImageRequest)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -336,13 +338,13 @@ class SigninForm extends Component {
                   welcome and will be very helpful for anyone involved.
                 </h5>
               </div>
-              <div className="verification_form_image">
+              <div className="verification2_column2">
                 <div className="signup_verification_form_image">
                   {/*<img alt="verification" src="images/drag.svg" />*/}
                   <label style={{ color: !this.state.featureImages[0] && this.state.submitted ? "red" : "inherit" }}>
                     {!this.state.featureImages[0] && this.state.submitted ? "SELECT YOUR FIRST FEATURED IMAGE" : "FIRST FEATURED IMAGE"}
                   </label>
-                  <div style={{ height: 275, width: 250 }}>
+                  <div style={{ height: 230, width: 230 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_1"
@@ -361,7 +363,7 @@ class SigninForm extends Component {
                   <label style={{ color: !this.state.featureImages[1] && this.state.submitted ? "red" : "inherit" }}>
                     {!this.state.featureImages[1] && this.state.submitted ? "SELECT YOUR SECOND FEATURED IMAGE" : "SECOND FEATURED IMAGE"}
                   </label>
-                  <div style={{ height: 275, width: 250 }}>
+                  <div style={{ height: 230, width: 230 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_2"
@@ -380,7 +382,7 @@ class SigninForm extends Component {
                   <label style={{ color: !this.state.featureImages[2] && this.state.submitted ? "red" : "inherit" }}>
                     {!this.state.featureImages[2] && this.state.submitted ? "SELECT YOUR THIRD FEATURED IMAGE" : "THIRD FEATURED IMAGE"}
                   </label>
-                  <div style={{ height: 275, width: 250 }}>
+                  <div style={{ height: 230, width: 230 }}>
                     <ImageUpload
                       alt="verification"
                       id="organisation_feature_3"
@@ -427,7 +429,7 @@ class SigninForm extends Component {
                 <label style={{ color: !this.state.documentImage && this.state.submitted ? "red" : "inherit" }}>
                   {!this.state.documentImage && this.state.submitted ? "SELECT A VALID MEANS OF IDENTIFICATION" : "IDENTIFICATION DOCUMENT"}
                 </label>
-                <div style={{ height: 275, width: 300 }}>
+                <div style={{ height: 230, width: 230 }}>
                   <ImageUpload
                     alt="verification"
                     id="organisation_relevant_document"
@@ -495,8 +497,6 @@ class SigninForm extends Component {
                     onChange={this._handleChange}
                   />
                 </div>
-              </div>
-              <div className="verification2_column4">
                 <div className="verification_form">
                   <FormInputField
                     type="email"

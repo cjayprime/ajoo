@@ -68,7 +68,7 @@ class Layout extends PureComponent {
             {...this.props}
           />
           {children}
-          <Footer />
+          <Footer {...this.props} />
         </div>
       </div>
     );

@@ -95,7 +95,7 @@ class VerifiedBody extends Component {
               className="verified_page_body_select verified_page_body-round"
               onChange={this._handleChange}
             />
-            <span>28 Verified Organisations</span>
+            <span>{organizationsData.organizations.length} Verified Organisations</span>
           </div>
           <div>
             <div id="verified_organization">

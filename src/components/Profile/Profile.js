@@ -7,6 +7,7 @@ import Polygon from "../../assets/images/Polygon.svg";
 import MyProfile from "./MyProfile";
 import Donations from "./Donations";
 import Rewards from "./Rewards";
+import Card from "../../sharedComponent/Card";
 import volunteerImg from "../../assets/images/non_volunteer.svg";
 // import VolunteeredStep from "./VolunteeredStep";
 
@@ -30,16 +31,16 @@ class Profile extends Component {
   };
 
   render() {
-    const { user, userCampaigns, request, history, userDonations, rewards } = this.props;
+    const { user, userCampaigns, request, history, userDonations, rewards, campaigns } = this.props;
 
     var tabs;
-    
-    if(user.is_organization === 1){
+
+    if (user.is_organization === 1) {
       tabs = [
         { tab: "Campaigns" },
         { tab: "Donations" }
       ];
-    }else{
+    } else {
       tabs = [
         { tab: "Campaigns" },
         { tab: "Donations" },
@@ -52,6 +53,13 @@ class Profile extends Component {
       <>
         <div className="profile">
           <div className="edit_profile">
+            <div className="profile__start-button">
+              <div className="heading_button-reduce">
+                <Link to="/create_campaigns">
+                  <p className="heading_button_text-reduce">start a campaign</p>
+                </Link>
+              </div>
+            </div>
             <div className="profile_name">
               <h3>
                 {user.is_organization === 0
@@ -124,17 +132,33 @@ class Profile extends Component {
             {this.state.active === "Volunteering" && (
               <div id="" className="">
                 <div className="campaigns_div">
-                  <div className="tab_content1">
-                    <div className="tab_nonVolunteer">
-                      <img src={volunteerImg} alt="volunteerImg" />
-                      <h3>
-                        You’re not a volunteer.{" "}
-                        <Link to="/volunteer">Click here</Link> to learn more
-                        <br />
-                        about Ajoo Volunteers.
-                      </h3>
-                    </div>
-                    {/* <VolunteeredStep userCampaigns={userCampaigns} /> */}
+                  <div className="tab_content1" style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap" }} >
+                    {
+                      campaigns.campaignsOfAVolunteer.length
+                        ? campaigns.campaignsOfAVolunteer.map((c, i) => (
+                          <div className="campaign_body-card" key={i} style={{ width: "40%", marginLeft: "6.6666667%" }}>
+                            <Card
+                              key={i}
+                              campaignId={c.campaign_id}
+                              src={c.imageUrl}
+                              percent={c.percent}
+                              amtDonated={c.pledged || "0"}
+                              category={c.category}
+                              title={c.title}
+                              summary={c.summary}
+                            />
+                          </div>
+                        ))
+                        : <div className="tab_nonVolunteer">
+                          <img src={volunteerImg} alt="volunteerImg" />
+                          <h3>
+                            {user.is_volunteer === 0 ? "You’re not a volunteer." : "You haven't verified any campaigns."}{" "}
+                            <Link to="/volunteer">Click here</Link> to learn more
+                            <br />
+                            about Ajoo Volunteers.
+                          </h3>
+                        </div>
+                    }
                   </div>
                   <div className="volunteer_content2">
                     <div className="tabContent_label">
@@ -147,14 +171,14 @@ class Profile extends Component {
                     </div>
                     <div className="tabContent_label">
                       <label>
-                        VERIFIED CAMPAIGNS<span>6</span>
+                        VERIFIED CAMPAIGNS<span>{campaigns.campaignsOfAVolunteer.length}</span>
                       </label>
                     </div>
-                    <div className="tabContent_label">
+                    {/*<div className="tabContent_label">
                       <label>
                         ASSIGNED CAMPAIGNS<span>13</span>
                       </label>
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
               </div>

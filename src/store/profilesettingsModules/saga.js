@@ -188,7 +188,7 @@ function* profilePasswordActionSaga(action) {
     });
     yield put(
       showRequestFeedBack({
-        message: "An erro occured! Try again",
+        message: "An error occured! Try again",
         for: settingRequest.individualPasswordSettingRequest,
         success: false
       })
@@ -301,7 +301,7 @@ function* organisationProfileEmailActionSaga(action) {
 
 function* organisationProfilePasswordActionSaga(action) {
   try {
-    const { data, history } = action.payload;
+    const { data } = action.payload;
     yield put(
       setLoading({ request: settingRequest.organisationPasswordSettingRequest })
     );
@@ -316,12 +316,25 @@ function* organisationProfilePasswordActionSaga(action) {
         type: ORGANISATION_PASSWORD_SETTING_SUCCESS,
         payload: response.data.status
       });
-      history.push("/");
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: settingRequest.organisationPasswordSettingRequest,
+          success: true
+        })
+      );
     } else {
       yield put({
         type: ORGANISATION_PASSWORD_SETTING_ERROR,
         payload: response.data.status
       });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: settingRequest.organisationPasswordSettingRequest,
+          success: false
+        })
+      );
     }
   } catch (error) {
     yield put(setLoading({}));
@@ -329,6 +342,13 @@ function* organisationProfilePasswordActionSaga(action) {
       type: ORGANISATION_PASSWORD_SETTING_ERROR,
       payload: error
     });
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured! Try again",
+        for: settingRequest.organisationPasswordSettingRequest,
+        success: false
+      })
+    );
   }
 }
 

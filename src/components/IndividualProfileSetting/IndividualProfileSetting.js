@@ -71,28 +71,28 @@ class IndividualProfileSetting extends Component {
           }
         }
       },
-      emailChangeField: {
-        new_email: {
-          value: user.email ? user.email : "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true,
-            email: true
-          }
-        },
-        password: {
-          value: "",
-          error: null,
-          name: "Password",
-          errorMessage: "",
-          rules: {
-            required: true,
-            password: true
-          }
-        }
-      },
+      // emailChangeField: {
+      //   new_email: {
+      //     value: user.email ? user.email : "",
+      //     error: null,
+      //     errorMessage: "",
+      //     name: "Email",
+      //     rules: {
+      //       required: true,
+      //       email: true
+      //     }
+      //   },
+      //   password: {
+      //     value: "",
+      //     error: null,
+      //     name: "Password",
+      //     errorMessage: "",
+      //     rules: {
+      //       required: true,
+      //       password: true
+      //     }
+      //   }
+      // },
       passwordChangeField: {
         current_password: {
           value: "",
@@ -138,8 +138,8 @@ class IndividualProfileSetting extends Component {
     }
   }
 
-  componentDidUpdate(){
-    if(this.props.user.email && ! this.state.runOnce){
+  componentDidUpdate() {
+    if (this.props.user.email && !this.state.runOnce) {
 
       this.load();
 
@@ -176,12 +176,12 @@ class IndividualProfileSetting extends Component {
         formError: true
       });
     }
-    
+
     Object.keys(this.state.basicInformationFields).map(key => {
       return data[key] = this.state.basicInformationFields[key].value;
     });
-    
-    if(! validate(this, this.state.basicInformationFields)){
+
+    if (!validate(this, this.state.basicInformationFields)) {
       return;
     }
 
@@ -203,21 +203,21 @@ class IndividualProfileSetting extends Component {
     });
   };
 
-  triggerIndividualEmailProfileAction = e => {
-    e.preventDefault();
-    const { new_email, password } = this.state.emailChangeField;
-    let data = {
-      new_email: new_email.value,
-      password: password.value
-    };
-    /*if (!validateInput(this.state.emailChangeField)) {
-      return this._safelySetState({
-        formError: true,
-        action: "emailChangeField"
-      });
-    }*/
-    this.props.individualEmailSetting({ data, history: this.props.history });
-  };
+  // triggerIndividualEmailProfileAction = e => {
+  //   e.preventDefault();
+  //   const { new_email, password } = this.state.emailChangeField;
+  //   let data = {
+  //     new_email: new_email.value,
+  //     password: password.value
+  //   };
+  //   /*if (!validateInput(this.state.emailChangeField)) {
+  //     return this._safelySetState({
+  //       formError: true,
+  //       action: "emailChangeField"
+  //     });
+  //   }*/
+  //   this.props.individualEmailSetting({ data, history: this.props.history });
+  // };
 
   triggerIndividualPasswordProfileAction = e => {
     e.preventDefault();
@@ -257,7 +257,7 @@ class IndividualProfileSetting extends Component {
         }
       }
     };
-    
+
     this.setState(newState);
     if (name === "state") {
       this.props.fetchLga({ stateId: value });
@@ -281,7 +281,7 @@ class IndividualProfileSetting extends Component {
   };
 
   _safelySetState = (newState, prevState = null) => {
-    if (this._isMounted){
+    if (this._isMounted) {
       return this.setState({
         ...newState
       });
@@ -379,7 +379,7 @@ class IndividualProfileSetting extends Component {
                 style={{ display: "block" }}
                 className="tabcontent"
               >
-                <EmailSetting
+                {/* <EmailSetting
                   form={this.state}
                   onBlur={(...args) => this.onBlur("emailChangeField", ...args)}
                   settingRequest={settingRequest}
@@ -388,7 +388,7 @@ class IndividualProfileSetting extends Component {
                     this.triggerIndividualEmailProfileAction
                   }
                   _handleChange={e => this._handleChange(e, "emailChangeField")}
-                />
+                /> */}
                 <PasswordSetting
                   form={this.state}
                   onBlur={(...args) =>

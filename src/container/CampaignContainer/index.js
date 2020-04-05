@@ -8,7 +8,8 @@ import {
   verifyPaymentAction,
   getCampaignDonationById,
   getReward,
-  reportCampaign
+  reportCampaign,
+  getVolunteersOfACampaign
 } from "../../store/campaignModules/actions";
 import {
   verifyCampaign
@@ -53,7 +54,8 @@ const mapStateToProps = ({ auth, utils, campaigns }) => ({
   rewards: campaigns.rewards,
   initDonation: campaigns.initDonation,
   requestStatus: campaigns.requestStatus,
-  userDonations: campaigns.campaignDonations
+  userDonations: campaigns.campaignDonations,
+  volunteers: campaigns.volunteers,
 });
 const mapDispatchToProps = {
   fetchCampaignById,
@@ -63,7 +65,8 @@ const mapDispatchToProps = {
   getCampaignDonationById,
   getReward,
   verifyCampaign,
-  reportCampaign
+  reportCampaign,
+  getVolunteersOfACampaign
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignContainer);

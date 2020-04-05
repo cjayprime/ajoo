@@ -5,11 +5,15 @@ const initialState = {
   requestStatus: {},
   emailVerificationSuccess: null,
   data: {},
-  environment: ''//dotenv.process.env 
+  environment: '',//dotenv.process.env 
+  facebookLogin: {},
+  facebookSignup: {},
+  facebookSignupDetails: {},
+  facebookOrgSignup: {}
 };
 
 const auth = (state = initialState, action) => {
-  console.log(state.environment, 'Action Log: ', action, state);
+  //console.log(state.environment, 'Action Log: ', action, state);
   switch (action.type) {
     case Actions.SIGNIN_ERROR:
       return {
@@ -23,6 +27,58 @@ const auth = (state = initialState, action) => {
         success: true,
         requestStatus: action.payload
       };
+    case Actions.FACEBOOK_LOGIN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    case Actions.FACEBOOK_LOGIN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        facebookLogin: action.payload.data
+      }
+    case Actions.FACEBOOK_SIGNUP_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    case Actions.FACEBOOK_SIGNUP_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        facebookSignup: action.payload.data
+      }
+    case Actions.FETCH_FACEBOOK_DETAILS_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    case Actions.FETCH_FACEBOOK_DETAILS_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        facebookSignupDetails: action.payload.data
+      }
+    case Actions.FACEBOOK_ORG_SIGNUP_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+    case Actions.FACEBOOK_ORG_SIGNUP_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        facebookOrgSignup: action.payload.data
+      }
     case Actions.SIGNUP_ERROR:
       return {
         ...state,

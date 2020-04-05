@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import ProfileComponent from "../../components/Profile";
 import {
   fetchUserCampaigns,
-  getCampaignDonations
+  getCampaignDonations,
+  getCampaignsOfAVolunteer,
+  getReward
 } from "../../store/campaignModules/actions";
 import { showRequestFeedBack } from "../../store/utilsModule/actions.js";
 
@@ -18,7 +20,7 @@ class ProfileContainer extends Component {
       getCampaignDonations,
       userDonations
     } = this.props;
-    
+
     return (
       <ProfileComponent
         {...this.props}
@@ -33,13 +35,14 @@ class ProfileContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) =>  {
+const mapStateToProps = (state) => {
   const { auth, utils, campaigns } = state;
 
   return {
     utils,
     user: auth.data,
     request: utils.request,
+    campaigns,
     rewards: campaigns.rewards,
     userCampaigns: campaigns.userCampaigns,
     userDonations: campaigns.campaignDonations
@@ -49,7 +52,9 @@ const mapStateToProps = (state) =>  {
 const mapDispatchToProps = {
   fetchUserCampaigns,
   getCampaignDonations,
-  showRequestFeedBack
+  showRequestFeedBack,
+  getCampaignsOfAVolunteer,
+  getReward
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

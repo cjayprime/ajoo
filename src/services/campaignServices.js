@@ -13,15 +13,16 @@ class CampaignService {
     });
   };
 
-  fetchAllCampaigns = ({ time, search, verify, category, page, perPage }) => {
+  fetchAllCampaigns = ({ time, search, verify, category, page, perPage, is_reward }) => {
     return new Promise((resolve, reject) => {
       apiClient(
         `/campaigns/all?${time ? `time=${time}` : ""}${
-          search ? `&search=${search}` : ""}
-        ${verify ? `&verify=${verify}` : ""}
-        ${category ? `&category=${category}` : ""}
-        ${page ? `&page=${page}` : ""}
-        ${perPage ? `&per_page=${perPage}` : ""}`
+        search ? `&search=${search}` : ""}${
+        verify ? `&verify=${verify}` : ""}${
+        category ? `&category=${category}` : ""}${
+        page ? `&page=${page}` : ""}${
+        perPage ? `&per_page=${perPage}` : ""}${
+        (is_reward === 0 || is_reward === 1) ? `&is_reward=${is_reward}` : ""}`
       )
         .then(res => {
           return resolve(res);
@@ -188,12 +189,15 @@ class CampaignService {
     });
   };
 
-  getReward = (id) => {
+  getReward = (id, isUser) => {
     return new Promise((resolve, reject) => {
       const config = {
         method: "GET"
       };
-      apiClient(`/reward/${id}`, config)
+
+      const url = isUser ? `/user/reward/${id}` : `/reward/${id}`;
+
+      apiClient(url, config)
         .then(res => {
           return resolve(res);
         })
@@ -321,22 +325,22 @@ class CampaignService {
     const formData = new FormData();
     formData.append('file', body.file);
     return new Promise((resolve, reject) => {
-        const config = {
-            onUploadProgress: ({ loaded, total }) => {
-                showPercentageProgress((loaded * 100) / total);
-            },
-            body: formData,
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        };
-        apiClient(`/volunteer/verification/electricity`, config)
+      const config = {
+        onUploadProgress: ({ loaded, total }) => {
+          showPercentageProgress((loaded * 100) / total);
+        },
+        body: formData,
+        method: "POST",
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      apiClient(`/volunteer/verification/electricity`, config)
         .then(res => {
-            return resolve(res);
+          return resolve(res);
         })
         .catch(error => {
-            reject(error.response);
+          reject(error.response);
         });
     });
   };
@@ -346,22 +350,22 @@ class CampaignService {
     const formData = new FormData();
     formData.append('file', body.file);
     return new Promise((resolve, reject) => {
-        const config = {
-            onUploadProgress: ({ loaded, total }) => {
-                showPercentageProgress((loaded * 100) / total);
-            },
-            body: formData,
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        };
-        apiClient(`/volunteer/verification/nationalid`, config)
+      const config = {
+        onUploadProgress: ({ loaded, total }) => {
+          showPercentageProgress((loaded * 100) / total);
+        },
+        body: formData,
+        method: "POST",
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      apiClient(`/volunteer/verification/nationalid`, config)
         .then(res => {
-            return resolve(res);
+          return resolve(res);
         })
         .catch(error => {
-            reject(error.response);
+          reject(error.response);
         });
     });
   };
@@ -382,6 +386,65 @@ class CampaignService {
     });
   };
 
+  getCampaignsOfAVolunteer = (id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      };
+      apiClient(`/volunteer/campaigns/${id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  getVolunteersOfACampaign = (campaign_id) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      };
+      apiClient(`/campaign/volunteers/${campaign_id}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  getTotalDonations = () => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      };
+      apiClient(`/donations/total/number`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  }
+
+  getTotalCampaigns = () => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      };
+      apiClient(`/campaigns/total/number`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  }
 }
 
 const instance = new CampaignService();

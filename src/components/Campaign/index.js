@@ -19,9 +19,10 @@ class CampaignComponent extends Component {
   }
 
   componentDidMount() {
-    const { match, fetchCampaignById } = this.props;
+    const { match, fetchCampaignById, getVolunteersOfACampaign } = this.props;
     this._isMounted = true;
     fetchCampaignById(match.params);
+    getVolunteersOfACampaign(match.params.campaignId);
   }
 
   ranOnce = false;
@@ -68,7 +69,6 @@ class CampaignComponent extends Component {
       match,
       rewards
     } = this.props;
-    //console.log('Reward:::', rewards)
 
     return (
       <Layout {...this.props}>
@@ -104,14 +104,18 @@ class CampaignComponent extends Component {
                   requestStatus={requestStatus}
                   match={match}
                 />
-                <CampaignBody campaign={campaign.campaign}/>
-                <CampaignTab
-                  {...this.props}
-                  rewards={rewards}
-                  campaign={campaign.campaign}
-                  getCampaignDonationById={getCampaignDonationById}
-                  userDonations={userDonations}
-                />
+                
+                {
+                  campaign.campaign.status === 2
+                  ? <CampaignBody {...this.props} campaign={campaign.campaign}/>
+                  : <CampaignTab
+                      {...this.props}
+                      rewards={rewards}
+                      campaign={campaign.campaign}
+                      getCampaignDonationById={getCampaignDonationById}
+                      userDonations={userDonations}
+                    />
+                }
               </>
             ) :
               <span

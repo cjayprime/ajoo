@@ -277,7 +277,6 @@
   .faq_desc {
     display: flex;
     flex-direction: column;
-    width: 60%;
   }
 
   .faq_desc p {
@@ -425,7 +424,6 @@
   .faq_desc {
     display: flex;
     flex-direction: column;
-    width: 60%;
   }
 
   .faq_desc p {
@@ -574,7 +572,6 @@
   .faq_desc {
     display: flex;
     flex-direction: column;
-    width: 60%;
   }
 
   .faq_desc p {

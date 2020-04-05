@@ -29,7 +29,7 @@ class VerifiedOrganisationComponent extends Component {
     organizationsAction({ page, perPage });
     organizationCampaignsAction((match.params), { perPage, page });
 
-    this.setState({organizationCampaigns: { transactions: [] }});
+    this.setState({ organizationCampaigns: { transactions: [] } });
   }
 
   _safelySetState = (newState, prevState = null) => {
@@ -81,15 +81,15 @@ class VerifiedOrganisationComponent extends Component {
       utils.request,
       campaignRequest.organizationCampaignsRequest
     );
-    
+
     return (
       <>
         <Layout {...this.props}>
           {
             isCampaignFetching
-            ? <Spinner />
-            : (typeof organizationsData.organizations === "undefined" || organizationsData.organizations.length === 0)
-              ? <span style={{
+              ? <Spinner />
+              : (typeof organizationsData.organizations === "undefined" || organizationsData.organizations.length === 0)
+                ? <span style={{
                   fontFamily: "Muli",
                   fontSize: "23px",
                   marginTop: "30px",
@@ -99,7 +99,7 @@ class VerifiedOrganisationComponent extends Component {
                 }}>
                   Sorry, there is no organization data
                 </span>
-              : <div className="verified_org_body">
+                : <div className="verified_org_body">
                   <VerifiedOrganisationHead
                     organizationId={match.params.organizationId}
                     organizationsData={organizationsData}
@@ -109,8 +109,8 @@ class VerifiedOrganisationComponent extends Component {
                     organizationsData={organizationsData}
                   />
                   {
-                    organizationCampaigns.transactions.length === 0 
-                    ? <span style={{
+                    organizationCampaigns.transactions.length === 0
+                      ? <span style={{
                         fontFamily: "Muli",
                         fontSize: "23px",
                         marginTop: "30px",
@@ -120,7 +120,7 @@ class VerifiedOrganisationComponent extends Component {
                       }}>
                         This organization has no campaigns
                       </span>
-                    : <VerifiedOrganisationBody
+                      : <VerifiedOrganisationBody
                         utils={utils}
                         more={this.more}
                         organizationsData={organizationsData}

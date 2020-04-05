@@ -12,9 +12,19 @@ class SignUpOrganisationComponent extends PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-    this.props.fetchStates({});
+  getParameterByName = () => {
+    var names = {};
+    if (this.props.location.search) {
+      var params = this.props.location.search.split("?")[1].split("&");
+      for (var i = 0; i < params.length; i++) {
+        var param = params[i].split("=");
+        var key = param[0];
+        var value = param[1];
+        names[key] = value;
+      }
+    }
+
+    return names;
   }
 
   _safelySetState = (newState, prevState = null) => {
@@ -25,8 +35,18 @@ class SignUpOrganisationComponent extends PureComponent {
       }));
   };
 
+  componentDidMount() {
+    this._isMounted = true;
+    this.props.fetchStates({});
+    this.props.facebookOrgSignup([]);
+
+    if (this.props.location.search)
+      this.props.getFacebookSignupDetails(this.getParameterByName());
+  }
+
   render() {
-    const { signupOrg, utils, misc, fetchLga } = this.props;
+    const { signupOrg, utils, misc, fetchLga, facebookOrgRegister, getFacebookDetails } = this.props;
+    console.log(getFacebookDetails, "hey email")
     return (
       <Layout {...this.props}>
         <SignUpOrganisationForm
@@ -35,6 +55,8 @@ class SignUpOrganisationComponent extends PureComponent {
           misc={misc}
           request={utils}
           fetchLga={fetchLga}
+          facebookOrgRegister={facebookOrgRegister.facebookorgsignupURL}
+          getFacebookDetails={getFacebookDetails}
           isLoading={isRequestActive(
             utils.request,
             authRequest.signupOrgRequest

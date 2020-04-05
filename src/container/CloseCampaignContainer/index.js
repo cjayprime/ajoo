@@ -1,7 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
 
-import { fetchCompletedCampaigns, closeCampaign, uploadCampaignThankYouImage } from "../../store/campaignModules/actions";
+import {
+    fetchCompletedCampaigns,
+    closeCampaign,
+    uploadCampaignThankYouImage,
+    getVolunteersOfACampaign,
+    getTotalDonations,
+    getTotalCampaigns
+} from "../../store/campaignModules/actions";
 import { showPercentageProgress } from "../../store/utilsModule/actions.js";
 import CloseCampaignComponent from '../../components/CloseCampaign';
 
@@ -13,7 +20,10 @@ const mapDispatchToProps = {
     fetchCompletedCampaigns,
     closeCampaign,
     uploadCampaignThankYouImage,
-    showPercentageProgress
+    showPercentageProgress,
+    getVolunteersOfACampaign,
+    getTotalDonations,
+    getTotalCampaigns
 }
 
 

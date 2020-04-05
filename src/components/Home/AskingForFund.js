@@ -25,7 +25,6 @@ class AskingForFund extends PureComponent {
               className="asking_for_fund_image1-mob"
               src={pregnant}
               alt="pregnant woman"
-              style={{ width: "300px" }}
             />
           </div>
           <div className="asking_for_fund_image2">
@@ -33,7 +32,6 @@ class AskingForFund extends PureComponent {
               className="asking_for_fund_image2-mob"
               src={Ellipse2}
               alt="doctors attending to a child"
-              style={{ width: "400px" }}
             />
           </div>
         </div>

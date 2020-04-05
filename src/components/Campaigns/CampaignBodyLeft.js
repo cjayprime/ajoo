@@ -82,7 +82,7 @@ export default class CampaignBodyLeft extends PureComponent {
     //const { openFilterModal } = this.state;
     //const { allCampaigns } = this.props;
     return (
-      <div className="campaign_body_left" ref={this.props.campaignBodyLeftRef} style={{zIndex: 1000000, top: 0, width: "25%", height: "100%", position: this.props.position, zIndex: 1000 }}>
+      <div className="campaign_body_left" ref={this.props.campaignBodyLeftRef} style={{ top: 0, width: "25%", height: "100%", position: this.props.position, zIndex: 1000 }}>
         <div className="campaign_body_left_content-heading campaign_body_left_content-heading-mobile">
           Campaign Filters
         </div>

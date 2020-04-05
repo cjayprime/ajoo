@@ -1,7 +1,7 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 // import ellipse from "../../assets/images/Ellipse_2.png";
-import { validateInput } from "../../utils/misc";
+import { validateInput, validate } from "../../utils/misc";
 import { settingRequest } from "../../store/profilesettingsModules/saga";
 import BasicInformation from "./BasicInformation";
 import EmailSetting from "./EmailSettings";
@@ -9,11 +9,11 @@ import PasswordSetting from "./PasswordSettings";
 import SignUpVerificationOrganization from "../AuthScreenComponent/SignUpVerification/SignUpVerificationOrganization";
 
 const type = [
-    "Profit",
-    "Non-Profit",
-    "Student Organisation",
-    "Government Owned"
-  ],
+  "Profit",
+  "Non-Profit",
+  "Student Organisation",
+  "Government Owned"
+],
   organisation_category = [
     "Medical",
     "Memorial",
@@ -38,7 +38,7 @@ const type = [
     "Wishes"
   ];
 
-class OrganizationProfileSetting extends PureComponent {
+class OrganizationProfileSetting extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
@@ -126,28 +126,28 @@ class OrganizationProfileSetting extends PureComponent {
           }
         }
       },
-      emailChangeField: {
-        new_email: {
-          value: user.email ? user.email : "",
-          error: null,
-          errorMessage: "",
-          name: "Email",
-          rules: {
-            required: true,
-            email: true
-          }
-        },
-        password: {
-          value: "",
-          error: null,
-          name: "Password",
-          errorMessage: "",
-          rules: {
-            required: true,
-            password: true
-          }
-        }
-      },
+      // emailChangeField: {
+      //   new_email: {
+      //     value: user.email ? user.email : "",
+      //     error: null,
+      //     errorMessage: "",
+      //     name: "Email",
+      //     rules: {
+      //       required: true,
+      //       email: true
+      //     }
+      //   },
+      //   password: {
+      //     value: "",
+      //     error: null,
+      //     name: "Password",
+      //     errorMessage: "",
+      //     rules: {
+      //       required: true,
+      //       password: true
+      //     }
+      //   }
+      // },
       passwordChangeField: {
         current_password: {
           value: "",
@@ -159,7 +159,7 @@ class OrganizationProfileSetting extends PureComponent {
             password: true
           }
         },
-        new_password: {
+        password: {
           value: "",
           name: "New Password",
           error: null,
@@ -192,9 +192,9 @@ class OrganizationProfileSetting extends PureComponent {
     }
   }
 
-  componentDidUpdate(){
-    if(this.props.user.email && ! this.state.runOnce){
-      
+  componentDidUpdate() {
+    if (this.props.user.email && !this.state.runOnce) {
+
       this.load();
 
       setTimeout(() => {
@@ -232,40 +232,34 @@ class OrganizationProfileSetting extends PureComponent {
     });
   };
 
-  triggerOrganisationEmailProfileAction = e => {
-    e.preventDefault();
-    const { new_email, password } = this.state.emailChangeField;
-    let data = {
-      new_email: new_email.value,
-      password: password.value
-    };
-    if (!validateInput(this.state.emailChangeField)) {
-      return this._safelySetState({
-        formError: true,
-        action: "emailChangeField"
-      });
-    }
-    this.props.organisationEmailSetting({ data, history: this.props.history });
-  };
+  // triggerOrganisationEmailProfileAction = e => {
+  //   e.preventDefault();
+  //   const { new_email, password } = this.state.emailChangeField;
+  //   let data = {
+  //     new_email: new_email.value,
+  //     password: password.value
+  //   };
+  //   if (!validateInput(this.state.emailChangeField)) {
+  //     return this._safelySetState({
+  //       formError: true,
+  //       action: "emailChangeField"
+  //     });
+  //   }
+  //   this.props.organisationEmailSetting({ data, history: this.props.history });
+  // };
 
   triggerOrganisationPasswordProfileAction = e => {
     e.preventDefault();
-    const {
-      current_password,
-      new_password,
-      cnew_password
-    } = this.state.passwordChangeField;
-    let data = {
-      current_password: current_password.value,
-      new_password: new_password.value,
-      cnew_password: cnew_password.value
-    };
-    if (!validateInput(this.state.passwordChangeField)) {
-      return this._safelySetState({
-        formError: true,
-        action: "passwordChangeField"
-      });
+    var data = {};
+
+    Object.keys(this.state.passwordChangeField).map(key => {
+      return data[key] = this.state.passwordChangeField[key].value;
+    });
+
+    if (! validate(this, this.state.passwordChangeField)) {
+      return;
     }
+
     this.props.organisationProfilePasswordSetting({
       data,
       history: this.props.history
@@ -285,10 +279,16 @@ class OrganizationProfileSetting extends PureComponent {
         }
       }
     };
+    
     this._safelySetState(newState);
     if (name === "state") {
       this.props.fetchLga({ stateId: value });
     }
+
+    var event = {target: {name: e.target.name}};
+    setTimeout(() => {
+      validate(this, this.state[field], event);
+    }, 500)
   };
 
   onBlur = (field, res, name) => {
@@ -316,6 +316,8 @@ class OrganizationProfileSetting extends PureComponent {
 
   render() {
     const { /*setting,*/ misc, utils/*, request*/ } = this.props;
+    //console.log(this.state, "hey error");
+    //console.log(this.onBlur, "hey I'm here jae")
 
     const typeItems = type.map((organization_types, i) => (
       <option key={organization_types}>{organization_types}</option>
@@ -433,7 +435,7 @@ class OrganizationProfileSetting extends PureComponent {
                 style={{ display: "block" }}
                 className="tabcontent"
               >
-                <EmailSetting
+                {/* <EmailSetting
                   form={this.state}
                   onBlur={(...args) => this.onBlur("emailChangeField", ...args)}
                   settingRequest={settingRequest}
@@ -442,7 +444,7 @@ class OrganizationProfileSetting extends PureComponent {
                     this.triggerOrganisationEmailProfileAction
                   }
                   _handleChange={e => this._handleChange(e, "emailChangeField")}
-                />
+                /> */}
                 <PasswordSetting
                   form={this.state}
                   onBlur={(...args) =>
@@ -460,7 +462,7 @@ class OrganizationProfileSetting extends PureComponent {
               </div>
             )}
             {
-              this.state.active === "verification" && 
+              this.state.active === "verification" &&
               <SignUpVerificationOrganization
                 {...this.props}
                 request={this.props.utils}

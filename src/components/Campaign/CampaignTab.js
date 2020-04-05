@@ -192,8 +192,7 @@ class CampaignTab extends PureComponent {
                       cols="20"
                       rows="10"
                       className="report_modal-card"
-                      placeholder="I have observed some shady things about this campaign and
-                whatnot."
+                      placeholder="I have observed some shady things about this campaign and whatnot."
                       value={this.state.message}
                       onChange={e => this.setState({message: e.target.value})}
                     />

@@ -87,18 +87,14 @@
   /* DONATIONS. REWARD. COMMUNITY */
   .heading_container {
     padding: 10px 0 10px 32px;
-    /* display: flex;
-        flex-direction: row; */
-    height: 90vh;
-    width: 120wh;
+    height: 100vw;
     position: relative;
   }
 
   .heading_left {
     font-family: "Muli", sans-serif;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(30%);
+    padding-top: 111px;
   }
 
   .heading_title {
@@ -106,7 +102,7 @@
     font-family: Muli;
     font-style: normal;
     font-weight: bold;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 45px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   }
@@ -128,6 +124,27 @@
     color: #fff;
     width: 242px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .profile__start-button {
+    margin-left: 0px;
+  }
+
+  .heading_button-reduce {
+    background: #0072a3;
+    margin-top: 30px;
+    border-radius: 50px;
+    color: #fff;
+    /* width: 202px; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .heading_button_text-reduce {
+    padding: 14px 34px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
   }
 
   .heading_button_text {
@@ -222,13 +239,17 @@
 
   /* WHY AJOO */
   .why_ajoo_container {
-    padding: 10px 100px;
-    margin: 300px 0 150px 0;
+    padding: 10px 20px;
+    margin: 0px 0 150px 0;
   }
 
   .why_ajoo_heading {
     margin: 20px 0 80px 0;
     text-align: center;
+  }
+
+  .circle {
+    display: none;
   }
 
   .why_ajoo_content {
@@ -288,9 +309,9 @@
   .asking_for_fund_content_container {
     border-radius: 100vw;
     width: 100vw;
-    height: 100vw;
+    height: 50vw;
     padding: 0;
-    background: rgba(246, 233, 254, 0.3);
+    background: transparent;
   }
 
   .asking_for_fund_image1-mob {
@@ -311,6 +332,7 @@
 
   .asking_for_fund_container {
     margin-top: 100px;
+    margin-bottom: 0px;
     padding: 32px;
     display: flex;
     justify-content: center;
@@ -1462,7 +1484,7 @@
     padding: 30px 20px;
   }
 
-  .terms_of_use h4 {
+  .terms_of_use h5 {
     font-style: normal;
     font-weight: normal;
     padding-bottom: 20px;
@@ -1470,12 +1492,12 @@
     line-height: 18px;
   }
 
-  .terms_of_use ol {
+  .terms_of_use ul {
     margin-left: 30px;
   }
 
   .terms_of_use li {
-    list-style-type: decimal;
+    list-style-type: disc;
     font-size: 14px;
     line-height: 18px;
   }
@@ -1519,6 +1541,22 @@
     margin-top: 20px;
     margin-left: 0 !important;
     width: 100%;
+  }
+
+  .campaign--body {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .campaign--body-content {
+    width: 100%;
+  }
+
+  .campaign--owner-message,
+  .campaign--more-image,
+  .campaign--owner-message-title {
+    min-width: 90%;
+    padding: 5%;
   }
 
   .facebook_twitter_button {
@@ -2062,15 +2100,20 @@
     margin: 20px 0;
   }
 
-  .verification_2 {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-  }
-
   .verification_social {
     display: flex;
     flex-direction: column;
+  }
+
+  .verification2_column2 {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  .verify2-form {
+    width: -webkit-fill-available;
   }
 
   .verification_person {
@@ -2078,30 +2121,10 @@
     flex-direction: column;
   }
 
-  .verification2_column1 {
+  .verification_2 {
     display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
-    font-family: Muli;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 20px;
-    color: #414141;
-    width: 100%;
-  }
-
-  .verification2_column1 h5 {
-    text-align: center;
-    font-size: 14px;
-  }
-
-  .verification2_column2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 0 !important;
-    width: 100% !important;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 
   .verification2_column4 {
@@ -2112,14 +2135,9 @@
     width: 100%;
   }
 
-  .verification_2 img {
-    padding-bottom: 20px;
-  }
-
   .verification_feature {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
   .verification_form_image {
@@ -2129,13 +2147,7 @@
   }
 
   .signup_verification_form_image {
-    padding-top: 20px;
-    margin-left: 0 !important;
-  }
-
-  .verification_form_image img {
-    padding-right: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
   }
 
   .signUp_verification label {
@@ -2673,12 +2685,12 @@
   /*PROFILE*/
   .profile {
     background-color: #f9fafc;
-    padding: 25px 16px;
+    padding: 25px 20px;
   }
 
   .edit_profile {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .profile_name {
@@ -2718,11 +2730,11 @@
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 15px 10px;
+    padding: 13px 8px;
     font-style: normal;
     font-family: "Muli", sans-serif;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 25px;
     display: block;
   }
@@ -3411,7 +3423,6 @@
 
   .accountSettings_org_column2 {
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-bottom: 20px;
     margin-left: 0;
@@ -3483,7 +3494,7 @@
   }
 
   .accountSettings_form2 input[type="password"] {
-    width: 410px;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -3830,13 +3841,12 @@
   /* VERIFIED ORGANISATION STYLING */
   .verified_org_body {
     background: #ffffff;
-    margin-top: 76px;
+    margin-top: 1px;
     padding: 0px 60px 62px 60px;
   }
 
   .verified_org_head_banner {
     width: 100%;
-    height: 40vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -4066,7 +4076,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 30px;
+    /* padding-top: 30px; */
   }
 
   .verified_org-card-social p.verified_org-card-email {
@@ -5998,4 +6008,94 @@
   }
 
   /* End About */
+
+  /* Success Story section on home style */
+
+  .home-success {
+    padding: 40px 32px;
+    margin-top: 200px;
+  }
+
+  .stories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 44px;
+  }
+
+  .story-body {
+    margin-top: 20px;
+  }
+
+  .stories img {
+    width: 100%;
+  }
+
+  .success-category {
+    display: flex;
+    align-items: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 31px;
+  }
+
+  /* End of success story on home style */
+
+  /* campaign stat */
+
+  .stat {
+    padding: 10px 50px;
+    margin: 144px 0px;
+  }
+
+  /* .stat-icon {
+      width: 40px;
+    } */
+
+  .stat-number {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #0072a3;
+    margin-top: 18.8px;
+  }
+
+  .stat-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .stat-text {
+    font-family: Muli;
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #414141;
+    margin-top: 18px;
+  }
+
+  .campaign-stat {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .stat-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  /* campaign state */
 }

@@ -4,8 +4,6 @@ import LoadableButton from "../../sharedComponent/LoadableButton";
 import FormInputField from "../../sharedComponent/form";
 import Arrow from "../../assets/images/Arrow.svg";
 import { isRequestActive } from "../../utils/misc";
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 class RewardForm extends Component {
   
@@ -22,6 +20,21 @@ class RewardForm extends Component {
     this.props.triggerSaveRewardAction(this.props.saveRewardSuccess);
     
   };
+
+  rewardTable = React.createRef();
+
+  rewardsLength = 0;
+
+  componentDidUpdate(){
+
+    if(this.props.rewards.length !== this.rewardsLength && this.rewardTable && this.rewardTable.current){
+      this.rewardsLength = this.props.rewards.length;
+      this.rewardTable.current.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+  }
 
   render() {
     const {
@@ -138,7 +151,7 @@ class RewardForm extends Component {
             </div>
           </div>
         </div>
-        <div style={{width: "auto", paddingRight: 235, paddingLeft: 90, backgroundColor: "#f9fafc"}}>
+        <div style={{width: "auto", paddingRight: 235, paddingLeft: 90, backgroundColor: "#f9fafc"}} ref={this.rewardTable}>
           <div style={{width: "100%", marginLeft: 0, marginBottom: 100, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end", backgroundColor: "#f9fafc"}}>
               {
                 rewards.length
