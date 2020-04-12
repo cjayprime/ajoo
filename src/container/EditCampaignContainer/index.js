@@ -9,7 +9,9 @@ import {
     getReward,
     addReward,
     editReward,
-    deleteReward
+    deleteReward,
+    closeDonation,
+    deleteCampaign
 } from "../../store/campaignModules/actions.js";
 import {
     fetchCategories,
@@ -88,7 +90,9 @@ const mapDispatchToProps = {
     getReward,
     addReward,
     editReward,
-    deleteReward
+    deleteReward,
+    closeDonation,
+    deleteCampaign
 };
 
 

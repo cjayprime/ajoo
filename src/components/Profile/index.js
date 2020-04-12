@@ -25,9 +25,18 @@ class ProfileComponent extends Component {
     }
   }
 
-  render() {
-    const { user, userCampaigns, match, request, userDonations, utils } = this.props;
+  componentDidUpdate(prevProps){
+    
+    if(this.props.user._id !== prevProps.user._id){
+      this.props.getCampaignsOfAVolunteer(this.props.user._id);
+      this.props.getReward({id: this.props.user._id, isUser: true});
+    }
+    
+  }
 
+  render() {
+    const { user, userCampaigns, request, userDonations, utils } = this.props;
+    
     return (
       <Layout {...this.props}>
         <AlertDialog

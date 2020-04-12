@@ -41,10 +41,10 @@ class CampaignFeatureImage extends Component {
           message={utils.feedback.message}
           success={utils.feedback.success}
         />
-        <div className="campaign_image-column1">
+        <div className="campaign_image-column1" style={{width: "auto"}}>
           <img alt="sign in" src="images/sign_in.svg" />
         </div>
-        <div className="campaign_image-column2" style={{width: "100%"}}>
+        <div className="campaign_image-column2" style={{width: "100%", marginLeft: 80}}>
           <div onClick={this.back} style={{ cursor: "pointer", marginBottom: 60 }}>
             <img src={Arrow} alt="Arrow" style={{ paddingRight: "5px" }} />
             Back
@@ -56,8 +56,8 @@ class CampaignFeatureImage extends Component {
             </label><br/><br/>
             <label>Campaign Images</label>{" "}
           </div>
-          <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", textAlign: "center" }}>
-            <div style={{ height: 260, width: 260 }}>
+          <div style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", textAlign: "center", width: 550, marginTop: 20 }}>
+            <div style={{ height: 260, width: 260, marginLeft: 10, marginTop: 15 }}>
               <ImageUpload
                 image={this.state.image[0]}
                 setImage={(image) => {
@@ -73,7 +73,7 @@ class CampaignFeatureImage extends Component {
                 }
               />
             </div>
-            <div style={{ height: 260, width: 260 }}>
+            <div style={{ height: 260, width: 260, marginLeft: 10, marginTop: 15 }}>
               <ImageUpload
                 image={this.state.image[1]}
                 setImage={(image) => {
@@ -89,7 +89,7 @@ class CampaignFeatureImage extends Component {
                 }
               />
             </div>
-            <div style={{ height: 260, width: 260 }}>
+            <div style={{ height: 260, width: 260, marginLeft: 10, marginTop: 15 }}>
               <ImageUpload
                 image={this.state.image[2]}
                 setImage={(image) => {
@@ -105,8 +105,7 @@ class CampaignFeatureImage extends Component {
                 }
               />
             </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {console.log('Created Campaign::: ', createdCampaign)}
+            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
               <LoadableButton
                 error={
                   false

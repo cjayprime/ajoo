@@ -22,7 +22,7 @@ class BasicInformation extends PureComponent {
         setImage
       } = this.props,
       { first_name, last_name, mobile, lga, state } = fields;
-    console.log("request.fileUploadProgress ", request.request);
+      
     return (
       <div
         id="Profile Settings"

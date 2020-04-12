@@ -5,7 +5,7 @@ export default class StartCampaign extends PureComponent {
   render() {
     return (
       <>
-        <div id="startCampaign" style={{ zIndex: 2000, position: "relative" }}>
+        <div id="startCampaign" style={{ position: "relative" }}>
           <div className="heading-2" style={{fontSize: 30, margin: 15}}>Guide your campaign to success</div>
           <div className="heading-4">
             {" "}

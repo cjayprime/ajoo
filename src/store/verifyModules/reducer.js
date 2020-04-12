@@ -2,6 +2,8 @@ import * as actionTypes from "./actions";
 
 const initialState = {
   success: false,
+  volunteers: [],
+  campaign: {},
   category: ""
 };
 
@@ -26,6 +28,32 @@ const verify = (state = initialState, action) => {
         category: action.payload.category
       };
 
+    case actionTypes.GET_ALL_VOLUNTEERS_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        volunteers: action.payload.entity
+      };
+
+    case actionTypes.GET_ALL_VOLUNTEERS_ERROR:
+      return {
+        ...state,
+        success: false
+      };
+
+    case actionTypes.VERIFY_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        campaign: action.payload.entity
+      };
+
+    case actionTypes.VERIFY_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false
+      };
+    
     default:
       return state;
   }

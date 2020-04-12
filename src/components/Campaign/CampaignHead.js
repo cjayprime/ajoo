@@ -5,10 +5,12 @@ import PaystackButton from "react-paystack";
 
 import { IMAGE_URL, validate, moneyFormat, isRequestActive } from "../../utils/misc";
 import { campaignRequest } from "../../store/campaignModules/saga";
+import { verifyRequest } from "../../store/verifyModules/saga";
 import FormInputField from "../../sharedComponent/form";
 import LoadableButton from "../../sharedComponent/LoadableButton";
 import { modalOptions } from "../../store/utilsModule/actions";
 import authServices from '../../services/authServices';
+import AlertDialog from "../../sharedComponent/AlertDialog";
 
 const bg = {
   overlay: {
@@ -82,6 +84,15 @@ class CampaignHead extends Component {
           minLength: 3
         }
       },
+      mobile: {
+        value: "",
+        error: null,
+        errorMessage: "",
+        name: "Mobile number",
+        rules: {
+          minLength: 11
+        }
+      },
       comment: {
         value: "",
         error: null,
@@ -106,6 +117,12 @@ class CampaignHead extends Component {
     this.props.verifyPaymentAction({ ref: response.reference, match: this.props.match });
 
   };
+
+  verifyCampaign = () => {
+
+    this.props.verifyCampaign({ campaign_id: this.props.campaign.campaign_id, status: 1 });
+
+  }
 
   openInitiatePayment = () => {
     this.props.openModalAction(modalOptions.initiatePaymentModal);
@@ -138,7 +155,7 @@ class CampaignHead extends Component {
   iniateDonation = () => {
 
     var fields = this.state.fields;
-    var firstname, lastname, email, anonymous, amount, comment;
+    var firstname, lastname, email, anonymous, amount, mobile, comment;
     var compulsoryFields = {};
     if(authServices.isAuthenticated()){
       var data = this.props.auth.data;
@@ -147,6 +164,7 @@ class CampaignHead extends Component {
       email = data.email;
       anonymous = this.state.fields.anonymous.value;
       amount = this.state.fields.amount.value;
+      mobile = this.state.fields.mobile.value;
       comment = this.state.fields.comment.value;
       for (var key in fields)
         if(key === 'amount' || key === 'comment')
@@ -157,6 +175,7 @@ class CampaignHead extends Component {
       email = fields.email.value;
       anonymous = fields.anonymous.value;
       amount = fields.amount.value;
+      mobile = fields.mobile.value;
       comment = fields.comment.value;
       for (var key in fields)
         if(!anonymous || (anonymous && key !== "firstname" && key !== "lastname"))
@@ -172,6 +191,7 @@ class CampaignHead extends Component {
         email,
         known: anonymous ? 1 : 0,
         amount,
+        mobile,
         comment,
         campaign: this.props.campaign._id
       });
@@ -180,9 +200,9 @@ class CampaignHead extends Component {
   };
 
   render() {
-    const { campaign, openModalAction, utils, initDonation, requestStatus } = this.props;
+    const { auth, campaign, openModalAction, utils, initDonation, requestStatus } = this.props;
     const {
-      fields: {firstname, lastname, email, anonymous, amount, comment}
+      fields: {firstname, lastname, email, anonymous, amount, mobile, comment}
     } = this.state;
     const sharelink = `${window.location.href}`;
 
@@ -195,7 +215,7 @@ class CampaignHead extends Component {
     var time = (new Date(campaign.created.replace(" ", "T"))).getTime() / 1000;
     var timePassed = Math.ceil((now - time) / (24 * 3600));
     var created = timePassed <= 1 ? "created today" : "created " + timePassed + " days ago";
-
+    
     return (
       <>
         <div className="campaign_row">
@@ -207,6 +227,13 @@ class CampaignHead extends Component {
               width: "100%",
             }}
           >
+            <AlertDialog
+                open={
+                    utils.feedback.for === verifyRequest.verifyCampaignRequest
+                }
+                message={utils.feedback.message}
+                success={utils.feedback.success}
+            />
             <div className="campaign_column1">
               <img
                 /*sizes="(min-width: 1200px) 730w,
@@ -274,14 +301,49 @@ class CampaignHead extends Component {
               </div>
               <div className="button_home">
                 {
-                  campaign.is_verified === 0
-                  ? <div className="donateButton" style={{ borderRadius: 10, cursor: "initial", background: "orange", color: "black", alignSelf: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>This campaign is not yet verified</div>
-                  : <button
-                      onClick={this.openInitiatePayment}
+                  campaign.status !== 1 && campaign.status !== 0
+                  ? <button
                       className="donateButton"
+                      style={{ cursor: "initial", background: "red", borderRadius: 5, color: "black", alignSelf: "center", display: "flex", justifyContent: "center", alignItems: "center" }}
                     >
-                      Donate to Campaign
+                      {
+                        campaign.status === 4
+                        ? "Campaign Deleted"
+                        : campaign.status === 3
+                          ? "Closed for donations"
+                          : campaign.status === 2
+                            ? "Campaign Closed"
+                            : null
+                      }
                     </button>
+                  : campaign.status === 0
+                    ? <div className="donateButton" style={{ borderRadius: 10, cursor: "initial", background: "orange", color: "black",       alignSelf: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        This campaign is not yet verified
+                      </div>
+                    : <div style={{ display: "flex", justifyContent: "space-around" }}>
+                        <button
+                          onClick={this.openInitiatePayment}
+                          className="donateButton"
+                        >
+                          Donate to Campaign
+                        </button>
+                        {
+                          auth.data.is_volunteer > 0
+                          ? <div style={{ marginLeft: 20 }}>
+                              <LoadableButton
+                                //error={formError}
+                                onClick={this.verifyCampaign}
+                                className="donateButton"
+                                btnTitle="Verify campaign"
+                                isLoading={
+                                  isRequestActive(utils.request, verifyRequest.verifyCampaignRequest)
+                                }
+                                type="submit"
+                              />
+                            </div>
+                          : null
+                        }
+                      </div>
                 }
               </div>
             </div>
@@ -393,6 +455,15 @@ class CampaignHead extends Component {
                   form={this.state.fields}
                   onChange={this._handleChange}
                   labelTitle="Amount"
+                />
+                <FormInputField
+                  placeholder="08123456789"
+                  name="mobile"
+                  value={mobile.value}
+                  onBlur={this.onBlur}
+                  form={this.state.fields}
+                  onChange={this._handleChange}
+                  labelTitle="Mobile Number"
                 />
                 <FormInputField
                   placeholder=""

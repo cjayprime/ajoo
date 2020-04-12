@@ -21,7 +21,6 @@ class HeaderNav extends PureComponent {
 
   signoutUser = () => {
     const { history, signoutAction } = this.props;
-    console.log(history)
     signoutAction({ history });
     this.hideProfileMenu();
   };
@@ -31,6 +30,11 @@ class HeaderNav extends PureComponent {
     history.push("/profile");
     this.hideProfileMenu();
   };
+
+  navigateToEditProfile = () => {
+    const { history, user } = this.props;
+    history.push(`/profile_setting/${user.is_organization === 0 ? "individual" : "organization"}`)
+  }
 
   showProfileMenu = e => {
     this.setState({
@@ -89,20 +93,25 @@ class HeaderNav extends PureComponent {
               {typeof user.is_organization !== "undefined" ? (
                 <>
                   <li className="menu_right_li">
-                    
+
                     {user.is_organization === 0
                       ? `${user.first_name} ${user.last_name}`
                       : `${user.organization_name ? user.organization_name : ""}`}
-                    
-                    <div style={{ fontSize: 10, display: "flex", justifyContent: "center", alignItems: "center", height: 15, padding: 1.5, borderRadius: 5, width: "auto",
+
+                    <div style={{
+                      fontSize: 10, display: "flex", justifyContent: "center", alignItems: "center", height: 15, padding: 1.5, borderRadius: 5, width: "auto",
                       background: user.verified === 1 ? "green" : "orange",
                       color: user.verified === 1 ? "white" : "black"
                     }}>
-                      {user.verified === 1
-                        ? "VERIFIED"
-                        : "UNVERIFIED"}
+                      {
+                        user.is_volunteer > 0
+                          ? "VOLUNTEER"
+                          : user.verified === 1
+                            ? "VERIFIED"
+                            : "UNVERIFIED"
+                      }
                     </div>
-                    
+
                   </li>
                   <li>
                     <div
@@ -131,13 +140,29 @@ class HeaderNav extends PureComponent {
                     >
                       <div>
                         <MenuItem
+                          onClick={this.navigateToEditProfile}
+                          style={{
+                            marginLeft: 10,
+                            marginRight: 10
+                          }}
+                        >
+                          <Link
+                            // to={`/profile_setting/${
+                            //   user.is_organization === 0 ? "individual" : "organization"
+                            //   }`}
+                            to={`/profile_setting`}
+                          >
+                            My Profile
+                          </Link>
+                        </MenuItem>
+                        <MenuItem
                           onClick={this.navigateToProfile}
                           style={{
                             marginLeft: 10,
                             marginRight: 10
                           }}
                         >
-                          <Link to="/profile">My profile</Link>
+                          <Link to="/profile">My Campaigns</Link>
                         </MenuItem>
                         <MenuItem
                           onClick={this.signoutUser}
@@ -153,17 +178,17 @@ class HeaderNav extends PureComponent {
                   </li>
                 </>
               ) : (
-                <>
-                  <li className="menu_right_li">
-                    <Link to="/signin">Sign In</Link>
-                  </li>
-                  <li>
-                    <Link to="/create_campaigns">
-                      <button>START CAMPAIGN</button>
-                    </Link>
-                  </li>
-                </>
-              )}
+                  <>
+                    <li className="menu_right_li">
+                      <Link to="/signin">Sign In</Link>
+                    </li>
+                    <li>
+                      <Link to="/create_campaigns">
+                        <button>START CAMPAIGN</button>
+                      </Link>
+                    </li>
+                  </>
+                )}
               <li id="dropDown" onClick={toggleMobileSideNav}>
                 <i className="fa fa-align-justify fa-2x"></i>
               </li>

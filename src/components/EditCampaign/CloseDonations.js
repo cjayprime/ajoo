@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Modal from "react-responsive-modal";
 
+import LoadableButton from "../../sharedComponent/LoadableButton";
+import { campaignRequest } from "../../store/campaignModules/saga";
+import { isRequestActive } from "../../utils/misc";
+
 const bg = {
   overlay: {
     background: "rgba(17, 12, 12, 0.932)"
@@ -26,7 +30,7 @@ export default class CloseDonations extends Component{
         return (
             <Modal
                 open={this.props.open}
-                onClose={this.props.toggle}
+                onClose={() => this.props.toggle("close")}
                 styles={bg}
                 center
             >
@@ -43,8 +47,24 @@ export default class CloseDonations extends Component{
                         This action is irreversible closing the campaign will stop any more donations from coming in.
                     </p>
                     <div className="report_modal-btn" style={{ marginTop: 30 }}>
-                        <button className="report_btn-cancel" onClick={this.props.toggle}>Cancel</button>
-                        <button className="report_btn-submit">Close Donations</button>
+                        <button className="report_btn-cancel" onClick={() => this.props.toggle("close")}>Cancel</button>
+                        <LoadableButton
+                            error={false}
+                            className="report_btn-submit"
+                            btnTitle="Close Donation"
+                            isLoading={
+                                isRequestActive(this.props.utils.request, campaignRequest.closeDonationRequest)
+                            }
+                            onClick={() => {
+                            
+                                this.props.closeDonation({ id: this.props.editCampaign._id, success: () => {
+                                    
+                                    this.props.toggle("close", true);
+                                
+                                }});
+    
+                            }}
+                        />
                     </div>
                 </div>
             </Modal>

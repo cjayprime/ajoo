@@ -46,7 +46,7 @@ const FormInputField = function(props){
   } else if (type === "textarea") {
     return (
       <div>
-        <div style={{ display: "flex", justifyContent: "space-between", width: 410 }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <label style={{ color: form[name].error ? "red" : "inherit" }}>
             {form[name].error ? form[name].errorMessage.toUpperCase() : labelTitle.toUpperCase()}
           </label>

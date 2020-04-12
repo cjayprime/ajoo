@@ -4,13 +4,13 @@ import StarRatings from "react-star-ratings";
 import { IMAGE_URL } from "../../utils/misc";
 import blueBadge from "../../assets/images/star3.svg";
 
-const VolunteerList = ({ url, title }) => {
+const VolunteerList = ({ url, title, name }) => {
   return (
     <div className="campaign--volunteers-list-item">
-      <img src={`${IMAGE_URL}363_232_${url}`} alt={`${title}`} />
+      <img src={`${IMAGE_URL}60_60_${url}`} alt={`${title}`} />
       <div>
         <img src={blueBadge} alt="Badge of this volunteer is gold" />
-        <p>Preye Adebusola</p>
+        <p>{name}</p>
       </div>
     </div>
   );
@@ -20,10 +20,7 @@ class CampaignBody extends PureComponent {
   state = { starRating: 4 };
   render() {
     const { campaign } = this.props;
-    const { starRating } = this.state;
-
-    return null;
-    /*
+    
     return (
       <div className="campaign--body">
         <div className="campaign--body-content">
@@ -32,21 +29,17 @@ class CampaignBody extends PureComponent {
               A message from the owner
             </h3>
             <p className="campaign--owner-message-text">
-              Dear Donor, Thank you for your generous donation. Your donation
-              changed life and helped build a better society. To all who
-              supported us throughout this campaign, you have our most sincere
-              gratitude. We send our gratitude to you with pictures of what you
-              have helped accomplished. WE APPRECIATE YOU
+              {campaign.message}
             </p>
           </div>
           <div className="campaign--volunteer">
             <div className="campaign--more-image">
               <img
-                src={`${IMAGE_URL}363_232_${campaign.imageUrl}`}
+                src={`${IMAGE_URL}${campaign.messageUrl1}`}
                 alt={`${campaign.title}`}
               />
               <img
-                src={`${IMAGE_URL}363_232_${campaign.imageUrl}`}
+                src={`${IMAGE_URL}${campaign.messageUrl2}`}
                 alt={`${campaign.title}`}
               />
             </div>
@@ -60,12 +53,19 @@ class CampaignBody extends PureComponent {
               >
                 Ajoo Volunteers
               </h3>
-              <div className="campaign--volunteers-list">
-                <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                <VolunteerList title={campaign.title} url={campaign.imageUrl} />
+              <div className="campaign--volunteers-list" style={{flexWrap: "wrap"}}>
+                {
+                  this.props.volunteers.map((v, i) => (
+                    <VolunteerList
+                      key={i}
+                      name={v.first_name + " " + v.last_name}
+                      title={v.first_name + " " + v.last_name}
+                      url={v.image_url}
+                    />
+                  ))
+                }
               </div>
-              <div className="campaign--rate-volunteers">
+              {/*<div className="campaign--rate-volunteers">
                 <button
                   onClick={this.openInitiatePayment}
                   className="donateButton"
@@ -109,13 +109,12 @@ class CampaignBody extends PureComponent {
                 >
                   rate campaign
                 </button>
-              </div>
+                </div>*/}
             </div>
           </div>
         </div>
       </div>
     );
-    */
   }
 }
 

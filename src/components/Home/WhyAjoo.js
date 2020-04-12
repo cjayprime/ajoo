@@ -44,6 +44,7 @@ class WhyAjoo extends PureComponent {
           <div className="why_ajoo_heading">
             <h2>Why Ajoo?</h2>
           </div>
+          <p className="circle"></p>
           <div className="why_ajoo_content">
             {icons.map((icon, i) => (
               <div className="why_ajoo_content_item" key={i}>

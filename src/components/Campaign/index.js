@@ -19,9 +19,22 @@ class CampaignComponent extends Component {
   }
 
   componentDidMount() {
-    const { match, fetchCampaignById } = this.props;
+    const { match, fetchCampaignById, getVolunteersOfACampaign } = this.props;
     this._isMounted = true;
     fetchCampaignById(match.params);
+    getVolunteersOfACampaign(match.params.campaignId);
+  }
+
+  ranOnce = false;
+
+  componentDidUpdate(){
+    const { getReward, campaign } = this.props;
+
+    if(typeof campaign.campaign !== "undefined" && campaign.campaign._id && this.ranOnce === false){
+      this.ranOnce = true;
+      getReward({id: campaign.campaign._id});
+    }
+    
   }
 
   componentWillUnmount() {
@@ -53,9 +66,9 @@ class CampaignComponent extends Component {
       requestStatus,
       getCampaignDonationById,
       userDonations,
-      match
+      match,
+      rewards
     } = this.props;
-    console.log('Campaign:::: ', campaign)
 
     return (
       <Layout {...this.props}>
@@ -80,6 +93,7 @@ class CampaignComponent extends Component {
             {campaign.campaign ? (
               <>
                 <CampaignHead
+                  {...this.props}
                   utils={utils}
                   initDonation={initDonation}
                   verifyPaymentAction={verifyPaymentAction}
@@ -90,12 +104,18 @@ class CampaignComponent extends Component {
                   requestStatus={requestStatus}
                   match={match}
                 />
-                <CampaignBody campaign={campaign.campaign}/>
-                <CampaignTab
-                  campaign={campaign.campaign}
-                  getCampaignDonationById={getCampaignDonationById}
-                  userDonations={userDonations}
-                />
+                
+                {
+                  campaign.campaign.status === 2
+                  ? <CampaignBody {...this.props} campaign={campaign.campaign}/>
+                  : <CampaignTab
+                      {...this.props}
+                      rewards={rewards}
+                      campaign={campaign.campaign}
+                      getCampaignDonationById={getCampaignDonationById}
+                      userDonations={userDonations}
+                    />
+                }
               </>
             ) :
               <span

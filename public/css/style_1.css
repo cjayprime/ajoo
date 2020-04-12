@@ -75,20 +75,23 @@ header {
   padding: 10px 0 10px 100px;
   display: flex;
   flex-direction: row;
-  height: 90vh;
-  width: 100wh;
+  height: 70vw;
   position: relative;
 }
 
 .heading_left {
   font-family: "Muli", sans-serif;
   overflow: hidden;
-  top: 50%;
-  transform: translateY(30%);
+  padding-top: 211px;
 }
 
 .heading_title {
   color: #0072a3;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 75px;
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
@@ -109,6 +112,27 @@ header {
   color: #fff;
   width: 242px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.profile__start-button {
+  margin-left: 50px;
+}
+
+.heading_button-reduce {
+  background: #0072a3;
+  margin-top: 30px;
+  border-radius: 50px;
+  color: #fff;
+  /* width: 202px; */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.heading_button_text-reduce {
+  padding: 17px 39px;
+  text-transform: uppercase;
+  font-weight: 100;
+  color: #fff;
+  text-align: center;
 }
 
 .heading_button_text {
@@ -178,7 +202,7 @@ header {
 .heading_right_image_5 {
   width: 124px;
   height: 124px;
-  right: 553px;
+  right: 493px;
   top: 223px;
   background: #f0b500;
 }
@@ -200,6 +224,7 @@ header {
   position: absolute;
   left: 0;
   top: 649px;
+  display: none;
 }
 
 .heading_right_image_7 {
@@ -216,6 +241,7 @@ header {
 .why_ajoo_container {
   padding: 10px 100px;
   margin: 200px 0;
+  position: relative;
 }
 
 .why_ajoo_heading {
@@ -228,6 +254,17 @@ header {
   flex-direction: row;
   margin-bottom: 60px;
   justify-content: space-between;
+}
+
+.circle {
+  background-color: rgba(246, 233, 254, 0.3);
+  width: 693px;
+  height: 693px;
+  border-radius: 50%;
+  position: absolute;
+  top: -70px;
+  left: -100px;
+  z-index: -1;
 }
 
 .why_ajoo_content_item {
@@ -286,6 +323,14 @@ header {
 
 .asking_for_fund_image2 {
   margin-left: -85px !important;
+}
+
+.asking_for_fund_image1-mob {
+  width: 300px;
+}
+
+.asking_for_fund_image2-mob {
+  width: 400px;
 }
 
 .asking_for_fund_content_container {
@@ -624,7 +669,6 @@ label {
 
 .campaigns_head_banner {
   width: 100%;
-  height: 40vh;
   background-image: url("../images/mask_group.png");
 }
 
@@ -647,11 +691,11 @@ label {
   border: none;
   border-bottom: 1px solid #ccc;
   font-size: 16px;
-  background-color: none;
+  /*background-color: none;
   background-image: url("../images/searchicon.svg");
   background-position: 10px 20px;
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px !important;
+  background-repeat: no-repeat;*/
+  padding: 12px 50px 12px 40px !important;
   outline: none;
   border: 1px solid #d5d5d5 !important;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
@@ -1171,7 +1215,7 @@ label {
   font-style: normal;
   font-weight: normal;
   margin-top: -15px;
-  width: 65%;
+  width: 80%;
 }
 
 .footerUp a {
@@ -1212,12 +1256,16 @@ footer {
   color: #757575;
 }
 
-.footer_column1 li {
-  padding-right: 40px;
+.footer_column1 {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 30px;
 }
 
-.footer_column3 li {
-  padding-left: 40px;
+.footer_column3 {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 30px;
 }
 
 /*FOOTER*/
@@ -1233,16 +1281,23 @@ footer {
   background: #f9fafc;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
+  width: 100%;
 }
 
 .card-body {
   padding: 70px 60px;
 }
 
-.terms_of_use h4 {
+.terms_of_use h5 {
   font-style: normal;
   font-weight: normal;
   padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.terms_of_use ul {
+  margin-left: 50px;
 }
 
 .terms_of_use ol {
@@ -1250,6 +1305,12 @@ footer {
 }
 
 .terms_of_use li {
+  list-style-type: disc;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.terms_of_use ol > li {
   list-style-type: decimal;
   font-size: 18px;
   line-height: 23px;
@@ -1531,11 +1592,14 @@ footer {
 .campaign--body-content {
   display: flex;
   height: 100%;
+  flex-wrap: wrap;
 }
 
 .campaign--body {
   margin-right: 100px;
   margin-left: 100px;
+  border-top: 1px solid rgb(210, 210, 210);
+  padding-top: 20px;
 }
 
 .campaign--owner-message {
@@ -2022,7 +2086,7 @@ label span {
 
 /*SIGN UP VERIFICATION*/
 .signUp_verification {
-  padding: 50px 90px;
+  padding: 50px 20px;
   background-color: #f9fafc;
 }
 
@@ -2057,59 +2121,48 @@ label span {
   margin: 20px 0;
 }
 
-.verification_2 {
-  display: flex;
-  padding-top: 10px;
-  padding-bottom: 50px;
-}
-
 .verification_social {
-  display: flex;
-  flex-direction: row;
-}
-
-.verification_person {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  grid-gap: 60px;
 }
 
 .verification_feature {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  grid-gap: 60px;
 }
 
-.verification2_column1 {
-  width: 33%;
+.verification_2 {
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  grid-gap: 60px;
+}
+
+.verification_person {
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  grid-gap: 60px;
 }
 
 .verification2_column2 {
-  padding-left: 35px;
-  width: 43%;
-}
-
-.verification2_column3 {
-  width: 20%;
-  padding-left: 35px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .verification2_column4 {
-  padding-left: 35px;
-  width: 30%;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 30px;
+}
+
+.verify2-form {
+  width: 60%;
 }
 
 /* .verification_2 img {
     width: 100%;
   } */
-
-.verification_form_image {
-  display: flex;
-  flex-direction: row;
-}
-
-.verification_form_image img {
-  padding-right: 20px;
-  padding-bottom: 20px;
-}
 
 .signUp_verification label {
   font-style: normal;
@@ -2170,6 +2223,7 @@ label span {
 
 .createCampaign_form {
   margin-top: 20px;
+  width: 410px;
 }
 
 .createCampaign_column3 h1 {
@@ -2369,6 +2423,7 @@ label span {
 .campaign__info-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__info-desc {
@@ -2377,9 +2432,8 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__info-form {
@@ -2411,6 +2465,7 @@ label span {
 .campaign__feature-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__feature-desc {
@@ -2419,13 +2474,15 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__feature-form {
   margin-left: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .edit__camp-img-btn {
@@ -2447,6 +2504,7 @@ label span {
 .campaign__desc-body {
   padding-top: 34px;
   display: flex;
+  flex-direction: row;
 }
 
 .campaign__desc-desc {
@@ -2455,9 +2513,8 @@ label span {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  width: 427px;
-  height: 92px;
   color: #414141;
+  width: 40%;
 }
 
 .campaign__desc-form {
@@ -2482,6 +2539,7 @@ label span {
 .campaign__reward-body {
   padding-top: 34px;
   display: flex;
+  justify-content: space-between;
 }
 
 .campaign__reward-desc {
@@ -2491,17 +2549,11 @@ label span {
   font-size: 16px;
   line-height: 20px;
   color: #414141;
-  width: 427px;
-  height: 92px;
-  flex-shrink: 0;
+  width: 40%;
 }
 
 .campaign__reward-form {
   margin-left: 48px;
-}
-
-.campaign__reward-form .createCampaign_form {
-  margin: 0 !important;
 }
 
 .reward-form {
@@ -2574,8 +2626,6 @@ label span {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 410px;
-  display: block;
 }
 
 .editCampaign_type-round {
@@ -2716,12 +2766,13 @@ label span {
 /*PROFILE*/
 .profile {
   background-color: #f9fafc;
-  padding: 20px 90px 0 90px;
+  padding: 20px 30px 0;
+  margin-top: 1px;
 }
 
 .edit_profile {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .profile_name {
@@ -3908,6 +3959,7 @@ label span {
 
 .verified_page_third-card-img img {
   width: 200px;
+  height: 200px;
 }
 
 .verified_page_third-card-title b {
@@ -3949,13 +4001,13 @@ label span {
 
 .verified_org_body {
   background: #ffffff;
-  margin-top: 76px;
+  margin-top: 1px;
   padding: 0px 110px 112px 110px;
 }
 
 .verified_org_head_banner {
   width: 100%;
-  height: 50vh;
+  margin-bottom: 50px;
 }
 
 .verified_org_head_banner-container {
@@ -5641,7 +5693,7 @@ label span {
   display: flex;
   justify-content: space-between;
   margin-top: -80px;
-  padding: 100px;
+  padding: 100px 50px;
 }
 
 .volunteerWork1 {
@@ -6053,6 +6105,10 @@ label span {
   margin-top: 80px;
 }
 
+.identify_verification-column1 {
+  width: 45%;
+}
+
 .identify_verification-column1 h5 {
   font-family: Muli;
   font-style: normal;
@@ -6094,3 +6150,84 @@ label span {
 }
 
 /* End of Volunteer Document */
+
+/* Success Story section on home style */
+
+.home-success {
+  padding: 10px 100px;
+}
+
+.stories {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 44px;
+}
+
+.stories img {
+  width: 350px;
+}
+
+.success-category {
+  display: flex;
+  align-items: center;
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 25px;
+  color: #212121;
+  width: 350px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  margin-top: 31px;
+}
+
+/* End of success story on home style */
+
+/* campaign stat */
+
+.stat {
+  padding: 10px 100px;
+  margin: 200px 0px;
+}
+
+.stat-number {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 72px;
+  line-height: 90px;
+  color: #0072a3;
+  padding-top: 18.8px;
+}
+
+.stat-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.stat-text {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #414141;
+  padding-top: 18px;
+}
+
+.campaign-stat {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* campaign state */

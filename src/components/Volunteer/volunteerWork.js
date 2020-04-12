@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import Modal from "react-responsive-modal";
+import { Link } from "react-router-dom";
 
 import note from "../../assets/images/note.svg";
 
@@ -28,13 +29,13 @@ class VolunteerWork extends PureComponent {
     this._isMounted = true;
   }
 
-  toggleModal = () => {
+  /*toggleModal = () => {
     this.setState(state => ({ isModalActive: !state.isModalActive }));
   };
 
   becomeVolunteer = () => {
     this.toggleModal();
-  };
+  };*/
 
   render() {
     return (
@@ -65,17 +66,16 @@ class VolunteerWork extends PureComponent {
             <img src={note} alt="note" />
           </div>
         </div>
-        <div className="volunteerWork_button">
-          <button
-            onClick={this.becomeVolunteer}
-            style={{
-              cursor: "pointer"
-            }}
-          >
-            Become a Volunteer
-          </button>
-        </div>
-        <Modal
+        <Link to="/volunteer_document">
+          <div className="volunteerWork_button">
+            <button
+              className="donateButton"
+            >
+              Become a Volunteer
+            </button>
+          </div>
+        </Link>
+        {/*<Modal
           open={this.state.isModalActive}
           onClose={this.toggleModal}
           styles={bg}
@@ -105,7 +105,7 @@ class VolunteerWork extends PureComponent {
               </button>
             </div>
           </div>
-        </Modal>
+        </Modal>*/}
       </>
     );
   }

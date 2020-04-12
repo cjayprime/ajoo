@@ -87,18 +87,14 @@
   /* DONATIONS. REWARD. COMMUNITY */
   .heading_container {
     padding: 10px 0 10px 32px;
-    /* display: flex;
-        flex-direction: row; */
-    height: 90vh;
-    width: 120wh;
+    height: 100vw;
     position: relative;
   }
 
   .heading_left {
     font-family: "Muli", sans-serif;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(30%);
+    padding-top: 111px;
   }
 
   .heading_title {
@@ -106,7 +102,7 @@
     font-family: Muli;
     font-style: normal;
     font-weight: bold;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 45px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   }
@@ -128,6 +124,27 @@
     color: #fff;
     width: 242px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .profile__start-button {
+    margin-left: 0px;
+  }
+
+  .heading_button-reduce {
+    background: #0072a3;
+    margin-top: 30px;
+    border-radius: 50px;
+    color: #fff;
+    /* width: 202px; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .heading_button_text-reduce {
+    padding: 14px 34px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
   }
 
   .heading_button_text {
@@ -222,13 +239,17 @@
 
   /* WHY AJOO */
   .why_ajoo_container {
-    padding: 10px 100px;
-    margin: 300px 0 150px 0;
+    padding: 10px 20px;
+    margin: 0px 0 150px 0;
   }
 
   .why_ajoo_heading {
     margin: 20px 0 80px 0;
     text-align: center;
+  }
+
+  .circle {
+    display: none;
   }
 
   .why_ajoo_content {
@@ -288,9 +309,9 @@
   .asking_for_fund_content_container {
     border-radius: 100vw;
     width: 100vw;
-    height: 100vw;
+    height: 50vw;
     padding: 0;
-    background: rgba(246, 233, 254, 0.3);
+    background: transparent;
   }
 
   .asking_for_fund_image1-mob {
@@ -311,6 +332,7 @@
 
   .asking_for_fund_container {
     margin-top: 100px;
+    margin-bottom: 0px;
     padding: 32px;
     display: flex;
     justify-content: center;
@@ -718,7 +740,6 @@
   /* CAMPAIGNS */
   .campaigns_head_banner {
     width: 100%;
-    height: 45vh;
     background-image: url("../images/mask_group.png");
   }
 
@@ -1463,7 +1484,7 @@
     padding: 30px 20px;
   }
 
-  .terms_of_use h4 {
+  .terms_of_use h5 {
     font-style: normal;
     font-weight: normal;
     padding-bottom: 20px;
@@ -1471,11 +1492,21 @@
     line-height: 18px;
   }
 
+  .terms_of_use ul {
+    margin-left: 30px;
+  }
+
   .terms_of_use ol {
     margin-left: 30px;
   }
 
   .terms_of_use li {
+    list-style-type: disc;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .terms_of_use ol > li {
     list-style-type: decimal;
     font-size: 14px;
     line-height: 18px;
@@ -1520,6 +1551,22 @@
     margin-top: 20px;
     margin-left: 0 !important;
     width: 100%;
+  }
+
+  .campaign--body {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .campaign--body-content {
+    width: 100%;
+  }
+
+  .campaign--owner-message,
+  .campaign--more-image,
+  .campaign--owner-message-title {
+    min-width: 90%;
+    padding: 5%;
   }
 
   .facebook_twitter_button {
@@ -2022,17 +2069,8 @@
 
   /*SIGN UP VERIFICATION*/
   .signUp_verification {
-    padding: 50px 50px;
+    padding: 50px 0px;
     background-color: #f9fafc;
-  }
-
-  .signUp_verification h1 {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 33px;
-    color: #212121;
   }
 
   .signUp_verification h5 {
@@ -2045,11 +2083,16 @@
     margin-bottom: 65px;
   }
 
+  .verification_1 h1 {
+    font-size: 18px;
+    line-height: 25px;
+  }
+
   .verification_1 a {
     font-size: 18px;
     line-height: 25px;
     color: #0072a3;
-    margin-top: 0;
+    margin: 0;
   }
 
   #organisation_logo {
@@ -2059,7 +2102,7 @@
   .signUp_verification h3 {
     font-size: 14px;
     font-weight: normal;
-    margin-top: 40px;
+    margin-top: 60px;
   }
 
   .signUp_verification hr {
@@ -2067,21 +2110,20 @@
     margin: 20px 0;
   }
 
-  .verification_2 {
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
-    padding-bottom: 50px;
-  }
-
   .verification_social {
     display: flex;
     flex-direction: column;
   }
 
-  .verification_feature {
+  .verification2_column2 {
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  .verify2-form {
+    width: -webkit-fill-available;
   }
 
   .verification_person {
@@ -2089,21 +2131,13 @@
     flex-direction: column;
   }
 
-  .verification2_column1 {
-    padding-bottom: 20px;
-    width: 100%;
+  .verification_2 {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 
-  .verification2_column1 h5 {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 20px;
-    color: #414141;
-  }
-
-  .verification2_column2 {
+  .verification2_column4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2111,53 +2145,25 @@
     width: 100%;
   }
 
-  .verification2_column3 {
-    width: 20%;
-    padding-left: 35px;
-  }
-
-  .verification2_column4 {
+  .verification_feature {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    padding-left: 0;
-  }
-
-  .verification2_column3 label {
-    font-family: Muli;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    line-height: 15px;
-    letter-spacing: 0.08em;
-    color: #000000;
-  }
-
-  .verification_2 img {
-    padding-bottom: 20px;
-  }
-
-  .signup_verification_form_image {
-    display: flex;
-    justify-content: center;
   }
 
   .verification_form_image {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 
-  .verification_form_image img {
-    padding-right: 20px;
-    padding-bottom: 20px;
+  .signup_verification_form_image {
+    margin-bottom: 20px;
   }
 
   .signUp_verification label {
     font-style: normal;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 15px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -2172,8 +2178,8 @@
     justify-content: center;
   }
 
-  .verificationbutton_center .verification_button {
-    width: 300px;
+  .verification_button {
+    width: 410px;
     height: 56px;
     background-color: #0072a3;
     border-radius: 8px;
@@ -2211,6 +2217,7 @@
 
   .createCampaign_form {
     margin-top: 20px;
+    width: 100%;
   }
 
   .createCampaign_column3 h1 {
@@ -2320,15 +2327,380 @@
 
   /*CREATE CAMPAIGN 1*/
 
+  /* EDIT CAMPAIGN */
+
+  .edit__campaign {
+    background-color: #f9fafc;
+    padding: 47px 30px 20px 30px;
+  }
+
+  .edit__campaign-head {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 66px;
+  }
+
+  .edit__campaign-head-title {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+  }
+
+  .edit__campaign-heade-2 {
+    display: flex;
+    align-items: center;
+  }
+
+  .edit__campaign-close {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    color: #0072a3;
+  }
+
+  .edit__campaign-line {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .edit__campaign-delete {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    color: #d84910;
+  }
+
+  .campaign__info-title {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+    color: #212121;
+    margin-bottom: 23px;
+  }
+
+  .campaign-hr {
+    border: 0.5px solid #d2d2d2;
+  }
+
+  .campaign__info-body {
+    padding-top: 34px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .campaign__info-desc {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+    width: 100%;
+  }
+
+  .campaign__info-form {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .edit__campaign-select {
+    padding: 12px;
+    border: 1px solid #dde2e5;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 6px;
+    resize: vertical;
+    height: 56px;
+    font-family: Muli;
+    outline: "none";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: #404040;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .campaign__feature-body {
+    padding-top: 34px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .campaign__feature-desc {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+    width: 100%;
+  }
+
+  .campaign__feature-form {
+    margin-left: 0 !important;
+    margin-top: 20px;
+  }
+
+  .campaign__feature-form img {
+    display: flex;
+    justify-content: center;
+  }
+
+  .edit__camp-img-btn {
+    width: 312px;
+    height: 56px;
+    background: #0072a3;
+    border: 1px solid #dde2e5;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 49px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  .campaign__desc-body {
+    padding-top: 34px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .campaign__desc-desc {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+    width: 100%;
+  }
+
+  .campaign__desc-form {
+    margin-left: 0 !important;
+    margin-top: 20px;
+  }
+
+  .edit-desc-btn {
+    width: 221px;
+    height: 56px;
+    background: #0072a3;
+    color: #fff;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    border: 1px solid #dde2e5;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+
+  .campaign__reward-body {
+    padding-top: 34px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .campaign__reward-desc {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+    width: 100%;
+  }
+
+  .campaign__reward-form {
+    margin-left: 0 !important;
+    margin-top: 20px;
+  }
+
+  .reward-form {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 44px;
+  }
+
+  .reward-form-2 {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
+  }
+
+  .editCampaign_form-select {
+    width: 410px;
+    padding: 12px;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    margin-top: 6px;
+    resize: vertical;
+    height: 56px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .editCampaign_form-round {
+    background-image: url("../images/arrowdown-blue.svg");
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), calc(100% - 0.5em) 0.5em;
+    background-size: 20px 20px, 20px 20px, 1.5em 1.5em;
+    background-repeat: no-repeat;
+  }
+
+  .editCampaign_form-round:focus {
+    background-image: url("../images/arrowdown-blue.svg");
+    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
+      calc(100% - 0.5em) 0.5em;
+    background-size: 20px 20px, 20px 20px, 1.5em 1.5em;
+    background-repeat: no-repeat;
+    outline: 0;
+  }
+
+  .editCampaign_type-select {
+    padding: 12px;
+    border: 1px solid #0072a3;
+    border-radius: 8px;
+    margin-top: 6px;
+    resize: vertical;
+    height: 56px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .editCampaign_type-round {
+    background-image: url("../images/arrowdown-blue.svg");
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), calc(100% - 0.5em) 0.5em;
+    background-size: 20px 20px, 20px 20px, 1.5em 1.5em;
+    background-repeat: no-repeat;
+  }
+
+  .editCampaign_type-round:focus {
+    background-image: url("../images/arrowdown-blue.svg");
+    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
+      calc(100% - 0.5em) 0.5em;
+    background-size: 20px 20px, 20px 20px, 1.5em 1.5em;
+    background-repeat: no-repeat;
+    outline: 0;
+  }
+
+  .createCampaign_form .editReward-summary {
+    width: 410px;
+    height: 85px;
+    background: #ffffff;
+    border: 1px solid #0072a3;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+
+  .createCampaign_form .editCampaign-amt {
+    background: #ffffff;
+    border: 1px solid #dde2e5;
+    box-sizing: border-box;
+    border-radius: 8px;
+    width: 250px;
+    height: 56px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: rgba(0, 0, 0, 0.25);
+  }
+
+  .reward-hr {
+    border: 1px solid #414141;
+  }
+
+  .save_reward {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+  }
+
+  .add_reward-btn {
+    background: #0072a3;
+    border: 1px solid #dde2e5;
+    box-sizing: border-box;
+    border-radius: 8px;
+    width: 180px;
+    height: 56px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #ffffff;
+    margin-left: 25px;
+  }
+
+  .edit_save-btn {
+    background: #ffffff;
+    border: 1px solid #0072a3;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #0072a3;
+    width: 144px;
+    height: 56px;
+  }
+
+  /* EDIT CAMPAIGN */
+
   /*PROFILE*/
   .profile {
     background-color: #f9fafc;
-    padding: 25px 16px;
+    padding: 25px 20px;
   }
 
   .edit_profile {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .profile_name {
@@ -2359,7 +2731,7 @@
 
   .profileTab_button {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
   }
 
   .profile_tablinks {
@@ -2368,11 +2740,11 @@
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 15px 0;
+    padding: 13px 8px;
     font-style: normal;
     font-family: "Muli", sans-serif;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 12px;
     line-height: 25px;
     display: block;
   }
@@ -2853,8 +3225,8 @@
 
   .profileSettings_column2 {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
     margin-bottom: 20px;
   }
 
@@ -2873,8 +3245,7 @@
 
   .profileSettings_form1 {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
   }
 
   .profileSettings_form1 .profileSettings_form1_first-name {
@@ -2883,7 +3254,7 @@
     border-radius: 8px;
     box-sizing: border-box;
     height: 56px;
-    width: 410px;
+    width: 200px;
     margin-top: 10px;
     margin-right: 20px;
   }
@@ -2893,13 +3264,13 @@
     border-radius: 8px;
     outline: #008435;
     box-sizing: border-box;
-    width: 410px;
+    width: 200px;
     height: 56px;
     margin-top: 10px;
   }
 
   .profileSettings_form2-mobile input[type="text"] {
-    width: 410px;
+    width: 100%;
     background: #ffffff;
     border: 1px solid #dde2e5;
     box-sizing: border-box;
@@ -2964,12 +3335,12 @@
     border-radius: 8px;
   }
 
-  /* .profileSettings_form1-location .profileSettings_form1-lga-select {
+  .profileSettings_form1-location .profileSettings_form1-lga-select {
     width: 100%;
-  } */
+  }
 
   .profileSettings_form1-location .profileSettings_form1-state-select {
-    width: 410px;
+    width: 100%;
   }
 
   .profileSettings_image {
@@ -3062,7 +3433,6 @@
 
   .accountSettings_org_column2 {
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-bottom: 20px;
     margin-left: 0;
@@ -3134,7 +3504,7 @@
   }
 
   .accountSettings_form2 input[type="password"] {
-    width: 410px;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -3481,13 +3851,12 @@
   /* VERIFIED ORGANISATION STYLING */
   .verified_org_body {
     background: #ffffff;
-    margin-top: 76px;
+    margin-top: 1px;
     padding: 0px 60px 62px 60px;
   }
 
   .verified_org_head_banner {
     width: 100%;
-    height: 40vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3717,7 +4086,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 30px;
+    /* padding-top: 30px; */
   }
 
   .verified_org-card-social p.verified_org-card-email {
@@ -5649,4 +6018,94 @@
   }
 
   /* End About */
+
+  /* Success Story section on home style */
+
+  .home-success {
+    padding: 40px 32px;
+    margin-top: 200px;
+  }
+
+  .stories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 44px;
+  }
+
+  .story-body {
+    margin-top: 20px;
+  }
+
+  .stories img {
+    width: 100%;
+  }
+
+  .success-category {
+    display: flex;
+    align-items: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 31px;
+  }
+
+  /* End of success story on home style */
+
+  /* campaign stat */
+
+  .stat {
+    padding: 10px 50px;
+    margin: 144px 0px;
+  }
+
+  /* .stat-icon {
+      width: 40px;
+    } */
+
+  .stat-number {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #0072a3;
+    margin-top: 18.8px;
+  }
+
+  .stat-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .stat-text {
+    font-family: Muli;
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #414141;
+    margin-top: 18px;
+  }
+
+  .campaign-stat {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .stat-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  /* campaign state */
 }

@@ -48,7 +48,40 @@ import {
   EDIT_REWARD_ERROR,
   DELETE_REWARD,
   DELETE_REWARD_SUCCESS,
-  DELETE_REWARD_ERROR
+  DELETE_REWARD_ERROR,
+  FETCH_ORGANIZATION_CAMPAIGNS,
+  FETCH_ORGANIZATION_CAMPAIGNS_SUCCESS,
+  FETCH_ORGANIZATION_CAMPAIGNS_ERROR,
+  CLOSE_CAMPAIGN,
+  CLOSE_CAMPAIGN_SUCCESS,
+  CLOSE_CAMPAIGN_ERROR,
+  CLOSE_DONATION,
+  CLOSE_DONATION_SUCCESS,
+  CLOSE_DONATION_ERROR,
+  DELETE_CAMPAIGN,
+  DELETE_CAMPAIGN_SUCCESS,
+  DELETE_CAMPAIGN_ERROR,
+  UPLOAD_CAMPAIGN_THANK_YOU_IMAGE,
+  UPLOAD_VOLUNTEER_BILL_IMAGE,
+  UPLOAD_VOLUNTEER_IDENTIFICATION_DOCUMENT,
+  REPORT_CAMPAIGN,
+  //REPORT_CAMPAIGN_SUCCESS,
+  REPORT_CAMPAIGN_ERROR,
+  GET_CAMPAIGN_VOLUNTEER,
+  GET_CAMPAIGN_VOLUNTEER_ERROR,
+  GET_CAMPAIGN_VOLUNTEER_SUCCESS,
+  GET_VOLUNTEER_CAMPAIGN,
+  GET_VOLUNTEER_CAMPAIGN_ERROR,
+  GET_VOLUNTEER_CAMPAIGN_SUCCESS,
+  GET_TOTAL_DONATIONS,
+  GET_TOTAL_DONATIONS_ERROR,
+  GET_TOTAL_DONATIONS_SUCCESS,
+  GET_TOTAL_CAMPAIGNS,
+  GET_TOTAL_CAMPAIGNS_ERROR,
+  GET_TOTAL_CAMPAIGNS_SUCCESS,
+  GET_TOTAL_CLOSED,
+  GET_TOTAL_CLOSED_ERROR,
+  GET_TOTAL_CLOSED_SUCCESS
 } from "./actions";
 import {
   setLoading,
@@ -71,7 +104,20 @@ export const campaignRequest = {
   addRewardRequest: "addRewardRequest",
   editRewardRequest: "editRewardRequest",
   deleteRewardRequest: "deleteRewardRequest",
-  organizationsRequest: "organizationsRequest"
+  organizationsRequest: "organizationsRequest",
+  organizationCampaignsRequest: "organizationCampaignsRequest",
+  closeCampaignRequest: "closeCampaignRequest",
+  closeDonationRequest: "closeDonationRequest",
+  deleteCampaignRequest: "deleteCampaignRequest",
+  uploadThankYouImageRequest: "uploadThankYouImageRequest",
+  uploadVolunteerBillImageRequest: "uploadVolunteerBillImageRequest",
+  uploadVolunteerIdentificationDocumentRequest: "uploadVolunteerIdentificationDocumentRequest",
+  reportCampaignRequest: "reportCampaignRequest",
+  getCampaignsOfAVolunteer: "getCampaignsOfAVolunteer",
+  getVolunteersOfACampaign: "getVolunteersOfACampaign",
+  getTotalDonations: "getTotalDonations",
+  getTotalCampaigns: "getTotalCampaigns",
+  getTotalClosed: "getTotalClosed"
 };
 
 function* createCampaignActionSaga(action) {
@@ -154,9 +200,13 @@ function* fetchAllCampaignsActionSaga({ payload }) {
         type: FETCH_ALL_CAMPAIGNS_SUCCESS,
         payload: {
           status: response.data.status,
-          data: {
+          /*data: {
             [`${queries.time ? queries.time : "all"}Campaigns`]: response.data
               .entity
+          }*/
+          data: {
+            [`${queries.time ? queries.time : "all"}Campaigns`]: response.data.entity,
+            allCampaigns: response.data.entity
           }
         }
       });
@@ -578,7 +628,7 @@ function* getCampaignDonationByIdActionSaga(action) {
 
 function* getRewardSaga(action) {
   try {
-    const { id, success } = action.payload;
+    const { id, isUser, success } = action.payload;
 
     yield put(
       setLoading({
@@ -586,7 +636,7 @@ function* getRewardSaga(action) {
         loading: true
       })
     );
-    const response = yield call(campaignService.getReward, id);
+    const response = yield call(campaignService.getReward, id, isUser);
     yield put(
       setLoading({ request: campaignRequest.getRewardRequest })
     );
@@ -841,6 +891,786 @@ function* organizationActionSaga(action) {
   }
 }
 
+function* organizationCampaignsSaga(action) {
+  try {
+    const data = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.organizationCampaignsRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.fetchOrganizationCampaigns, data);
+    yield put(
+      setLoading({ request: campaignRequest.organizationCampaignsRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: FETCH_ORGANIZATION_CAMPAIGNS_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+    } else {
+      yield put({
+        type: FETCH_ORGANIZATION_CAMPAIGNS_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.organizationCampaignsRequest })
+    );
+    yield put({
+      type: FETCH_ORGANIZATION_CAMPAIGNS_ERROR,
+      payload: error
+    })
+  }
+}
+
+function* closeCampaignSaga(action) {
+  try {
+    const { message, id, campaign_id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.closeCampaignRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.closeCampaign, message, id);
+    yield put(
+      setLoading({ request: campaignRequest.closeCampaignRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: CLOSE_CAMPAIGN_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.closeCampaignRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+      window.location = window.location.origin + "/campaign/" + campaign_id.toLowerCase();
+
+    } else {
+      yield put({
+        type: CLOSE_CAMPAIGN_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.closeCampaignRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.closeCampaignRequest })
+    );
+    yield put({
+      type: CLOSE_CAMPAIGN_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* closeDonationSaga(action) {
+  try {
+    const { id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.closeDonationRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.closeDonation, id);
+    yield put(
+      setLoading({ request: campaignRequest.closeDonationRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: CLOSE_DONATION_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.closeDonationRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: CLOSE_DONATION_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.closeDonationRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.closeDonationRequest })
+    );
+    yield put({
+      type: CLOSE_DONATION_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* deleteCampaignSaga(action) {
+  try {
+    const { id, success } = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.deleteCampaignRequest,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.deleteCampaign, id);
+    yield put(
+      setLoading({ request: campaignRequest.deleteCampaignRequest })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: DELETE_CAMPAIGN_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.deleteCampaignRequest,
+          success: true
+        })
+      );
+
+      if (typeof success === "function") success();
+
+    } else {
+      yield put({
+        type: DELETE_CAMPAIGN_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.deleteCampaignRequest,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.deleteCampaignRequest })
+    );
+    yield put({
+      type: DELETE_CAMPAIGN_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+function* uploadThankYouImageActionSaga(action) {
+  try {
+    const {
+      data,
+      //createdCampaign,
+      //history,
+      showPercentageProgress,
+      imageNumber,
+      success
+    } = action.payload;
+
+    yield put(showPercentageProgress(0));
+    yield put(
+      setLoading({
+        request: campaignRequest.uploadThankYouImageRequest,
+        loading: true
+      })
+    );
+    const response = yield call(
+      campaignService.uploadThankYouImage,
+      data,
+      showPercentageProgress,
+      imageNumber
+    );
+    yield put(
+      setLoading({ request: campaignRequest.uploadThankYouImageRequest })
+    );
+
+    if (typeof success === "function") success();
+
+    if (response.data.status.code === 100) {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadThankYouImageRequest,
+          success: true
+        })
+      );
+    } else {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadThankYouImageRequest,
+          success: false
+        })
+      );
+      yield put({
+        type: CLOSE_CAMPAIGN_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.uploadThankYouImageRequest })
+    );
+    yield put({
+      type: CLOSE_CAMPAIGN_ERROR,
+      payload: error
+    });
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured uploading the image",
+        for: campaignRequest.uploadThankYouImageRequest,
+        success: false
+      })
+    );
+  }
+}
+
+
+
+function* uploadVolunteerBillSaga(action) {
+  try {
+    const {
+      data,
+      showPercentageProgress,
+      success
+    } = action.payload;
+
+    yield put(showPercentageProgress(0));
+    yield put(
+      setLoading({
+        request: campaignRequest.uploadVolunteerBillImageRequest,
+        loading: true
+      })
+    );
+    const response = yield call(
+      campaignService.uploadVolunteerBillImage,
+      data,
+      showPercentageProgress
+    );
+    yield put(
+      setLoading({ request: campaignRequest.uploadVolunteerBillImageRequest })
+    );
+
+    if (typeof success === "function") success();
+
+    if (response.data.status.code === 100) {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadVolunteerBillImageRequest,
+          success: true
+        })
+      );
+      
+      setTimeout(() => {
+        window.location = window.location.origin;
+      }, 2000);
+
+    } else {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadVolunteerBillImageRequest,
+          success: false
+        })
+      );
+      yield put({
+        type: CLOSE_CAMPAIGN_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.uploadVolunteerBillImageRequest })
+    );
+    yield put({
+      type: CLOSE_CAMPAIGN_ERROR,
+      payload: error
+    });
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured uploading the image",
+        for: campaignRequest.uploadVolunteerBillImageRequest,
+        success: false
+      })
+    );
+  }
+}
+
+
+
+function* uploadVolunteerIdentificationSaga(action) {
+  try {
+    const {
+      data,
+      showPercentageProgress,
+      success
+    } = action.payload;
+
+    yield put(showPercentageProgress(0));
+    yield put(
+      setLoading({
+        request: campaignRequest.uploadVolunteerIdentificationDocumentRequest,
+        loading: true
+      })
+    );
+    const response = yield call(
+      campaignService.uploadVolunteerIdentificationDocument,
+      data,
+      showPercentageProgress
+    );
+    yield put(
+      setLoading({ request: campaignRequest.uploadVolunteerIdentificationDocumentRequest })
+    );
+
+    if (typeof success === "function") success();
+
+    if (response.data.status.code === 100) {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadVolunteerIdentificationDocumentRequest,
+          success: true
+        })
+      );
+      
+      setTimeout(() => {
+        window.location = window.location.origin;
+      }, 2000);
+
+    } else {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.uploadVolunteerIdentificationDocumentRequest,
+          success: false
+        })
+      );
+      yield put({
+        type: CLOSE_CAMPAIGN_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.uploadVolunteerIdentificationDocumentRequest })
+    );
+    yield put({
+      type: CLOSE_CAMPAIGN_ERROR,
+      payload: error
+    });
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured uploading the image",
+        for: campaignRequest.uploadVolunteerIdentificationDocumentRequest,
+        success: false
+      })
+    );
+  }
+}
+
+
+
+function* reportCampaignSaga(action) {
+  try {
+    const data = action.payload;
+
+    //yield put(showPercentageProgress(0));
+    yield put(
+      setLoading({
+        request: campaignRequest.reportCampaignRequest,
+        loading: true
+      })
+    );
+    const response = yield call(
+      campaignService.reportCampaign,
+      data//,
+      //showPercentageProgress
+    );
+    yield put(
+      setLoading({ request: campaignRequest.reportCampaignRequest })
+    );
+
+    if (response.data.status.code === 100) {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.reportCampaignRequest,
+          success: true
+        })
+      );
+    } else {
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.reportCampaignRequest,
+          success: false
+        })
+      );
+      yield put({
+        type: REPORT_CAMPAIGN_ERROR,
+        payload: response.data.status
+      });
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.reportCampaignRequest })
+    );
+    yield put({
+      type: REPORT_CAMPAIGN_ERROR,
+      payload: error
+    });
+    yield put(
+      showRequestFeedBack({
+        message: "An error occured uploading the image",
+        for: campaignRequest.reportCampaignRequest,
+        success: false
+      })
+    );
+  }
+}
+
+
+function* getCampaignsOfAVolunteerSaga(action) {
+  try {
+    const id = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.getCampaignsOfAVolunteer,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.getCampaignsOfAVolunteer, id);
+    yield put(
+      setLoading({ request: campaignRequest.getCampaignsOfAVolunteer })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_CAMPAIGN_VOLUNTEER_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getCampaignsOfAVolunteer,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: GET_CAMPAIGN_VOLUNTEER_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getCampaignsOfAVolunteer,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getCampaignsOfAVolunteer })
+    );
+    yield put({
+      type: GET_CAMPAIGN_VOLUNTEER_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+
+
+function* getVolunteersOfACampaignSaga(action) {
+  try {
+    const id = action.payload;
+
+    yield put(
+      setLoading({
+        request: campaignRequest.getVolunteersOfACampaign,
+        loading: true
+      })
+    );
+    const response = yield call(campaignService.getVolunteersOfACampaign, id);
+    yield put(
+      setLoading({ request: campaignRequest.getVolunteersOfACampaign })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_VOLUNTEER_CAMPAIGN_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getVolunteersOfACampaign,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: GET_VOLUNTEER_CAMPAIGN_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getVolunteersOfACampaign,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getVolunteersOfACampaign })
+    );
+    yield put({
+      type: GET_VOLUNTEER_CAMPAIGN_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+
+
+
+
+
+function* getTotalDonationsSaga() {
+  try {
+    yield put(
+      setLoading({
+        request: campaignRequest.getTotalDonations,
+        loading: true
+      })
+    );
+    // we are using fetchAllCampaigns temporarily
+    // const response = yield call(campaignService.getTotalDonations);
+    const response = yield call(campaignService.fetchAllCampaigns);
+    yield put(
+      setLoading({ request: campaignRequest.getTotalDonations })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_TOTAL_DONATIONS_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalDonations,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: GET_TOTAL_DONATIONS_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalDonations,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getTotalDonations })
+    );
+    yield put({
+      type: GET_TOTAL_DONATIONS_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+
+
+
+
+
+function* getTotalCampaignsSaga() {
+  try {
+    yield put(
+      setLoading({
+        request: campaignRequest.getTotalCampaigns,
+        loading: true
+      })
+    );
+    // we are using fetchAllCampaigns temporarily
+    // const response = yield call(campaignService.getTotalCampaigns);
+    const response = yield call(campaignService.fetchAllCampaigns);
+    yield put(
+      setLoading({ request: campaignRequest.getTotalCampaigns })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_TOTAL_CAMPAIGNS_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalCampaigns,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: GET_TOTAL_CAMPAIGNS_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalCampaigns,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getTotalCampaigns })
+    );
+    yield put({
+      type: GET_TOTAL_CAMPAIGNS_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+
+
+
+function* getTotalClosedSaga() {
+  try {
+    yield put(
+      setLoading({
+        request: campaignRequest.getTotalClosed,
+        loading: true
+      })
+    );
+    // we are using fetchAllCampaigns temporarily
+    // const response = yield call(campaignService.getTotalCampaigns);
+    const response = yield call(campaignService.fetchAllCampaigns);
+    yield put(
+      setLoading({ request: campaignRequest.getTotalClosed })
+    );
+    if (response.data.status.code === 100) {
+      yield put({
+        type: GET_TOTAL_CLOSED_SUCCESS,
+        payload: {
+          status: response.data.status,
+          data: response.data.entity
+        }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalClosed,
+          success: true
+        })
+      );
+
+    } else {
+      yield put({
+        type: GET_TOTAL_CLOSED_ERROR,
+        payload: { status: response.data.status, data: undefined }
+      });
+      yield put(
+        showRequestFeedBack({
+          message: response.data.status.desc,
+          for: campaignRequest.getTotalClosed,
+          success: false
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      setLoading({ request: campaignRequest.getTotalClosed })
+    );
+    yield put({
+      type: GET_TOTAL_CLOSED_ERROR,
+      payload: { status: error, data: undefined }
+    });
+  }
+}
+
+
+
+
 function* fetchUserCampaignsWatcher() {
   yield takeEvery(FETCH_USER_CAMPAIGNS, fetchUserCampaignsActionSaga);
 }
@@ -905,6 +1735,58 @@ function* organizationsWatcher() {
   yield takeLatest(FETCH_ORGANIZATIONS, organizationActionSaga)
 }
 
+function* organizationCampaignsWatcher() {
+  yield takeLatest(FETCH_ORGANIZATION_CAMPAIGNS, organizationCampaignsSaga)
+}
+
+function* closeCampaignWatcher() {
+  yield takeLatest(CLOSE_CAMPAIGN, closeCampaignSaga);
+}
+
+function* closeDonationWatcher() {
+  yield takeLatest(CLOSE_DONATION, closeDonationSaga);
+}
+
+function* deleteCampaignWatcher() {
+  yield takeLatest(DELETE_CAMPAIGN, deleteCampaignSaga);
+}
+
+function* uploadThankYouImageWatcher() {
+  yield takeLatest(UPLOAD_CAMPAIGN_THANK_YOU_IMAGE, uploadThankYouImageActionSaga);
+}
+
+function* uploadVolunteerBillWatcher() {
+  yield takeLatest(UPLOAD_VOLUNTEER_BILL_IMAGE, uploadVolunteerBillSaga);
+}
+
+function* uploadVolunteerIdentificationWatcher() {
+  yield takeLatest(UPLOAD_VOLUNTEER_IDENTIFICATION_DOCUMENT, uploadVolunteerIdentificationSaga);
+}
+
+function* reportCampaignWatcher() {
+  yield takeLatest(REPORT_CAMPAIGN, reportCampaignSaga);
+}
+
+function* getCampaignsOfAVolunteerWatcher() {
+  yield takeLatest(GET_CAMPAIGN_VOLUNTEER, getCampaignsOfAVolunteerSaga);
+}
+
+function* getVolunteersOfACampaignWatcher() {
+  yield takeLatest(GET_VOLUNTEER_CAMPAIGN, getVolunteersOfACampaignSaga);
+}
+
+function* getTotalDonationsWatcher() {
+  yield takeLatest(GET_TOTAL_DONATIONS, getTotalDonationsSaga);
+}
+
+function* getTotalCampaignsWatcher() {
+  yield takeLatest(GET_TOTAL_CAMPAIGNS, getTotalCampaignsSaga);
+}
+
+function* getTotalClosedWatcher() {
+  yield takeLatest(GET_TOTAL_CLOSED, getTotalClosedSaga)
+}
+
 export default function* campaignSaga() {
   yield all([
     userCreateCampaignWatcher(),
@@ -922,6 +1804,19 @@ export default function* campaignSaga() {
     addRewardWatcher(),
     editRewardWatcher(),
     deleteRewardWatcher(),
-    organizationsWatcher()
+    organizationsWatcher(),
+    organizationCampaignsWatcher(),
+    closeCampaignWatcher(),
+    closeDonationWatcher(),
+    deleteCampaignWatcher(),
+    uploadThankYouImageWatcher(),
+    uploadVolunteerBillWatcher(),
+    uploadVolunteerIdentificationWatcher(),
+    reportCampaignWatcher(),
+    getCampaignsOfAVolunteerWatcher(),
+    getVolunteersOfACampaignWatcher(),
+    getTotalDonationsWatcher(),
+    getTotalCampaignsWatcher(),
+    getTotalClosedWatcher()
   ]);
 }

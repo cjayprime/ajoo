@@ -14,6 +14,8 @@ class VolunteerComponent extends PureComponent {
 
   componentDidMount() {
     this._isMounted = true;
+    
+    this.props.getAllVolunteers();
   }
 
   _safelySetState = (newState, prevState = null) => {
@@ -25,12 +27,14 @@ class VolunteerComponent extends PureComponent {
   };
 
   render() {
+    const { verify: { volunteers } } = this.props;
+
     return (
       <>
         <Layout>
           <VolunteerHead />
           <VolunteerWork />
-          <Volunteer />
+          <Volunteer volunteers={volunteers} />
           <StartCampaign />
         </Layout>
       </>

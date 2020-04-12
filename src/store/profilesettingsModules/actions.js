@@ -36,7 +36,6 @@ export const USER_PROFILE_IMAGE_SUCCESS = "USER_PROFILE_IMAGE_SUCCESS";
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA";
 
 export const individualProfileSetting = data => {
-  // console.log("individualProfileSetting individualProfileSetting individualProfileSetting ", data)
   return {
     type: INDIVIDUAL_SETTING,
     payload: data

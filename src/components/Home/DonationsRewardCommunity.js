@@ -6,8 +6,8 @@ export default class DonationsRewardCommunity extends PureComponent {
     return (
       <div className="heading_container">
         <div className="heading_left">
-          <div className="heading_title">
-            <h2>
+          <div>
+            <h2 className="heading_title">
               Donations. Reward. <br />
               Community
             </h2>

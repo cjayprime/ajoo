@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LoadableButton from "../../../sharedComponent/LoadableButton";
 import FormInputField from "../../../sharedComponent/form";
-import { validateInput, isRequestActive, validate } from "../../../utils/misc";
+import { isRequestActive, validate } from "../../../utils/misc";
 import Vector from "../../../assets/images/Vector.svg";
 import AlertDialog from "../../../sharedComponent/AlertDialog";
 import { authRequest } from "../../../store/authModules/saga";
@@ -107,8 +107,31 @@ class SignUpIndividualForm extends Component {
     };
   }
 
-  componentDidMount() {
-    this._isMounted = true;
+  ranOnce = false;
+
+  componentDidUpdate() {
+
+    if (this.ranOnce === false && typeof this.props.getFacebookDetails.user !== "undefined" && this.state.fields.first_name.value != this.props.getFacebookDetails.user.first_name) {
+      this.ranOnce = true;
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          email: {
+            ...this.state.fields.email,
+            value: this.props.getFacebookDetails.user.email
+          },
+          first_name: {
+            ...this.state.fields.first_name,
+            value: this.props.getFacebookDetails.user.first_name
+          },
+          last_name: {
+            ...this.state.fields.last_name,
+            value: this.props.getFacebookDetails.user.last_name
+          }
+        }
+      });
+    }
+
   }
 
   componentWillUnmount() {
@@ -130,7 +153,7 @@ class SignUpIndividualForm extends Component {
     }
 
     if (validate(this, compulsoryFields)) {
-      
+
       let data = {};
       Object.keys(this.state.fields).map(key => {
         if (key !== "confirm_password") {
@@ -171,15 +194,15 @@ class SignUpIndividualForm extends Component {
   };
 
   _safelySetState = (newState, prevState = null) => {
-    if (this._isMounted)
-      return this.setState(state => ({
-        [prevState]: !state[prevState],
-        ...newState
-      }));
+    //if (this._isMounted)
+    return this.setState(state => ({
+      [prevState]: !state[prevState],
+      ...newState
+    }));
   };
 
   render() {
-    const { isLoading, misc, request } = this.props;
+    const { isLoading, misc, request, facebookRegister } = this.props;
     const {
       email,
       password,
@@ -224,13 +247,15 @@ class SignUpIndividualForm extends Component {
             {/* Handle signup with facebook */}
             <div className="face-pass">
               {" "}
-              <button
-                className="signup_indi-face-btn facebook_button"
-                style={{ display: "flex", justifyContent: "space-around" }}
-              >
-                <img style={{ width: "24px" }} src={Vector} />
+              <a href={facebookRegister}>
+                <button
+                  className="signup_indi-face-btn facebook_button"
+                  style={{ display: "flex", justifyContent: "space-around" }}
+                >
+                  <img style={{ width: "24px" }} src={Vector} />
                 Sign Up with Facebook
               </button>
+              </a>
               <span>
                 We’ll never post anything on Facebook without your permission.
               </span>
@@ -382,14 +407,19 @@ class SignUpIndividualForm extends Component {
                   message={request.feedback.message}
                   success={request.feedback.success}
                 />
+                <AlertDialog
+                  open={request.feedback.for === authRequest.facebookSignupDetailsRequest}
+                  message={request.feedback.message}
+                  success={request.feedback.success}
+                />
                 <div className="signup_agree">
                   <div className="signup_span">
-                    By signing up with Ajoo, you agree to the{" "}
-                    <Link to="#">
+                    By clicking submit, you agree to the{" "}
+                    <Link to="/privacy-policy">
                       <label>Privacy Policy</label>
                     </Link>{" "}
                     and{" "}
-                    <Link to="#">
+                    <Link to="/terms_of_use">
                       <label>Terms of Use</label>
                     </Link>{" "}
                     of the Company.

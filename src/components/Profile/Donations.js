@@ -2,7 +2,6 @@ import React from "react";
 import { moneyFormat } from "../../utils/misc";
 
 const Donations = ({ userDonations, userCampaigns }) => {
-  console.log(userDonations)
   return (
     <div id="" className="">
       <div className="campaigns_div">

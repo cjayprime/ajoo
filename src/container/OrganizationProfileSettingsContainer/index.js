@@ -6,8 +6,11 @@ import {
   organisationEmailSetting,
   organisationProfilePasswordSetting
 } from "../../store/profilesettingsModules/actions.js";
+import { uploadProfileImage } from "../../store/authModules/actions.js";
+import { verifySignupUser, uploadFeatureImageForVerification, uploadDocumentImageForVerification } from "../../store/verifyModules/actions.js";
 import OrganizationProfileSettingComponent from "../../components/OrganizationProfileSetting";
 import { fetchStates, fetchLga } from "../../store/miscModules/actions";
+import { showPercentageProgress } from "../../store/utilsModule/actions.js";
 
 class OganizationProfileSettingContainer extends PureComponent {
   render() {
@@ -57,7 +60,12 @@ const mapDispatchToProps = {
   organisationEmailSetting,
   organisationProfilePasswordSetting,
   fetchStates,
-  fetchLga
+  fetchLga,
+  verifySignupUser,
+  uploadProfileImage,
+  uploadFeatureImageForVerification,
+  uploadDocumentImageForVerification,
+  showPercentageProgress
 };
 
 export default connect(

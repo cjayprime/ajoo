@@ -8,6 +8,12 @@ export const UPLOAD_FEATURE_IMAGE_FOR_VERIFICATION_ERROR = "UPLOAD_FEATURE_IMAGE
 export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION";
 export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_SUCCESS = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_SUCCESS";
 export const UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_ERROR = "UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION_ERROR";
+export const GET_ALL_VOLUNTEERS = "GET_ALL_VOLUNTEERS";
+export const GET_ALL_VOLUNTEERS_SUCCESS = "GET_ALL_VOLUNTEERS_SUCCESS";
+export const GET_ALL_VOLUNTEERS_ERROR = "GET_ALL_VOLUNTEERS_ERROR";
+export const VERIFY_CAMPAIGN = "VERIFY_CAMPAIGN";
+export const VERIFY_CAMPAIGN_SUCCESS = "VERIFY_CAMPAIGN_SUCCESS";
+export const VERIFY_CAMPAIGN_ERROR = "VERIFY_CAMPAIGN_ERROR";
 
 export const volunteerImageUser = data => ({
   type: VERIFY_VOLUNTEER_IMAGE,
@@ -26,5 +32,15 @@ export const uploadFeatureImageForVerification = data => ({
 
 export const uploadDocumentImageForVerification = data => ({
   type: UPLOAD_DOCUMENT_IMAGE_FOR_VERIFICATION,
+  payload: data
+});
+
+export const getAllVolunteers = data => ({
+  type: GET_ALL_VOLUNTEERS,
+  payload: data
+});
+
+export const verifyCampaign = data => ({
+  type: VERIFY_CAMPAIGN,
   payload: data
 });

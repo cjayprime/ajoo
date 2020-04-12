@@ -23,6 +23,68 @@ class AuthService {
     });
   };
 
+  facebookLogin = () => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      }
+      apiClient(`/account/facebookloginlink`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        })
+    })
+  }
+
+  facebookSignup = () => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      }
+      apiClient(`/account/facebooksignuplink
+      `, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        })
+    })
+  }
+
+  getFacebookDetails = ({ u }) => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      }
+      apiClient(`/account/user/${u}`, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        })
+    })
+  }
+
+  facebookOrgSignup = () => {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: "GET"
+      }
+      apiClient(`/account/facebookorgsignuplink
+      `, config)
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(error => {
+          reject(error.response);
+        })
+    })
+  }
+
   signupUser = body => {
     return new Promise((resolve, reject) => {
       apiClient("/account", { body })

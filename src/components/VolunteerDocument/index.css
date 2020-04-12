@@ -3,7 +3,7 @@
 
   .volunteer_document {
     background: #f9fafc;
-    padding: 48px 110px 48px 110px;
+    padding: 48px 40px 48px 40px;
   }
 
   .volunteer_document h3 {
@@ -14,6 +14,10 @@
     line-height: 25px;
     color: #212121;
     margin-top: 80px;
+  }
+
+  .identify_verification-column1 {
+    width: 100%;
   }
 
   .identify_verification-column1 h5 {
@@ -36,7 +40,7 @@
 
   .identify_verification {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
   }
 
   .volunteer_button {
@@ -77,6 +81,12 @@
     margin-top: 80px;
   }
 
+  .identify_verification-column1 {
+    width: auto;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   .identify_verification-column1 h5 {
     font-family: Muli;
     font-style: normal;
@@ -87,14 +97,16 @@
   }
 
   .identify_verification-column2 {
-    margin-top: 30px;
+    margin-top: 0;
     margin-left: 0 !important;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
 
-  .identify_verification-column2 img {
-    display: flex;
-    justify-content: center;
-    width: 200px;
+  .identify_verification-column2 > div {
+    width: 200px !important;
+    height: 200px !important;
   }
 
   .volunteer_document hr {
@@ -103,9 +115,9 @@
   }
 
   .identify_verification {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 50px;
   }
 
   .volunteer_button {
@@ -155,15 +167,23 @@
     color: #414141;
   }
 
-  .identify_verification-column2 {
-    margin-top: 30px;
-    margin-left: 0 !important;
+  .identify_verification-column1 {
+    width: auto;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
-  .identify_verification-column2 img {
+  .identify_verification-column2 {
+    margin-top: 0;
+    margin-left: 0 !important;
     display: flex;
-    justify-content: center;
-    width: 200px;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .identify_verification-column2 > div {
+    width: 200px !important;
+    height: 200px !important;
   }
 
   .volunteer_document hr {

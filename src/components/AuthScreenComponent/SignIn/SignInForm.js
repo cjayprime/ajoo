@@ -112,7 +112,7 @@ class SigninForm extends Component {
   };
 
   render() {
-    const { /*auth,*/ isLoading, utils } = this.props;
+    const { /*auth,*/ isLoading, utils, facebookSignin } = this.props;
     const {
       fields: { email, password },
       formError
@@ -182,21 +182,6 @@ class SigninForm extends Component {
                 type="submit"
               />
             </form>
-            <div className="hr_or">
-              <hr className="hr2" />
-              <p id="or">or</p>
-              <hr className="hr3" />
-            </div>
-            <button
-              id="facebook"
-              style={{ display: "flex", justifyContent: "space-around" }}
-            >
-              <img style={{ width: "24px" }} src={Vector} alt="Vector" />
-              <span>Continue with Facebook</span>
-            </button>
-            <p id="post">
-              We’ll never post anything on Facebook without your permission.
-            </p>
           </div>
         </div>
 

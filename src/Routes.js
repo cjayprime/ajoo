@@ -59,13 +59,13 @@ let routes = {
     { path: "/signin", exact: true, component: SignInContainer },
     { path: "/signup", exact: true, component: SignUpContainer },
     { path: "/signout", exact: true, component: () => <Redirect to={{ pathname: "/signin", state: {} }} /> },
-    { path: "/tnc", exact: true, component: PrivacyPolicyContainer },
+    { path: "/privacy-policy", exact: true, component: PrivacyPolicyContainer },
     { path: "/terms_of_use", exact: true, component: TermsOfUseContainer },
     { path: "/volunteer", exact: true, component: VolunteerContainer },
     // { path: "/non_volunteer", exact: true, component: NonVolunteerContainer },
     { path: "/verified_page", exact: true, component: VerifiedPagesContainer },
     {
-      path: "/verified_org_campaigns",
+      path: "/verified_org_campaigns/:organizationId",
       exact: true,
       component: VerifiedOrganisationContainer
     },

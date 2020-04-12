@@ -20,7 +20,7 @@ class NewCampaign extends PureComponent {
             {isCampaignFetching ? (
               <Spinner />
             ) : (
-                <div className="topCampaigns_row2">
+                <>
                   {transactions.length === 0 ? (
                     <span
                       style={{
@@ -33,9 +33,9 @@ class NewCampaign extends PureComponent {
                       }}
                     >
                       no campaigns
-                  </span>
+                    </span>
                   ) : (
-                      <>
+                      <div className="topCampaigns_row2">
                         {transactions.map((c, i) => {
                           if (i > 2) return null;
                           return (
@@ -51,9 +51,9 @@ class NewCampaign extends PureComponent {
                             />
                           );
                         })}
-                      </>
+                      </div>
                     )}
-                </div>
+                </>
               )}
           </div>
         </div>

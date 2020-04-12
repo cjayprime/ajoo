@@ -163,6 +163,29 @@ class SignUpOrganisationForm extends Component {
 
   }
 
+  ranOnce = false;
+
+  componentDidUpdate() {
+
+    if (this.ranOnce === false && typeof this.props.getFacebookDetails.user !== "undefined" && this.state.fields.organization_name.value != this.props.getFacebookDetails.user.organization_name){
+      this.ranOnce = true;
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          organization_email: {
+            ...this.state.fields.organization_email,
+            value: this.props.getFacebookDetails.user.email
+          },
+          organization_name: {
+            ...this.state.fields.organization_name,
+            value: this.props.getFacebookDetails.user.organization_name
+          },
+        }
+      });
+    }
+
+  }
+
   componentWillUnmount() {
     let newState = { ...this.state };
     Object.keys(newState.fields).map(key => {
@@ -184,11 +207,11 @@ class SignUpOrganisationForm extends Component {
     }
 
     // Although secondary mobile isn't compulsory, if it has a value it MUST be correct
-    if (fields.secondary_mobile.value !== "" && ! validate(this, fields))
-    return;
+    if (fields.secondary_mobile.value !== "" && !validate(this, fields))
+      return;
 
     if (validate(this, compulsoryFields)) {
-      
+
       let data = {};
       Object.keys(this.state.fields).map(key => {
         if (key !== "confirm_password") {
@@ -239,7 +262,7 @@ class SignUpOrganisationForm extends Component {
   };
 
   _safelySetState = (newState, prevState = null) => {
-    if (this._isMounted)
+    //if (this._isMounted)
       return this.setState(state => ({
         [prevState]: !state[prevState],
         ...newState
@@ -247,7 +270,7 @@ class SignUpOrganisationForm extends Component {
   };
 
   render() {
-    const { isLoading, misc, request } = this.props;
+    const { isLoading, misc, request, facebookOrgRegister } = this.props;
     const {
       fields: {
         organization_email,
@@ -306,13 +329,15 @@ class SignUpOrganisationForm extends Component {
             {/* Handle signup with facebook */}
             <div className="face-pass">
               {" "}
-              <button
-                style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}
-                className="signup_org-face-btn"
-              >
-                <img style={{ width: "24px" }} src={Vector} />
+              <a href={facebookOrgRegister}>
+                <button
+                  style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}
+                  className="signup_org-face-btn"
+                >
+                  <img style={{ width: "24px" }} src={Vector} />
                 Sign Up with Facebook
               </button>
+              </a>
               <span>
                 We’ll never post anything on Facebook without your permission.
               </span>
@@ -491,12 +516,12 @@ class SignUpOrganisationForm extends Component {
                 </div>
                 <div className="signup_agree">
                   <div className="signup_span">
-                    By signing up with Ajoo, you agree to the{" "}
-                    <Link to="#">
+                    By clicking submit, you agree to the{" "}
+                    <Link to="/privacy-policy">
                       <label>Privacy Policy</label>
                     </Link>{" "}
                     and{" "}
-                    <Link to="#">
+                    <Link to="/terms_of_use">
                       <label>Terms of Use</label>
                     </Link>{" "}
                     of the Company.

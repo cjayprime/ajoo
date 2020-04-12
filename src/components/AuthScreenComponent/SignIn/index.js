@@ -14,6 +14,7 @@ class SigninComponent extends PureComponent {
 
   componentDidMount() {
     this._isMounted = true;
+    this.props.facebookLogin([])
   }
 
   _safelySetState = (newState, prevState = null) => {
@@ -25,8 +26,8 @@ class SigninComponent extends PureComponent {
   };
 
   render() {
-    const { signinUser, utils, requestStatus } = this.props;
-    
+    const { signinUser, utils, requestStatus, facebookSignin } = this.props;
+
     return (
       <>
         <Layout {...this.props}>
@@ -35,6 +36,7 @@ class SigninComponent extends PureComponent {
             signinUser={signinUser}
             utils={utils}
             requestStatus={requestStatus}
+            facebookSignin={facebookSignin.facebookloginURL}
             isLoading={isRequestActive(utils.request, authRequest.loginRequest)}
           />
         </Layout>

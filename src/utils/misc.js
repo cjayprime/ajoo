@@ -98,8 +98,27 @@ const validateHelper = function(event, fields){
     
     if(typeof this === "undefined") return;
 
-    let newForm = { ...this.state };
-    if (typeof newForm.rewardFields !== "undefined" && newForm.rewardFields.hasOwnProperty(name)) {
+    let newForm = { ...this.state };    
+    
+    if (typeof newForm.emailChangeField !== "undefined" && newForm.emailChangeField.hasOwnProperty(name)) {
+      newForm.emailChangeField[name] = {
+        ...newForm.emailChangeField[name],
+        error,
+        errorMessage
+      };
+    } else if (typeof newForm.passwordChangeField !== "undefined" && newForm.passwordChangeField.hasOwnProperty(name)) {
+      newForm.passwordChangeField[name] = {
+        ...newForm.passwordChangeField[name],
+        error,
+        errorMessage
+      };
+    } else if (typeof newForm.basicInformationFields !== "undefined" && newForm.basicInformationFields.hasOwnProperty(name)) {
+      newForm.basicInformationFields[name] = {
+        ...newForm.basicInformationFields[name],
+        error,
+        errorMessage
+      };
+    } else if (typeof newForm.rewardFields !== "undefined" && newForm.rewardFields.hasOwnProperty(name)) {
       newForm.rewardFields[name] = {
         ...newForm.rewardFields[name],
         error,

@@ -1,12 +1,40 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import VerifiedOrganisationComponent from "../../components/VerifiedOrganisationCampaigns";
+import { organizationCampaignsAction, organizationsAction } from "../../store/campaignModules/actions";
 
-class VerifiedOrganisationContainer extends PureComponent {
+class VerifiedOrganisationContainer extends Component {
   render() {
+    const {
+      utils,
+      organizationCampaigns,
+      organizationCampaignsAction,
+      organizationsData
+    } = this.props;
+
     return <VerifiedOrganisationComponent
-      {...this.props} />;
+      {...this.props}
+      utils={utils}
+      organizationCampaigns={organizationCampaigns}
+      organizationCampaignsAction={organizationCampaignsAction}
+    />;
   }
 }
 
-export default VerifiedOrganisationContainer;
+const mapStateToProps = (state) => {
+  const { utils, campaigns } = state;
+
+  return {
+    utils,
+    organizationCampaigns: campaigns.organizationCampaignsData,
+    organizationsData: campaigns.organizationsData
+  }
+}
+
+const mapDispatchToProps = {
+  organizationCampaignsAction,
+  organizationsAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifiedOrganisationContainer);

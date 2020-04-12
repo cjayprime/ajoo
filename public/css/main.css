@@ -181,20 +181,23 @@ p {
     padding: 10px 0 10px 100px;
     display: flex;
     flex-direction: row;
-    height: 90vh;
-    width: 100wh;
+    height: 70vw;
     position: relative;
   }
 
   .heading_left {
     font-family: "Muli", sans-serif;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(30%);
+    padding-top: 211px;
   }
 
   .heading_title {
     color: #0072a3;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 75px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   }
 
@@ -215,6 +218,27 @@ p {
     color: #fff;
     width: 242px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .profile__start-button {
+    margin-left: 50px;
+  }
+
+  .heading_button-reduce {
+    background: #0072a3;
+    margin-top: 30px;
+    border-radius: 50px;
+    color: #fff;
+    /* width: 202px; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .heading_button_text-reduce {
+    padding: 17px 39px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
   }
 
   .heading_button_text {
@@ -323,9 +347,9 @@ p {
   /* WHY AJOO */
 
   .why_ajoo_container {
-    /* width: 100%; */
     padding: 10px 100px;
     margin: 200px 0;
+    position: relative;
   }
 
   .why_ajoo_heading {
@@ -338,6 +362,17 @@ p {
     flex-direction: row;
     margin-bottom: 60px;
     justify-content: space-between;
+  }
+
+  .circle {
+    background-color: rgba(246, 233, 254, 0.3);
+    width: 693px;
+    height: 693px;
+    border-radius: 50%;
+    position: absolute;
+    top: -70px;
+    left: -100px;
+    z-index: -1;
   }
 
   .why_ajoo_content_item {
@@ -719,7 +754,6 @@ p {
 
   .campaigns_head_banner {
     width: 100%;
-    height: 40vh;
     background-image: url("../images/mask_group.png");
   }
 
@@ -1306,6 +1340,7 @@ p {
     background: #f9fafc;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
+    width: 100%;
   }
 
   .card-body {
@@ -1322,7 +1357,17 @@ p {
     margin-left: 50px;
   }
 
+  .terms_of_use ul {
+    margin-left: 50px;
+  }
+
   .terms_of_use li {
+    list-style-type: decimal;
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  .terms_of_use ol > li {
     list-style-type: decimal;
     font-size: 18px;
     line-height: 23px;
@@ -1574,17 +1619,17 @@ p {
     margin-right: 100px;
     margin-left: 100px;
     min-height: 420px;
-    background-color: red;
+    /*background-color: red;*/
   }
 
   .campaign--owner-message {
     flex: 1;
-    background-color: red;
+    /*background-color: red;*/
   }
 
   .campaign--volunteer {
     flex: 1;
-    background-color: green;
+    /*background-color: green;*/
   }
 
   .campaignTab_image {
@@ -1969,7 +2014,7 @@ p {
 
   /*SIGN UP VERIFICATION*/
   .signUp_verification {
-    padding: 50px 90px;
+    padding: 50px 20px;
     background-color: #f9fafc;
   }
 
@@ -2004,44 +2049,48 @@ p {
     margin: 20px 0;
   }
 
-  .verification_2 {
-    display: flex;
-    padding-top: 10px;
-    padding-bottom: 50px;
+  .verification_social {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    grid-gap: 60px;
   }
 
-  .verification2_column1 {
-    width: 33%;
+  .verification_feature {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    grid-gap: 60px;
+  }
+
+  .verification_2 {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    grid-gap: 60px;
+  }
+
+  .verification_person {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    grid-gap: 60px;
   }
 
   .verification2_column2 {
-    padding-left: 35px;
-    width: 43%;
-  }
-
-  .verification2_column3 {
-    width: 20%;
-    padding-left: 35px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .verification2_column4 {
-    padding-left: 35px;
-    width: 30%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 30px;
+  }
+
+  .verify2-form {
+    width: 60%;
   }
 
   /* .verification_2 img {
-    width: 100%;
-  } */
-
-  .verification_form_image {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .verification_form_image img {
-    padding-right: 20px;
-    padding-bottom: 20px;
-  }
+      width: 100%;
+    } */
 
   .signUp_verification label {
     font-style: normal;
@@ -2234,8 +2283,6 @@ p {
 
   /*CREATE CAMPAIGN 1*/
 
-  /* EDIT CAMPAIGN */
-
   .edit__campaign {
     background-color: #f9fafc;
     padding: 47px 110px 20px 110px;
@@ -2303,6 +2350,7 @@ p {
   .campaign__info-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__info-desc {
@@ -2311,9 +2359,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__info-form {
@@ -2345,6 +2392,7 @@ p {
   .campaign__feature-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__feature-desc {
@@ -2353,9 +2401,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__feature-form {
@@ -2381,6 +2428,7 @@ p {
   .campaign__desc-body {
     padding-top: 34px;
     display: flex;
+    flex-direction: row;
   }
 
   .campaign__desc-desc {
@@ -2389,9 +2437,8 @@ p {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    width: 427px;
-    height: 92px;
     color: #414141;
+    width: 40%;
   }
 
   .campaign__desc-form {
@@ -2416,6 +2463,7 @@ p {
   .campaign__reward-body {
     padding-top: 34px;
     display: flex;
+    justify-content: space-between;
   }
 
   .campaign__reward-desc {
@@ -2425,16 +2473,11 @@ p {
     font-size: 16px;
     line-height: 20px;
     color: #414141;
-    width: 427px;
-    height: 92px;
+    width: 40%;
   }
 
   .campaign__reward-form {
-    margin-left: 38px;
-  }
-
-  .campaign__reward-form .createCampaign_form {
-    margin: 0 !important;
+    margin-left: 48px;
   }
 
   .reward-form {
@@ -2560,7 +2603,7 @@ p {
     margin-top: 30px;
   }
 
-  .edit_save-btn {
+  .add_reward-btn {
     background: #0072a3;
     border: 1px solid #dde2e5;
     box-sizing: border-box;
@@ -2573,9 +2616,10 @@ p {
     font-size: 18px;
     line-height: 23px;
     color: #ffffff;
+    margin-left: 25px;
   }
 
-  .add_reward-btn {
+  .edit_save-btn {
     background: #ffffff;
     border: 1px solid #0072a3;
     box-sizing: border-box;
@@ -2588,7 +2632,6 @@ p {
     color: #0072a3;
     width: 164px;
     height: 56px;
-    margin-left: 25px;
   }
 
   /* EDIT CAMPAIGN */
@@ -2647,12 +2690,12 @@ p {
   /*PROFILE*/
   .profile {
     background-color: #f9fafc;
-    padding: 20px 110px 0 110px;
+    padding: 20px 30px 0 30px;
   }
 
   .edit_profile {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .profile_name {
@@ -4080,20 +4123,9 @@ p {
     border-radius: 5px;
   }
 
-  .verified_page_third-card-img {
-    display: flex;
-    justify-content: center;
-  }
-
   .verified_page_third-card-img img {
     width: 200px;
-    padding-top: 74px;
-    padding-bottom: 112px;
-  }
-
-  .verified_page_third-card-title {
-    display: flex;
-    justify-content: center;
+    height: 200px;
   }
 
   .verified_page_third-card-title b {
@@ -4135,13 +4167,12 @@ p {
 
   .verified_org_body {
     background: #ffffff;
-    margin-top: 76px;
+    margin-top: 1px;
     padding: 0px 110px 112px 110px;
   }
 
   .verified_org_head_banner {
     width: 100%;
-    height: 50vh;
   }
 
   .verified_org_head_banner-container {
@@ -6242,6 +6273,10 @@ p {
     margin-top: 80px;
   }
 
+  .identify_verification-column1 {
+    width: 45%;
+  }
+
   .identify_verification-column1 h5 {
     font-family: Muli;
     font-style: normal;
@@ -6283,4 +6318,84 @@ p {
   }
 
   /* End of Volunteer Document */
+  /* Success Story section on home style */
+
+  .home-success {
+    padding: 10px 100px;
+  }
+
+  .stories {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 44px;
+  }
+
+  .stories img {
+    width: 350px;
+  }
+
+  .success-category {
+    display: flex;
+    align-items: center;
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    color: #212121;
+    width: 350px;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 31px;
+  }
+
+  /* End of success story on home style */
+
+  /* campaign stat */
+
+  .stat {
+    padding: 10px 100px;
+    margin: 200px 0px;
+  }
+
+  .stat-number {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 72px;
+    line-height: 90px;
+    color: #0072a3;
+    padding-top: 18.8px;
+  }
+
+  .stat-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .stat-text {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #414141;
+    padding-top: 18px;
+  }
+
+  .campaign-stat {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .stat-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  /* campaign state */
 }

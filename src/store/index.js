@@ -61,7 +61,6 @@ export const injectReducer = (key, reducer) => {
 
 sagaMiddleware.run(rootSaga);
 //const persistor = persistStore(store);
-//console.log(store)
 
 //export { persistor };
 export default store;

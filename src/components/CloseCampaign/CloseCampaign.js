@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import StarRatings from "react-star-ratings";
-//import { Link } from "react-router-dom";
-//import CKEditor from "@ckeditor/ckeditor5-react";
-//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import FormInputField from "../../sharedComponent/form";
 import AlertDialog from "../../sharedComponent/AlertDialog";
@@ -12,15 +9,13 @@ import { campaignRequest } from "../../store/campaignModules/saga";
 
 import { IMAGE_URL, validate, isRequestActive } from "../../utils/misc";
 
-//import OpenDonations from "./OpenDonations";
-
-const VolunteerList = ({ url, title }) => {
+const VolunteerList = ({ url, title, name }) => {
   return (
-    <div className="campaign--volunteers-list-item">
-      <img src={`${IMAGE_URL}363_232_${url}`} alt={`${title}`} />
+    <div className="campaign--volunteers-list-item" style={{width: 150}}>
+      <img src={`${IMAGE_URL}60_60_${url}`} alt={`${title}`} />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p>Preye Adebusola</p>
-        <div style={{ marginTop: 20 }}>
+        <p>{name}</p>
+        {/*<div style={{ marginTop: 20 }}>
             <StarRatings
                 rating={4}
                 numberOfStars={5}
@@ -33,7 +28,7 @@ const VolunteerList = ({ url, title }) => {
                 name="rating"
                 className="review-star"
             />
-        </div>
+  </div>*/}
       </div>
     </div>
   );
@@ -45,6 +40,8 @@ export default class CloseCampaign extends Component {
 
     state = {
         images: [],
+        index: "",
+        submitted: false,
         fields: {
             message: {
                 value: "",
@@ -60,23 +57,12 @@ export default class CloseCampaign extends Component {
     
     _handleChange = (e, text) => {
         let newState = { ...this.state };
-        newState.formError = false;
-        if (text && text.hasOwnProperty("name")) {
-            const { name, data } = text;
-            newState.fields[name].error = false;
-            newState.fields[name].value = data;
-            this._safelySetState(newState);
-            return;
-        }
         const { name, value } = e.target;
-        if (newState.rewardFields.hasOwnProperty(name)) {
-            newState.rewardFields[name].error = false;
-            newState.rewardFields[name].value = value;
-        } else {
-            newState.fields[name].error = false;
-            newState.fields[name].value = value;
-        }
-        this._safelySetState(newState);
+        
+        newState.fields[name].error = false;
+        newState.fields[name].value = value;
+        
+        this.setState(newState);
 
         validate(this, this.state.fields, e);
     };
@@ -84,40 +70,62 @@ export default class CloseCampaign extends Component {
     onBlur = (res, name) => {
         const { error, errorMessage } = res;
         let newForm = { ...this.state };
-        if (newForm.rewardFields.hasOwnProperty(name)) {
-            newForm.rewardFields[name] = {
-                ...newForm.rewardFields[name],
-                error,
-                errorMessage
-            };
-        } else {
-            newForm.fields[name] = {
-                ...newForm.fields[name],
-                error,
-                errorMessage
-            };
-        }
+        newForm.fields[name] = {
+            ...newForm.fields[name],
+            error,
+            errorMessage
+        };
 
         this.setState(newForm);
     };
 
-    setImage = image => {
-        this.setState({ image });
+    triggerThankYouImageUpload = (index) => {
+      const { images } = this.state;
+      const { showPercentageProgress } = this.props;
+  
+      this.props.uploadCampaignThankYouImage({
+        data: {
+          image: images[index],
+          id: this.props.history.location.state.campaign._id
+        },
+        showPercentageProgress,
+        imageNumber: index + 1
+      });
+    };
+
+    setImage = (image, index) => {
+        var images = this.state.images;
+        images[index] = image;
+        this.setState({ images, index }, () => this.triggerThankYouImageUpload(index));
     };
 
     save = e => {
+
+        if(validate(this, this.state.fields) && this.state.images[0] && this.state.images[1]){
+            this.props.closeCampaign({
+                message: this.state.fields.message.value,
+                id: this.props.history.location.state.campaign._id,
+                campaign_id: this.props.history.location.state.campaign.campaign_id,
+                success: () => {}
+            });
+        }else{
+            this.setState({
+                submitted: true
+            });
+        }
 
     };
 
     render() {
         const { fields: message } = this.state;
-        const { utils, history, campaign } = this.props;
-        
+        const { utils, campaign } = this.props;
         return (
             <>
                 <AlertDialog
                     open={
-                        utils.feedback.for === campaignRequest.userCampaignRequest
+                        utils.feedback.for === campaignRequest.userCampaignRequest ||
+                        utils.feedback.for === campaignRequest.closeCampaignRequest ||
+                        utils.feedback.for === campaignRequest.uploadThankYouImageRequest
 
                     }
                     message={utils.feedback.message}
@@ -128,15 +136,6 @@ export default class CloseCampaign extends Component {
                     <div className="edit__campaign-head">
                         <div className="edit__campaign-head-title">
                             Close Campaign
-                        </div>
-                        <div className="edit__campaign-heade-2">
-                            <span className="edit__campaign-close" onClick={this.toggle} style={{ cursor: "pointer" }}>
-                                Reopen Donations
-                            </span>
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAjCAYAAABVcWC0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAaSURBVHgB1cQxDQAADAKwZsonHWzwFP6KCQJtbQDFuhliogAAAABJRU5ErkJggg==" alt="line" className="edit__campaign-line" />
-                            <span className="edit__campaign-delete" onClick={() => {}} style={{ cursor: "pointer" }}>
-                                Close Campaign
-                            </span>
                         </div>
                     </div>
 
@@ -149,20 +148,20 @@ export default class CloseCampaign extends Component {
                     <div className="campaign__info">
                         <h3 className="campaign__info-title">Campaign Info</h3>
                         <hr className="campaign-hr" />
-                        <div className="campaign__info-body">
-                            <div className="campaign__info-desc" style={{flexShrink:"0"}}>
+                        <div className="campaign__info-body" style={{ justifyContent: "space-between" }}>
+                            <div className="campaign__info-desc" style={{ width: "40%", flexShrink: "0" }}>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <div>
                                         CAMPAIGN GOAL
-                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N 230, 000.00</div>
+                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N{campaign.pledged === null ? 0 : campaign.pledged}</div>
                                     </div>
                                     <div>
                                         CAMPAIGN DONATIONS
-                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N 242, 579.00</div>
+                                        <div style={{ fontWeight: "bolder", fontSize: 20, marginTop: 10 }}>N{campaign.amount}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="campaign__info-form" style={{width:"100%"}}>
+                            <div className="campaign__info-form" style={{ width: "45%", alignItems: "end" }}>
                                 <div className="createCampaign_form">
                                     <FormInputField
                                         type="textarea"
@@ -172,47 +171,51 @@ export default class CloseCampaign extends Component {
                                         form={this.state.fields}
                                         style={{height: 200, width: "100%"}}
                                         required
-                                        //validate={validate1}
-                                        //onChange={this._handleChange}
+                                        validate={validate}
+                                        onChange={this._handleChange}
                                         labelTitle="Thank you message to donors"
                                         className="createCampaign_form-goal"
                                     />
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <div style={{ height: 260, width: "46.5%", marginTop: 30, marginLeft: 0 }}>
+                                        <label style={{ color: !this.state.images[0] && this.state.submitted ? "red" : "inherit" }}>
+                                            {!this.state.images[0] && this.state.submitted ? "SELECT YOUR FIRST THANK YOU IMAGE" : ""}
+                                        </label>
                                         <ImageUpload
                                             image={this.state.images[0]}
-                                            setImage={this.setImage}
+                                            setImage={(image) => this.setImage(image, 0)}
                                             fileUploadProgress={utils.fileUploadProgress}
                                             //editImageUrl={this.editCampaign && this.editCampaign.imageUrl}
                                             isUploading={
-                                                isRequestActive(utils.request, campaignRequest.uploadCampaignImageRequest)
+                                                this.state.index === 0 &&
+                                                isRequestActive(utils.request, campaignRequest.uploadThankYouImageRequest)
                                             }
                                         />
                                     </div>
                                     <div style={{ height: 260, width: "46.5%", marginTop: 30, marginLeft: 25 }}>
+                                        <label style={{ color: !this.state.images[1] && this.state.submitted ? "red" : "inherit" }}>
+                                            {!this.state.images[1] && this.state.submitted ? "SELECT YOUR SECOND THANK YOU IMAGE" : ""}
+                                        </label>
                                         <ImageUpload
                                             image={this.state.images[1]}
-                                            setImage={this.setImage}
+                                            setImage={(image) => this.setImage(image, 1)}
                                             fileUploadProgress={utils.fileUploadProgress}
                                             //editImageUrl={this.editCampaign && this.editCampaign.imageUrl}
                                             isUploading={
-                                                isRequestActive(utils.request, campaignRequest.uploadCampaignImageRequest)
+                                                this.state.index === 1 &&
+                                                isRequestActive(utils.request, campaignRequest.uploadThankYouImageRequest)
                                             }
                                         />
                                     </div>
                                 </div>
                                 <div style={{ display: "flex", justifyContent: "end", cursor: "pointer" }}>
                                     <LoadableButton
-                                        error={
-                                            false
-                                            /*formError &&
-                                            "There is something wrong! Ensure you've added a campaign"*/
-                                        }
+                                        error={false}
                                         className="edit__camp-img-btn"
                                         btnTitle="Save Message"
                                         isLoading={
-                                            isRequestActive(utils.request, campaignRequest.uploadCampaignImageRequest)
+                                            isRequestActive(utils.request, campaignRequest.closeCampaignRequest)
                                         }
                                         onClick={this.save}
                                     />
@@ -228,25 +231,28 @@ export default class CloseCampaign extends Component {
 
 
                     <div className="campaign__info">
-                        <h3 className="campaign__info-title">Volunteer Rating</h3>
+                        <h3 className="campaign__info-title">Volunteer</h3>
                         <hr className="campaign-hr" />
-                        <div className="campaign--volunteers-list" style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
-                            <VolunteerList title={campaign.title} url={campaign.imageUrl} />
+                        <div className="campaign--volunteers-list" style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
+                            {
+                                this.props.campaigns.volunteers.map((v, i) => (
+                                    <VolunteerList
+                                        key={i}
+                                        name={v.first_name + " " + v.last_name}
+                                        title={v.first_name + " " + v.last_name}
+                                        url={v.image_url}
+                                    />
+                                ))
+                            }
                         </div>
                         <div className="campaign__info-body">
                             <div className="campaign__info-desc">
                             </div>
                             <div className="campaign__info-form" style={{ width: "100%"}}>
                                 <div style={{ width: "100%", display: "flex", justifyContent: "end", cursor: "pointer" }}>
-                                    <LoadableButton
+                                    {/*<LoadableButton
                                         error={
                                             false
-                                            /*formError &&
-                                            "There is something wrong! Ensure you've added a campaign"*/
                                         }
                                         className="edit__camp-img-btn"
                                         btnTitle="Save Rating"
@@ -254,7 +260,7 @@ export default class CloseCampaign extends Component {
                                             isRequestActive(utils.request, campaignRequest.uploadCampaignImageRequest)
                                         }
                                         onClick={this.save}
-                                    />
+                                    />*/}
                                 </div>
                             </div>
                         </div>

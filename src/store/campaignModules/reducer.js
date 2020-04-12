@@ -14,7 +14,16 @@ const initialState = {
   verifiedPayment: {},
   completedCampaigns: {},
   organizationsData: {},
-  rewards: []
+  organizationCampaignsData: {},
+  rewards: [],
+  closeCampaign: {},
+  closeDonation: {},
+  deleteCampaign: {},
+  campaignsOfAVolunteer: [],
+  volunteers: [],
+  totalDonations: 0,
+  totalCampaigns: 0,
+  totalClosed: 0
 };
 
 const campaigns = (state = initialState, action) => {
@@ -235,9 +244,124 @@ const campaigns = (state = initialState, action) => {
         requestStatus: action.payload
       };
 
+    case Action.FETCH_ORGANIZATION_CAMPAIGNS_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        organizationCampaignsData: action.payload.data
+      }
+
+    case Action.FETCH_ORGANIZATION_CAMPAIGNS_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.CLOSE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        closeCampaign: action.payload.data
+      }
+
+    case Action.CLOSE_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.CLOSE_DONATION_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        closeDonation: action.payload.data
+      }
+
+    case Action.CLOSE_DONATION_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.DELETE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        deleteCampaign: action.payload.data
+      }
+
+    case Action.DELETE_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.REPORT_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        requestStatus: action.payload.status,
+        //deleteCampaign: action.payload.data
+      }
+
+    case Action.REPORT_CAMPAIGN_ERROR:
+      return {
+        ...state,
+        success: false,
+        requestStatus: action.payload
+      }
+
+    case Action.GET_CAMPAIGN_VOLUNTEER_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.status,
+        campaignsOfAVolunteer: action.payload.data
+      }
+
+    case Action.GET_VOLUNTEER_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.status,
+        volunteers: action.payload.data
+      }
+
+    case Action.GET_TOTAL_DONATIONS_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.status,
+        totalDonations: action.payload.data.total_donations
+      }
+
+    case Action.GET_TOTAL_CAMPAIGNS_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.status.data,
+        totalCampaigns: action.payload.data.total_campaigns
+      }
+
+    case Action.GET_TOTAL_CLOSED_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.status.data,
+        totalClosed: action.payload.data.total_closed
+      }
+
     default:
       return state;
   }
 };
 
 export default campaigns;
+/**
+  campaignsOfAVolunteer: [],
+  volunteers: [],
+  totalDonations: 0,
+  totalCampaigns: 0, */

@@ -186,7 +186,6 @@ class CreateCampaignForm extends Component {
       this.editCampaign.imageUrl &&
       image === `${preImage}${this.editCampaign.imageUrl}`
     ) {
-      console.log('111')
       return history.push(
         `/campaign/${this.editCampaign.campaign_id.toLowerCase()}`
       );
@@ -229,7 +228,6 @@ class CreateCampaignForm extends Component {
   };
 
   saveRewardSuccess = () => {
-    
     var rewards = this.state.rewards;
     rewards.push(this.state.rewardFields);
     this.setState({
@@ -318,7 +316,7 @@ class CreateCampaignForm extends Component {
   render() {
     const { utils, categories, orgTypes, createdCampaign } = this.props;
     
-    var { image, rewardFields, step, rewards } = this.state;
+    var { step, rewards } = this.state;
 
     const categoriesItem = categories.map(item => (
       <option value={item} key={item}>
@@ -358,7 +356,7 @@ class CreateCampaignForm extends Component {
     const validate1 = validate.bind(this, this, form1);
     const validate2 = validate.bind(this, this, form2);
     const validate3 = validate.bind(this, this, form3);
-
+    
     switch (step) {
       case 1:
         return (

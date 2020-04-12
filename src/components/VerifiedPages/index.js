@@ -38,27 +38,28 @@ class VerifiedPagesComponent extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    setTimeout(() => {
+      if (typeof prevProps.organizationsData.organizations !== "undefined" &&
+        prevProps.organizationsData.organizations.length > 0 &&
+        this.props.organizationsData.organizations[0]._id !== prevProps.organizationsData.organizations[0]._id &&
+        prevState.page === this.state.page)
+        this.setState({
+          page: this.state.page + 1,
+          lastPage: (this.state.page + 1) >= this.props.organizationsData.total_pages
+        });
 
-    if (typeof prevProps.organizationsData.organizations !== "undefined" &&
-      prevProps.organizationsData.organizations.length > 0 &&
-      this.props.organizationsData.organizations[0]._id !== prevProps.organizationsData.organizations[0]._id &&
-      prevState.page === this.state.page)
-      this.setState({
-        page: this.state.page + 1,
-        lastPage: (this.state.page + 1) >= this.props.organizationsData.total_pages
-      });
-
-    if (typeof prevProps.organizationsData.organizations !== "undefined" &&
-      prevProps.organizationsData.organizations.length > 0 &&
-      this.props.organizationsData.organizations[0]._id !== prevProps.organizationsData.organizations[0]._id
-      ||
-      (typeof this.props.organizationsData.organizations !== "undefined" && this.state.organizationsData.organizations.length === 0)
-    ) {
-      var organizations = this.state.organizationsData.organizations.concat(this.props.organizationsData.organizations);
-      this.setState({
-        organizationsData: { ...this.props.organizationsData, organizations }
-      });
-    }
+      if (typeof prevProps.organizationsData.organizations !== "undefined" &&
+        prevProps.organizationsData.organizations.length > 0 &&
+        this.props.organizationsData.organizations[0]._id !== prevProps.organizationsData.organizations[0]._id
+        ||
+        (typeof this.props.organizationsData.organizations !== "undefined" && this.state.organizationsData.organizations.length === 0)
+      ) {
+        var organizations = this.state.organizationsData.organizations.concat(this.props.organizationsData.organizations);
+        this.setState({
+          organizationsData: { ...this.props.organizationsData, organizations }
+        });
+      }
+    }, 2000)
   }
 
   more = () => {
