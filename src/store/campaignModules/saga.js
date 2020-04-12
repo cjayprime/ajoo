@@ -200,9 +200,13 @@ function* fetchAllCampaignsActionSaga({ payload }) {
         type: FETCH_ALL_CAMPAIGNS_SUCCESS,
         payload: {
           status: response.data.status,
-          data: {
+          /*data: {
             [`${queries.time ? queries.time : "all"}Campaigns`]: response.data
               .entity
+          }*/
+          data: {
+            [`${queries.time ? queries.time : "all"}Campaigns`]: response.data.entity,
+            allCampaigns: response.data.entity
           }
         }
       });

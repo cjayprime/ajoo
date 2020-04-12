@@ -91,7 +91,6 @@ function* signinActionSaga(action) {
       }
     
     }*/
-    console.log('Response: ', response.data)
     if (response.data.status.code === 109) {
 
       yield put({

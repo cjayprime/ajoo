@@ -7,7 +7,6 @@ import { isRequestActive } from "../../utils/misc";
 
 class PasswordSetting extends Component {
   render() {
-    console.log(this.props.form, "Hey I'm form here")
     const {
       form: { passwordChangeField: fields, action, formError },
       settingRequest,
@@ -18,8 +17,6 @@ class PasswordSetting extends Component {
     } = this.props;
     const { current_password, password, cnew_password } = fields;
 
-    //console.log(fields, "Hey I'm fields");
-    //console.log(formError, "Hey I'm action")
     return (
       <div className="campaigns_div" id="profile_div">
         <div className="accountSettings_column1">

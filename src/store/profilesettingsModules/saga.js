@@ -237,7 +237,6 @@ function* organisationProfileActionSaga(action) {
       data
     );
     yield put(setLoading({ request: settingRequest.organisationProfileRequest, loading: false }));
-    console.log(response.data, '::: DATA')
     yield put(
       showRequestFeedBack({
         message: response.data.status.desc,

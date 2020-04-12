@@ -97,38 +97,40 @@ class TopCampaigns extends PureComponent {
               <Spinner />
             ) : (
                 <>
-                  {transactions.length === 0 ? (
-                    <span
-                      style={{
-                        fontFamily: "Muli",
-                        fontSize: "23px",
-                        marginTop: "30px",
-                        display: "flex",
-                        justifyContent: "center",
-                        textTransform: "uppercase"
-                      }}
-                    >
-                      no campaigns
-                  </span>
-                  ) : (
-                      <div className="topCampaigns_row2">
-                        {transactions.map((c, i) => {
-                          if (i === 0 || i > 3) return null;
-                          return (
-                            <Card
-                              key={c._id}
-                              campaignId={c.campaign_id}
-                              src={c.imageUrl}
-                              category={c.category}
-                              percent={c.percent}
-                              amtDonated={c.pledged}
-                              title={c.title}
-                              summary={c.summary}
-                            />
-                          );
-                        })}
-                      </div>
-                    )}
+                  {
+                    transactions.length === 0 ? (
+                      <span
+                        style={{
+                          fontFamily: "Muli",
+                          fontSize: "23px",
+                          marginTop: "30px",
+                          display: "flex",
+                          justifyContent: "center",
+                          textTransform: "uppercase"
+                        }}
+                      >
+                        no campaigns
+                      </span>
+                    ) : (
+                        <div className="topCampaigns_row2">
+                          {transactions.map((c, i) => {
+                            if (i > 2) return null;
+                            return (
+                              <Card
+                                key={c._id}
+                                campaignId={c.campaign_id}
+                                percent={c.percent}
+                                amtDonated={c.pledged}
+                                src={c.imageUrl}
+                                category={c.category}
+                                title={c.title}
+                                summary={c.summary}
+                              />
+                            );
+                          })}
+                        </div>
+                      )
+                  }
                 </>
               )}
           </div>

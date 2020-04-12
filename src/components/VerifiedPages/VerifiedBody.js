@@ -73,7 +73,6 @@ class VerifiedBody extends Component {
       isCampaignFetching,
       utils
     } = this.props;
-    console.log('Organizations Data', organizationsData.organizations)
     const { category } = this.state.fields;
 
     const categoryItems = categories.map((c, i) => (

@@ -1297,6 +1297,7 @@
     font-style: normal;
     font-weight: normal;
     margin-top: -15px;
+    width: auto;
   }
 
   .footerUp a {
@@ -1401,8 +1402,18 @@
     margin-left: 30px;
   }
 
+  .terms_of_use ol {
+    margin-left: 30px;
+  }
+
   .terms_of_use li {
     list-style-type: disc;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .terms_of_use ol > li {
+    list-style-type: decimal;
     font-size: 14px;
     line-height: 18px;
   }

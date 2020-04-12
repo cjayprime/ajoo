@@ -18,8 +18,6 @@ class VerifiedOrganisationCard extends PureComponent {
       organization = v;
     });
 
-    console.log(organization)
-
     return (
       <>
         {/* <p className="verified_org-report">

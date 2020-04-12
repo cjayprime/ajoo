@@ -14,7 +14,6 @@ class CampaignsContainer extends PureComponent {
       categories,
       utils
     } = this.props;
-    console.log(allCampaigns, "Hey I'm here")
 
     return (
       <CampaignsComponent

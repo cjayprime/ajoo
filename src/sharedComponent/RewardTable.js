@@ -8,7 +8,6 @@ class RewardTable extends Component {
     const {
         rewards
       } = this.props;
-    console.log('Rewards::: ', rewards)
     return (
         <>
             {

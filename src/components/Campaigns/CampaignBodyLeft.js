@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import Modal from "react-responsive-modal";
 
 const TitleHeading = ({ children, title }) => {
@@ -25,7 +25,7 @@ const bg = {
   }
 };
 
-export default class CampaignBodyLeft extends PureComponent {
+export default class CampaignBodyLeft extends Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
@@ -57,7 +57,10 @@ export default class CampaignBodyLeft extends PureComponent {
       prevState.campaignType !== campaignType ||
       prevState.category !== category
     ) {
-      this.fetchCampaign();
+      this.props.reset(() => {
+        this.fetchCampaign();
+        this.props.update({ verification, campaignType, category });
+      });
     }
   }
 
@@ -73,9 +76,7 @@ export default class CampaignBodyLeft extends PureComponent {
 
   handleChange = e => {
     const { name, value } = e.target;
-    this.setState({ ...this.state, [name]: value }, () => {
-      this.props.reset(() => this.props.fetchAllCampaigns({ category: this.state.category, type: this.state.campaignType }))
-    });
+    this.setState({ ...this.state, [name]: value });
   };
 
   render() {

@@ -19,9 +19,9 @@ class SuccessStory extends Component {
                         {isCampaignFetching ? (
                             <Spinner />
                         ) : (
-                                <div className="stories">
+                                <>
                                     {completedCampaigns.campaigns && completedCampaigns.campaigns.length > 0 ? (
-                                        <>
+                                        <div className="stories">
                                             {completedCampaigns.campaigns.map((c, i) => {
                                                 var src = c.imageUrl;
                                                 var title = c.title;
@@ -42,7 +42,7 @@ class SuccessStory extends Component {
                                                     </div>
                                                 );
                                             })}
-                                        </>
+                                        </div>
 
                                     ) : (
                                             <span
@@ -57,7 +57,7 @@ class SuccessStory extends Component {
                                                 no success stories yet
                                             </span>
                                         )}
-                                </div>
+                                </>
                                 // <>p</>
                             )}
                     </div>

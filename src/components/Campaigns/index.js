@@ -20,6 +20,9 @@ class CampaignComponent extends Component {
       perPage: 6,
       lastPage: false,
       allCampaigns: { transactions: [] },
+      verification: undefined,
+      campaignType: undefined,
+      category: undefined,
       position: "static"
     };
   }
@@ -91,11 +94,11 @@ class CampaignComponent extends Component {
       
       // If the `Show More` button is clicked then the campaign_id of the first item in the collection will change
       // cause the item is always re-fetched, which is the need to write the props into the state in the first place
-      // so as to show the new (more) items beneath the old ones
-      if(typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
+      // so as to show the new (more) items beneath the old ones      
+      if((typeof prevProps.allCampaigns.allCampaigns !== "undefined" &&
         this.props.allCampaigns.allCampaigns.transactions.length > 0 &&
         prevProps.allCampaigns.allCampaigns.transactions.length > 0 &&
-        this.props.allCampaigns.allCampaigns.transactions[0].campaign_id !== prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id
+        this.props.allCampaigns.allCampaigns.transactions[0].campaign_id !== prevProps.allCampaigns.allCampaigns.transactions[0].campaign_id)
         ||
         (typeof this.props.allCampaigns.allCampaigns !== "undefined" && this.state.allCampaigns.transactions.length === 0)
         ){
@@ -110,6 +113,8 @@ class CampaignComponent extends Component {
   }
 
   reset = (updated) => {
+    this.props.allCampaigns.allCampaigns = { transactions: [] };
+
     this.setState({
       page: 0,
       perPage: 6,
@@ -121,11 +126,13 @@ class CampaignComponent extends Component {
   more = () => {
 
     if(! this.state.lastPage){
-      var { page, perPage } = this.state;
-      this.props.fetchAllCampaigns({ page, perPage });
+      var { page, perPage, verification, campaignType, category } = this.state;
+      this.props.fetchAllCampaigns({ page, perPage, verification, campaignType, category });
     }
 
   };
+
+  update = ({ verification, campaignType, category }) => this.setState({ verification, campaignType, category });
 
   render() {
     const { /*allCampaigns, */fetchAllCampaigns, categories, utils } = this.props;
@@ -138,6 +145,7 @@ class CampaignComponent extends Component {
         <div className="campaign_body" style={{ height: this.state.allCampaigns.transactions.length === 0 ? "100vh" : "auto" }}>
           <CampaignBodyLeft
             reset={this.reset}
+            update={this.update}
             position={this.state.position}
             campaignBodyLeftRef={campaignBodyLeftRef}
             fetchAllCampaigns={fetchAllCampaigns}

@@ -46,7 +46,6 @@ class SignUpIndividualComponent extends Component {
 
   render() {
     const { signupUser, request, misc, fetchLga, facebookRegister, getFacebookDetails } = this.props;
-    console.log(getFacebookDetails, "hey details")
 
     return (
       <Layout {...this.props}>

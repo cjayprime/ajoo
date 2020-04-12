@@ -517,7 +517,7 @@ class SignUpOrganisationForm extends Component {
                 <div className="signup_agree">
                   <div className="signup_span">
                     By clicking submit, you agree to the{" "}
-                    <Link to="/tnc">
+                    <Link to="/privacy-policy">
                       <label>Privacy Policy</label>
                     </Link>{" "}
                     and{" "}

@@ -1382,6 +1382,16 @@
     line-height: 23px;
   }
 
+  .terms_of_use ol {
+    margin-left: 50px;
+  }
+
+  .terms_of_use ol > li {
+    list-style-type: decimal;
+    font-size: 18px;
+    line-height: 23px;
+  }
+
   .terms_of_use span {
     font-weight: bold;
   }

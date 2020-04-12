@@ -21,7 +21,6 @@ class HeaderNav extends PureComponent {
 
   signoutUser = () => {
     const { history, signoutAction } = this.props;
-    console.log(history)
     signoutAction({ history });
     this.hideProfileMenu();
   };

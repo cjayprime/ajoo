@@ -20,7 +20,6 @@ class HomeContainer extends PureComponent {
       // totalDonations
     } = this.props;
 
-    console.log(allCampaigns, "yes ALl campaign")
 
     return (
       <HomeComponent
